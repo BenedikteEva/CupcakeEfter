@@ -15,7 +15,7 @@
         <h1>Login Page</h1>
     </body>
 
-    <form name="FormLogin" action="products.jsp" method="POST">
+    <form name="FormLogin" action="Login" method="POST">
         <div class="imgcontainer">
             <!--<img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
         </div>

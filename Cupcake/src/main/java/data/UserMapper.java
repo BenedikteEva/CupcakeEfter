@@ -68,7 +68,7 @@ public class UserMapper {
 
             Connection conn = new Connector().getConnection();
             
-            String sql = "SELECT username, password, admin_status FROM userlist WHERE username=? AND password=?";
+            String sql = "SELECT username, password FROM userlist WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userName);//Det som sættes ind sql stringen
             pstmt.setString(2, password);
