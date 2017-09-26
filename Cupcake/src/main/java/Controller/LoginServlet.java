@@ -35,27 +35,48 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           
+
+            String email = null;
+            double balance = 0.00;
+
             //Henter brugens input
             String userName = request.getParameter("username");
             String password = request.getParameter("password");
             System.out.println("LoginServlet");
 
+            User user = new User();
+
             //Laver user objekt
             User loginUser = new User();
             loginUser.setUserName(userName);
             loginUser.setPassword(password);
-            
+
             UserMapper userMapper = new UserMapper();
             boolean userValidate = userMapper.godkendBruger(loginUser);
             if (userValidate) {
+
+                try {
+                    boolean userAdmin = userMapper.getUserData(userName).isAdminStatus();
+                    HttpSession session = request.getSession();
+                    session.setAttribute(userName, loginUser);
+                    session.setAttribute(password, loginUser);
+                    
+                    if (userAdmin == true) {
+                    request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/products.jsp").forward(request, response);
+                }
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 //Sætter et key value pair så det kan hentes senere med getAttribute("key")
                 //request.setAttribute("userName", userName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
-                HttpSession session = request.getSession();
-                session.setAttribute(userName, out);
-                session.setAttribute(password, out);
-                                
-                request.getRequestDispatcher("/products.jsp").forward(request, response);
+                
+
+                
+
             } else {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }

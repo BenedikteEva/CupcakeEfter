@@ -32,7 +32,7 @@ public class UserMapper {
                 String password = rs.getString("password");
                 boolean adminStatus = rs.getBoolean("admin_status");
                 username = rs.getString("username"); 
-                int balance = rs.getInt("balance");
+                double balance = rs.getInt("balance");
 
                 user = new User(id, username, password, email, adminStatus, balance);
             }

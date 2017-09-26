@@ -15,24 +15,24 @@ public class User {
     private String userName;
     private String password;
     private String email;
-    private boolean admindStatus;
-    private double Balance;
+    private boolean adminStatus;
+    private double balance;
 
-    public User(int user_id, String userName, String password, String email, boolean admindStatus, double Balance) {
+    public User(int user_id, String userName, String password, String email, boolean adminStatus, double balance) {
         this.user_id = user_id;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.admindStatus = admindStatus;
-        this.Balance = Balance;
+        this.adminStatus = adminStatus;
+        this.balance = balance;
     }
 
-    public User(String userName, String password, String email, boolean admindStatus, double Balance) {
+    public User(String userName, String password, String email, boolean adminStatus, double balance) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.admindStatus = admindStatus;
-        this.Balance = Balance;
+        this.adminStatus = adminStatus;
+        this.balance = balance;
     }
 
     public User(String userName, String password, String email) {
@@ -61,12 +61,12 @@ public class User {
         return email;
     }
 
-    public boolean isAdmindStatus() {
-        return admindStatus;
+    public boolean isAdminStatus() {
+        return adminStatus;
     }
 
     public double getBalance() {
-        return Balance;
+        return balance;
     }
 
     public void setUser_id(int user_id) {
@@ -85,17 +85,17 @@ public class User {
         this.email = email;
     }
 
-    public void setAdmindStatus(boolean admindStatus) {
-        this.admindStatus = admindStatus;
+    public void setAdminStatus(boolean admindStatus) {
+        this.adminStatus = admindStatus;
     }
 
-    public void setBalance(double Balance) {
-        this.Balance = Balance;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
     
     @Override
     public String toString() {
-        return "User{" + "user_id=" + user_id + ", userName=" + userName + ", password=" + password + ", email=" + email + ", admindStatus=" + admindStatus + ", Balance=" + Balance + '}';
+        return "User{" + "user_id=" + user_id + ", userName=" + userName + ", password=" + password + ", email=" + email + ", adminStatus=" + adminStatus + ", balance=" + balance + '}';
     }
 
     
