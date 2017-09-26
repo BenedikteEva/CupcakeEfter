@@ -1,0 +1,238 @@
+/*
+Her kan jeg skrive et eller andet til mig selv. M�ske en opskrift p� �ggekogning
+Ellers en huskeliste p� hvordan jeg gerne vil have den til at se ud. 
+Min header skal v�re et eller andet jeg ikke har besluttet mig for endnu men 
+er heller ikke helt sikker p� om jeg vil have den i wordpressstil m�ske mere med
+et centreret ovalt billede
+
+Home, Bookstore, Music, ArtGallery, Merchandice, Programming, About
+And maybe a dropdownbutton that drops down og et roterende logo
+*/
+/* 
+    Created on : 14-03-2017, 13:51:43
+    Author     : BenedikteEva
+*/
+title
+{
+    font-family: cursive ;
+    background-color: lightseagreen;
+}
+head
+{
+    background-color: transparent;
+}
+
+section {
+    width: 80%;
+    border-color: transparent;
+    border-width: 20 px;
+    
+}
+ /* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+}
+
+/* Left and right column */
+.column.side {
+    width: 25%;
+}
+
+/* Middle column */
+.column.middle {
+    width: 50%;
+}
+body{
+    
+    width: 100%;
+    background-color: transparent;
+    padding: 16px;
+    border-width: 10px;
+    border-color:darkolivegreen;
+    align-content: stretch;
+}
+main{
+    background-color:  transparent;
+    text-align: justify;
+    width: 80%;
+    padding: 16px;
+    border-width: 10px;
+    border-color:darkolivegreen;
+    align-content: stretch;
+}
+nav{
+    background-color: transparent;
+}  
+
+footer {
+    background-color: transparent;
+   
+}
+h4{
+    color: chartreuse;
+}
+h2{
+    color: black;
+}
+
+/* dropdown menu buttons*/
+
+.dropbtn {
+    background-color: lightcyan;
+    color: blue;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    cursor: url('CSS/logoicon.ico'), auto;
+    background-color: #f1f1f1
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    cursor: url('CSS/logoicon.ico'), auto;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+    cursor: url('CSS/logoicon.ico'), auto;
+}  
+
+/* okay animation af en dropdown menu mangler stadig at lave det med mousehower*/
+
+
+.dropmonkey {
+/*    width: 1px;
+    height: 1px;
+    */
+    position: absolute; right: 600px; top:200px;
+    -webkit-animation-name: dropdown; 
+    -webkit-animation-duration: 4s; 
+    animation-name: dropdown;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    
+    
+    @-webkit-keyframes dropmonkey {
+    0%   { right:0px; top:300px;}
+    20% { left:50px; top:250px;}
+    30% {left 25 px; top: 200px;}
+    40% {left 10px; top:150px;}
+    50%  { left:0 px; top:50px;}
+    75%  {left:-20px; top:100px;}
+    85%  {left:-100px; top:150px;}
+    100% {left:-200px; top:200px;}
+}
+
+/* Standard syntax */
+@keyframes dropmonkey {
+    0%   { right:0px; top:300px;}
+    20% { left:50px; top:250px;}
+    30% {left 25 px; top: 200px;}
+    40% {left 10px; top:150px;}
+    50%  { left:0 px; top:50px;}
+    75%  {left:-20px; top:100px;}
+    85%  {left:-100px; top:150px;}
+    100% {left:-200px; top:200px;}
+}
+}
+@-webkit-keyframes dropdown {
+      0%   { right:0px; top:300px;}
+    20% { left:50px; top:250px;}
+    30% {left 25 px; top: 200px;}
+    40% {left 10px; top:150px;}
+    50%  { left:0 px; top:50px;}
+    75%  {left:-20px; top:100px;}
+    85%  {left:-100px; top:150px;}
+    100% {left:-200px; top:200px;}
+}
+}
+
+/* Standard syntax */
+@keyframes dropdown {
+  0%   { right:0px; top:300px;}
+    20% { left:100px; top:250px;}
+    30% {left:120 px; top: 200px;}
+    40% {left 130px; top:150px;}
+    50%  { left:140 px; top:50px;}
+    60%  {left:150px; top:100px;}
+    75%  {left:160px; top:150px;}
+    85% {left:170px; top:200px;}
+   100% {left:180px; top:250px;}
+}
+div.gallery {
+    margin: 10px;
+    border: 5px solid #ccc;
+    float: left;
+    width: 120px;
+}
+
+div.gallery:hover {
+    border: 10px solid #777;
+    width: 50%;
+    height: auto;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: left;
+}
+
+footer{
+    columns: 3;
+    width: 100%;
+    background-color: lightgrey;
+    margin: 0px;
+}
+
+.image2{
+    position: relative;
+}
+
+.image {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin:30px 0 0 30px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { -moz-transform: rotate(360deg); } 
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(-360deg); } }
