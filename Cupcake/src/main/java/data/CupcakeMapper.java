@@ -21,41 +21,48 @@ import java.util.logging.Logger;
  */
 public class CupcakeMapper {
 
-   
-
     public List<Topping> getAllTopping() throws SQLException {
+
         List<Topping> cupcakeToppingList = new ArrayList();
-        String sql = "SELECT top_id, topname, top_price FROM toppinglist";
-        ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
-        int lastId = -1;
-        Topping topping = null;
-        while (rs.next()) {
-            int top_id = rs.getInt("top_id");
-            if (top_id != lastId) {
-                String topname = rs.getString("topname");
-                double top_Price = rs.getDouble("top_price");
-                topping = new Topping(top_id, topname, top_Price);
-                cupcakeToppingList.add(topping);
-            }
+        try {
+            String sql = "SELECT top_id, topname, top_price FROM toppinglist";
+            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            int lastId = -1;
+            Topping topping = null;
+            while (rs.next()) {
+                int top_id = rs.getInt("top_id");
+                if (top_id != lastId) {
+                    String topname = rs.getString("topname");
+                    double top_Price = rs.getDouble("top_price");
+                    topping = new Topping(top_id, topname, top_Price);
+                    cupcakeToppingList.add(topping);
+                }
 //            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
 //            lastId = personId;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return cupcakeToppingList;
     }
 // jeg forstår ikke hvorfor min get topping og bottomprice by name ikke virker. 
+
     public double getToppingPricebyName(String topname) throws SQLException {
         Topping t = null;
         double topprice = 0;
+        try {
+            String sql = "SELECT top_id, top_price, topname FROM toppinglist where topname =" + "'" + topname + "'";
+            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            if (rs.next()) {
 
-        String sql = "SELECT top_id, top_price, topname FROM toppinglist where topname ="+"'"+topname+"'";
-        ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
-        if (rs.next()) {
+                int top_id = rs.getInt("top_id");
+                topname = rs.getString("topname");
+                topprice = rs.getDouble("top_price");
 
-            int top_id = rs.getInt("top_id");
-            topname = rs.getString("topname");
-            topprice = rs.getDouble("top_price");
-
-            t = new Topping(top_id, topname, topprice);
+                t = new Topping(top_id, topname, topprice);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return t.getTop_Price();
     }
@@ -63,20 +70,24 @@ public class CupcakeMapper {
     public double getBottomPricebyName(String botname) throws SQLException {
         double botprice = 0;
         Bottom b = null;
-
-        String sql = "SELECT bot_id, bot_price, bottomname FROM bottomlist WHERE bottomname ="+"'"+botname+"'";
-        ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
-        if (rs.next()) {
-            int bot_id = rs.getInt("bot_id");
-            botname = rs.getString("bottomname");
-            botprice = rs.getDouble("bot_price");
-            b = new Bottom(bot_id, botname, botprice);
+        try {
+            String sql = "SELECT bot_id, bot_price, bottomname FROM bottomlist WHERE bottomname =" + "'" + botname + "'";
+            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            if (rs.next()) {
+                int bot_id = rs.getInt("bot_id");
+                botname = rs.getString("bottomname");
+                botprice = rs.getDouble("bot_price");
+                b = new Bottom(bot_id, botname, botprice);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return b.getBot_Price();
     }
 
     public List<Bottom> getAllBottom() throws SQLException {
         List<Bottom> cupcakeBottomList = new ArrayList();
+
         String sql = "SELECT bot_id, bottomname, bot_price FROM bottomlist";
 
         ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
