@@ -4,6 +4,7 @@
     Author     : Ejer
 --%>
 
+<%@page import="java.sql.SQLException"%>
 <%@page import="data.UserMapper"%>
 <%@page import="Controller.RendUtilCupCake"%>
 <%@page import="Controller.RendUtilBottom"%>
@@ -23,20 +24,13 @@
 
     </head>
     <body>  
-    <container class="column">
-        <h2>   <% UserMapper um = new UserMapper();%>
-            
-            <%
-            String uname = request.getParameter("username");
-            Double balance = um.getUserData(uname).getBalance();
-            out.println("Welcome back  " + uname);
-            out.println("Your account balance is: " + balance);
-            %>
-        </h2>
-            <br>
+
+        <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="10%" height="10% "/>    
         <h1>Order our cupcakes!</h1>
 
-  
+      
+        
+
         <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
 
         <%
@@ -44,42 +38,46 @@
             List<Bottom> bottomList = cupcakeList.getAllBottom();
 
         %>
-
+   
         <%= RendUtilTopping.toppingTable(toppingList)%>
+ 
         <br>
         <br>
         <br>
+         <container class="column">
         <%= RendUtilBottom.bottomTable(bottomList)%>
+</container>
+   
 
 
+     <section>
         <button type="submit" >See your CupCake </button>
 
-        <container class="middlecolumn">
+        <%
+            Topping t = new Topping();
+            Bottom b = new Bottom();
+            CupcakeMapper ccm = new CupcakeMapper();
+            RendUtilCupCake rucc = new RendUtilCupCake();
+            UserMapper um = new UserMapper();
+            String[] chosenName = request.getParameterValues("checkbox");
+            String topname = request.getParameter("topname");
+            String botname = request.getParameter("bottomname");
 
+            String uname = request.getParameter("username");
+      
 
-            <%
-                Topping t = new Topping();
-                Bottom b = new Bottom();
-                CupcakeMapper ccm = new CupcakeMapper();
-                RendUtilCupCake rucc = new RendUtilCupCake();
-                String[] chosenName = request.getParameterValues("checkbox");
-                String topname = request.getParameter("topname");
-                String botname = request.getParameter("bottomname");
+            if (topname != null && botname != null) {
+                out.println("<a>" + rucc.createCakeName(botname, topname) + "</a><td><td>");
+                out.println("<a>" + rucc.calculateCakePrice(ccm.getBottomPricebyName(botname), ccm.getToppingPricebyName(topname)) + "</a>");
+            
+            } else {
+  
+                out.println("<div class=column><h2>Welcome back  " + uname+"</h2></div><br>");
 
-                if (topname != null && botname != null) {
-                    out.println("<a>" + rucc.createCakeName(botname, topname) + "</a><td><td>");
-                    out.println("<a>" + rucc.calculateCakePrice(ccm.getBottomPricebyName(botname), ccm.getToppingPricebyName(topname)) + "</a>");
+                out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance()+"</h3>");
 
-                } else {
-
-                    out.println("<a></a>");
-
-                }
-            %></container>
-
-        <div class="column">
-            <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="25%" height="25%"/>    
-        </div>
+            }
+        %>
 
         <form>Quantity
             <input type="number" name="quantity" min="0" width="5px" value="Quantity" default="1" >
@@ -88,7 +86,7 @@
         <%-- måske bør man kalde knappen add to shopping cart istedet --%>
         <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
         <button type="submit" class="signupbtn">Add to Shoppingcart</button>
-    </container>
+  </section>
 
 </body>
 </html>
