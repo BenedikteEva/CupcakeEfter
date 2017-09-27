@@ -22,10 +22,8 @@
             <br>
             <a href="registration.jsp">Register new user</a> 
 
-            <br>
-            <br>
-            <br>
-            <a href="login_admin.jsp">Admin login page</a>
+            
+            
             
         </div>
 
