@@ -1,5 +1,6 @@
 package data;
 
+import Controller.Utilities.UserRendUtil;
 import domain.Admin;
 import domain.User;
 import java.sql.Connection;
@@ -7,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,6 +60,8 @@ public class UserMapper {
         int id = rs.getInt(1);
         return id;
     }
+    
+ 
     
     public boolean godkendBruger(User loginUser) {
         
@@ -141,13 +146,52 @@ public class UserMapper {
         return admin;
     }
     
-    public static void main(String[] args) throws SQLException {
+       public int changeUserBalance (String username, double b) throws Exception {
+        User u = null;double total=0;
+        UserRendUtil uru = new UserRendUtil();
+        try {
+        Connection conn = new Connector().getConnection();
+        String changeBalance = "UPDATE userlist set balance= (?) WHERE username ="+username;
+          PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
+          balancePstmt.setString(1, username);
+            
+          balancePstmt.setDouble(2, getUserData(username).getBalance()); // her skal der være en calculator
+        
+          b= uru.calculateBalance(getUserData(username).getBalance(), total);
+           
+          ResultSet rs = balancePstmt.executeQuery(); int result = balancePstmt.executeUpdate();
+          getUserData(username).setBalance(b);
+         
+           if(rs.next()) {
+
+                int id = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                boolean adminStatus = rs.getBoolean("admin_status");
+                username = rs.getString("username"); 
+                 b = rs.getDouble("balance");
+                u= new User(id, email , password, username, adminStatus,  b);
+            }
+          
+        
+          int id = rs.getInt(1); 
+          return id;
+    }
+        catch (Exception ex) {
+            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }return 0;
+}
+    
+    public static void main(String[] args) throws SQLException, Exception {
         UserMapper pm = new UserMapper();
         
         //Test af getUserData
         System.out.println(pm.getUserData("admin"));
         System.out.println(pm.getAdminData("admin"));
         
+            pm.changeUserBalance("tr", 25.0);
+            System.out.println(pm.getUserData("tr"));
+    }}
         
         
         //Test af addUser
@@ -166,6 +210,6 @@ public class UserMapper {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        
-    }
     
-}
+    
+

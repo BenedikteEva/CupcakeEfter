@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Welcome to Cupcake Shop. Please registrate your self to use our services.</h1>
+        <h1>Welcome to Cupcake Shop. Please register your self to use our services.</h1>
     </body>
 
 

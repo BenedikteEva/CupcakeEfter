@@ -5,11 +5,19 @@
  */
 package Controller;
 
+import Controller.Utilities.RendUtilCupCake;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+import data.CupcakeMapper;
+import data.UserMapper;
+import domain.Bottom;
 import domain.Topping;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +44,35 @@ public class CupCakeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-    
+        Topping t = new Topping();
+        Bottom b = new Bottom();
+        CupcakeMapper ccm = new CupcakeMapper();
+        RendUtilCupCake rucc = new RendUtilCupCake();
+        UserMapper um = new UserMapper();
+        String[] chosenName = request.getParameterValues("checkbox");
+        String topname = request.getParameter("topname");
+        String botname = request.getParameter("bottomname");
+
+        String uname = request.getParameter("username");
+
+        if (topname != null && botname != null) {
+            try {
+                out.println("<a>" + rucc.createCakeName(botname, topname) + "</a><td><td>");
+                out.println("<a>" + rucc.calculateCakePrice(ccm.getBottomPricebyName(botname), ccm.getToppingPricebyName(topname)) + "</a>");
+               
+            } catch (SQLException ex) {
+                Logger.getLogger(CupCakeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                out.println("<div class=column><h2>Welcome back  " + uname + "</h2></div><br>");
+                double balance = um.getUserData(uname).getBalance();
+                out.println("<h3>Your account balance is: " + balance + "</h3>");
+            } catch (SQLException ex) {
+                Logger.getLogger(CupCakeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

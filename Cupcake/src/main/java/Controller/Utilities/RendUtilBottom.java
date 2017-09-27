@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Utilities;
 
 import domain.Bottom;
 import java.util.List;

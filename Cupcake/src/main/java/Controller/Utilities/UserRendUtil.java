@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Utilities;
 
 import domain.CupCake;
 import domain.User;
@@ -32,4 +32,11 @@ public class UserRendUtil {
         return sb.toString();
 
     }
+    
+    public double calculateBalance (double a, double b){
+        double c = a-b;
+        return c;
+    }
+    
+    
 }

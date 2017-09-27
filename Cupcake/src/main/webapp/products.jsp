@@ -73,7 +73,6 @@
             } else {
   
                 out.println("<div class=column><h2>Welcome back  " + uname+"</h2></div><br>");
-
                 out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance()+"</h3>");
 
             }

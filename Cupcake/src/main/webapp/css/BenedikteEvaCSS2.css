@@ -23,25 +23,28 @@ head
 }
 
 section {
+    display: block;
     width: 80%;
     border-color: transparent;
-    border-width: 20 px;
+    border-width: 20px;
     
 }
- /* Create three equal columns that floats next to each other */
-.column {
-    float: left;
+
+
+div {
+    -webkit-columns: 300px 3; /* Chrome, Safari, Opera */
+    -moz-columns: 300px 3; /* Firefox */
+    columns: 300px 3;
+}
+div.absolute {
+    position: absolute;
+    top: 100px;
+    right: 300px;
+    
 }
 
-/* Left and right column */
-.column.side {
-    width: 25%;
-}
 
-/* Middle column */
-.column.middle {
-    width: 50%;
-}
+
 body{
     
     width: 100%;
@@ -50,6 +53,7 @@ body{
     border-width: 10px;
     border-color:darkolivegreen;
     align-content: stretch;
+
 }
 main{
     background-color:  transparent;
@@ -72,7 +76,8 @@ h4{
     color: chartreuse;
 }
 h2{
-    color: black;
+    color: chocolate;
+    
 }
 
 /* dropdown menu buttons*/
@@ -87,6 +92,10 @@ h2{
     cursor: pointer;
     width: 100%;
 
+}
+.column {
+    float: left;
+    width: 50%;
 }
 
 .dropdown {

@@ -52,7 +52,7 @@ public class UserServlet extends HttpServlet {
 //                request.getRequestDispatcher("registration.jsp").forward(request, response);
 //            }
 //            else{
-            request.setAttribute("userName", name);
+            request.setAttribute("username", name);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
 //             request.getRequestDispatcher("products.jsp").forward(request, response);
