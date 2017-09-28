@@ -14,14 +14,12 @@ import domain.LineItem;
  */
 public class ShoppingeCart {
     
-public static void main(String[] args) {
-    
 ArrayList<LineItem> LineItems =  new ArrayList<LineItem>();
 
-    LineItem.add("invoice_id");
+  
          
 
-    }
+   
 }
    
     

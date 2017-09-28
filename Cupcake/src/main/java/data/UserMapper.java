@@ -1,6 +1,6 @@
 package data;
 
-import Controller.Utilities.UserRendUtil;
+import Utilities.UserRendUtil;
 import domain.Admin;
 import domain.User;
 import java.sql.Connection;

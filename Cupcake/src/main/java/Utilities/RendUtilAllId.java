@@ -1,4 +1,4 @@
-package Controller.Utilities;
+package Utilities;
 
 import domain.InfoToAdmin;
 import java.util.List;

@@ -9,12 +9,12 @@
 <%@page import="data.LineItemsMapper"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="data.UserMapper"%>
-<%@page import="Controller.Utilities.RendUtilCupCake"%>
+<%@page import="Utilities.RendUtilCupCake"%>
 <%@page import="domain.Bottom"%>
 <%@page import="domain.Topping"%>
 <%@page import="java.util.List"%>
-<%@page import="Controller.Utilities.RendUtilTopping"%>
-<%@page import="Controller.Utilities.RendUtilBottom"%>
+<%@page import="Utilities.RendUtilTopping"%>
+<%@page import="Utilities.RendUtilBottom"%>
 <%@page import="data.CupcakeMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

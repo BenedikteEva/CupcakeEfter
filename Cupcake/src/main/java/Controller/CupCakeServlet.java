@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Controller.Utilities.RendUtilCupCake;
+import Utilities.RendUtilCupCake;
 import data.CupcakeMapper;
 import data.UserMapper;
 import domain.Bottom;

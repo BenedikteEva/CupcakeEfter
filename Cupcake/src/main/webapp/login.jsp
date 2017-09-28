@@ -9,6 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+        <link href="css/cupcakestylesheet1.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
     </head>
     <body>

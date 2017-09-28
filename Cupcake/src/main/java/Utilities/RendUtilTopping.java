@@ -1,6 +1,6 @@
-package Controller.Utilities;
+package Utilities;
 
-import static Controller.Utilities.RendUtilTopping.toppingTable;
+import static Utilities.RendUtilTopping.toppingTable;
 import domain.Topping;
 import java.util.List;
 

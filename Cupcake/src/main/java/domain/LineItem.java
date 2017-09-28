@@ -11,45 +11,28 @@ package domain;
  */
 public class LineItem {
 
-    static void add(String invoice_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    public int invoice_id;
-    public User u = new User();
-    String cupcakename;
-    
+//    static void add(String invoice_id) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//    public int invoice_id;
+//   private User u = new User();
+  
+    private String cupcakename;
+    private double cupcakepriceapiece;
+    private int quantity;
+    private double totalprice;
 
-    public LineItem(int invoice_id, String cupcakename, double cupcakepriceapiece, int quantity, double totalprice) {
-        this.invoice_id = invoice_id;
+    public LineItem(String cupcakename, double cupcakepriceapiece, int quantity, double totalprice) {
+
         this.cupcakename = cupcakename;
         this.cupcakepriceapiece = cupcakepriceapiece;
         this.quantity = quantity;
         this.totalprice = totalprice;
     }
 
-    public LineItem(int invoice_id, String u, double top_Price) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-        public String getAllLineItems() {
-        return invoice_id + cupcakename + cupcakepriceapiece + quantity + totalprice;
-    }
-
-    public int getInvoice_id() {
-        return invoice_id;
-    }
-
-    public void setInvoice_id(int invoice_id) {
-        this.invoice_id = invoice_id;
-    }
-
-    public User getU() {
-        return u;
-    }
-
-    public void setU(User u) {
-        this.u = u;
+    public String getAllLineItems() {
+        return cupcakename + cupcakepriceapiece + quantity + totalprice;
     }
 
     public String getCupcakename() {
@@ -83,15 +66,14 @@ public class LineItem {
     public void setTotalprice(double totalprice) {
         this.totalprice = totalprice;
     }
-    double cupcakepriceapiece;
-    int quantity;
-    double totalprice;
-
-    static class add {
-
-        public add() {
-        }
+    
+    
+    @Override
+    public String toString() {
+        return quantity+"  " +cupcakename + " à " + cupcakepriceapiece + " fiktive currency pr. cake       total=" + totalprice + '}';
     }
+ 
 }
+
 /*I lineItem skal der være String cupcakename double cupcakepriceapiece int quantity 
 og double totalprice*/

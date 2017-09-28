@@ -3,6 +3,7 @@ package data;
 import static data.Connector.getConnection;
 import domain.Bottom;
 import domain.CupCake;
+import domain.LineItem;
 import domain.Topping;
 import domain.User;
 import java.sql.Connection;
@@ -108,6 +109,11 @@ public class CupcakeMapper {
     }
 
     public static void main(String[] args) throws SQLException {
+        List <LineItem> test = new ArrayList <>();
+         LineItem li = new LineItem("kage2", 11.00, 2,22.00);
+         LineItem li2 = new LineItem("kage3", 10.00, 2,20.00);
+         test.add(li);test.add(li2);
+                System.out.println(test.get(0));System.out.println(test.get(1));
         CupcakeMapper pm = new CupcakeMapper();
         //Recipe p = new Recipe("Kalle", "Karlsen");
         System.out.println("Bottom:");
