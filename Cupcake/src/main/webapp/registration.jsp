@@ -11,18 +11,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
-        
+
     </head>
-    <center>
-    <div id="somewhereelse">
-            <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="25%" height="25% "/>    
-        </div>
-    </center>
+
     <body>
+
+
+    <center>
         <h1>Welcome to Cupcake Shop. Please register your self to use our services.</h1>
-    </body>
-
-
+    </center>
+    
+    <div class="flex-container">
+        <div id="box">   
     <form name="Form1" action="UserServlet" method="POST">
         <div class="container">
             <label><b>User name     </b></label>
@@ -40,22 +40,26 @@
             <input type="checkbox" checked="checked"> Remember me
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-            <div class="clearfix">
-
-              
-
                 <form name="Form1" action="UserServlet" method="POST">
 
+                    <button type="submit" class="signupbtn">Sign Up</button> <%-- Brug denne kode stadigvæk for at linke til en classe i programmet. --%>
+                    
                     <button type="button" onclick="location.href = 'index.html';" class="cancelbtn">Cancel</button>
 
+                    
 
-                    <button type="submit" class="signupbtn">Sign Up</button> <%-- Brug denne kode stadigvæk for at linke til en classe i programmet. --%>
-
-            </div>
         </div>
-
     </form>
+</div> 
+                    
+    <div id="somewhereelse box">
+        <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy"/>    
+    </div>                
+</div>
 
+            
+            
+    </body>
 </html>
 
 

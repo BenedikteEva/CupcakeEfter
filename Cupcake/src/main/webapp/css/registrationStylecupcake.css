@@ -7,17 +7,48 @@ and open the template in the editor.
     Created on : 28-09-2017, 12:20:00
     Author     : Ejer
 */
+p {
+    color: #eca979; /*Find en cream farve*/
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;     /* make main axis horizontal (default setting) */
+    justify-content: center; /* center items horizontally, in this case */
+    align-items: center;     /* center items vertically, in this case */
+    width: 50%;
+    height: 400px;
+    margin: 30px;
+    padding: 20px;
+    border-style: solid;
+    border-color: #592d0d; /* Find en dark brown farve*/
+    background-color: #864313; /* Find en chocolate brown farve */
+    margin: auto;
+}
+
+#box {
+    margin: auto;
+    
+}
+
+
+.somewhereelse{
+        
+}
+
+/*
 title
 {
     font-family: cursive ;
     background-color: lightseagreen;
-      background-image: url(http://46.101.179.58/Cupcake%2D1.0%2DSNAPSHOT/images/fasching-cupcakes-rezept-img-19761.jpg);
+    background-image: url(http://46.101.179.58/Cupcake%2D1.0%2DSNAPSHOT/images/fasching-cupcakes-rezept-img-19761.jpg);
 }
 head
 {
     background-color: transparent;
   
 }
+
 
 section {
     display: inline-block;
@@ -64,10 +95,5 @@ h2{
 
 h3{
     color: chartreuse;
-}
-.somewhereelse{
-    float: right;
-    border-width: 10px;
-    border-color:darkolivegreen;
-    
-}
+}*/
+
