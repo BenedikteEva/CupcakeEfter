@@ -5,8 +5,14 @@
  */
 package Controller;
 
+import data.InfoToAdminMapper;
+import domain.InfoToAdmin;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,14 +39,37 @@ public class InvoiceDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
+            //Parser den som int da den kommer som String
+            int invoiceId = Integer.parseInt(request.getParameter("id"));
             
+            out.print(invoiceId);
             
+            InfoToAdminMapper infoMapper = new InfoToAdminMapper();
             
-            
-            
-            
-        }
-    }
+            try {
+                InfoToAdmin invoiceInfo = infoMapper.getODetail(invoiceId);
+                request.setAttribute("invoiceId", invoiceInfo);
+                request.setAttribute("pricePrCc", invoiceInfo);
+                request.setAttribute("totalPrice", invoiceInfo);
+                request.setAttribute("quantity", invoiceInfo);
+                
+                InfoToAdmin cupcakeNameInvoice = infoMapper.getCupcakeName(invoiceId);
+                request.setAttribute("cupcakeName", cupcakeNameInvoice);
+                
+                if(invoiceInfo != null && cupcakeNameInvoice != null) {
+                    out.print("Du er på vej til bogholderiet...");
+                    request.getRequestDispatcher("/invoice_detail.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/error_page.jsp").forward(request, response);
+                }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+}
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -52,7 +81,7 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -66,7 +95,7 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -77,7 +106,7 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

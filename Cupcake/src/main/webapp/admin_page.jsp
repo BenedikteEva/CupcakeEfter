@@ -19,23 +19,33 @@
     </head>
     <body>
         <h1>Admin Page</h1>
-        
-        <% String adminName = request.getParameter("username"); 
-        
-        out.println("Hello " + adminName + ". What are your plans for today?"); 
-        
-        InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-        
-        List<InfoToAdmin> idList = infoToAdmin.getAllOrderId();
-         %>
-       <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
-        
-        
-        
+
+        <% String adminName = request.getParameter("username");
+
+            out.println("Hello " + adminName + ". What are your plans for today?");
+
+            InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+
+            List<InfoToAdmin> idList = infoToAdmin.getAllOrderId();
+        %>
+        <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
 
 
-       
-        
-        
+        <form name="FormLogin" action="InvoiceDetailServlet" method="POST">
+            
+            <div class="container">
+                <label><b>Enter the invoice number you want to inspect</b></label>
+                <input type="text" placeholder="Enter Invoicenumber" name="id" required>
+                
+                <!--<button type="submit" onclick="location.href = 'invoice_detail.jsp';" required>Submit</button> -->
+                
+                
+            </div>
+
+        </form>
+
+
+
+
     </body>
 </html>
