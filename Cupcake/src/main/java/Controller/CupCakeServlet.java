@@ -6,16 +6,13 @@
 package Controller;
 
 import Controller.Utilities.RendUtilCupCake;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import data.CupcakeMapper;
 import data.UserMapper;
 import domain.Bottom;
 import domain.Topping;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
