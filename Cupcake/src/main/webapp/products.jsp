@@ -21,14 +21,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      
+        <link href="../resources/cupcakestylesheet1.css" rel="stylesheet" type="text/css"/>
         <link href="css/cupcakestylesheet1.css" rel="stylesheet" type="text/css"/>
 
         <title>JSP Page</title>
 
     </head>
+    <body>
          <div id="somewhereelse">
-            <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="10%" height="10% "/>    
+            <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="25%" height="25% "/>    
         </div>
 
         <h1>Order our cupcakes!</h1>
@@ -50,7 +51,7 @@
 
         <%= RendUtilBottom.bottomTable(bottomList)%>
 
-
+        <section>
 
         <button type="submit" >See your CupCake </button>
         
@@ -82,16 +83,24 @@
                 out.println("<a>" + cupcakename + "</a><td><td>");
                 out.println("<a>" + cupcakeprice + "</a>");
 
-                try {
+              
+
+     %>
+       
+  <button type="submit" >add to shoppingcart   </button>    
+<%            
+          try {
                     int qty = Integer.parseInt(request.getParameter("quantity"));
 
-                    if (qty > 0 ) {
+                    if (qty != 0 ) {
                         cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
                         cupcakename = request.getParameter("cupcakename");
                         double typeCupCakeprice = qty * cupcakeprice;
                         request.setAttribute("typeCupCakeprice", typeCupCakeprice);
+                      double b= um.getUserData(uname).getBalance();
+                        um.changeUserBalance(uname, b);
 
-                        out.println("<a>test</a>");
+                        out.println("<a> Your new balance is: "+um.getUserData(uname).getBalance()+"</a>");
 
                     }
                     else{
@@ -103,19 +112,10 @@
                 }
 
             }
-
-
-     %>
-       
-   
-
-  <button type="submit" >add to shoppingcart   </button>
-</form>
-<%            
-            
+    
            
         %>
-
+</form>
      
 
 
@@ -124,6 +124,6 @@
 
         <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
 
-
-    
+</section>
+    </body>
 </html>

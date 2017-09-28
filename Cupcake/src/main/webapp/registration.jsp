@@ -9,8 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="css/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
+        
     </head>
+    <div id="somewhereelse">
+            <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="25%" height="25% "/>    
+        </div>
+    
     <body>
         <h1>Welcome to Cupcake Shop. Please register your self to use our services.</h1>
     </body>

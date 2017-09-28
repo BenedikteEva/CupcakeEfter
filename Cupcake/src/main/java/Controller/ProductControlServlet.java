@@ -81,7 +81,7 @@ public class ProductControlServlet extends HttpServlet {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-  request.getRequestDispatcher("products.jsp").forward(request, response);
+//  request.getRequestDispatcher("products.jsp").forward(request, response);
             }}}
 
   
