@@ -30,7 +30,7 @@
          %>
        <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
         
-        //out.print(infoToAdmin.getAllOrderId());
+        
         
 
 

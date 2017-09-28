@@ -2,6 +2,8 @@ package data;
 
 import static data.DBConnector.getConnection;
 import domain.InfoToAdmin;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,9 +16,9 @@ import java.util.logging.Logger;
  * @author Bo Henriksen
  */
 public class InfoToAdminMapper {
-    
+
     //Denne metode er til admin page og henter order id 
-   public List<InfoToAdmin> getAllOrderId() throws SQLException {
+    public List<InfoToAdmin> getAllOrderId() throws SQLException {
         List<InfoToAdmin> allOrderId = new ArrayList();
 
         String sql = "SELECT order_id FROM orderlist;";
@@ -36,17 +38,88 @@ public class InfoToAdminMapper {
         }
         return allOrderId;
     }
-   
-   
-    public static void main(String[] args) {
-        
-        InfoToAdminMapper info = new InfoToAdminMapper();
-       try {
-           System.out.println(info.getAllOrderId().toString()); 
-       } catch (SQLException ex) {
-           Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
-       }
-     
+
+    public InfoToAdmin getODetail(int invoiceID) throws SQLException {
+
+        InfoToAdmin oDetail = null;
+        try {
+
+            Connection conn = new Connector().getConnection();
+            String sql = "SELECT order_id, priceprcc, total_price, quantity FROM odetail WHERE order_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, invoiceID);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                int invoiceId = rs.getInt("order_id");
+                int pricePrCc = rs.getInt("priceprcc");
+                int totalPrice = rs.getInt("total_price");
+                int quantity = rs.getInt("quantity");
+
+                oDetail = new InfoToAdmin(invoiceId, pricePrCc, totalPrice, quantity);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return oDetail;
     }
     
+    public InfoToAdmin getCupcakeName(int invoiceID) throws SQLException {
+
+        InfoToAdmin name = null;
+        try {
+
+            Connection conn = new Connector().getConnection();
+            String sql = "SELECT cupcakename from cupcakelist INNER JOIN odetail ON cupcakelist.cupcake_id  WHERE order_id = ?";//Forkert sql statement
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, invoiceID);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                String cupcakeName = rs.getString("cupcakename");
+                
+                name = new InfoToAdmin(cupcakeName);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return name;
+    }
+    
+    
+
+    public static void main(String[] args) {
+
+        InfoToAdminMapper info = new InfoToAdminMapper();
+        
+        //Tester getCupcakeName
+        System.out.println("CUPCAKENAME");
+        try {
+            System.out.println(info.getCupcakeName(1));
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Tester getODetail metoden
+        try {
+            System.out.println("GETODETAIL");
+            System.out.println(info.getODetail(1));
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Tester getAllOrderId metoden
+        try {
+            System.out.println("GETALLORDERID");
+            System.out.println(info.getAllOrderId().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }
