@@ -1,5 +1,8 @@
 package Controller;
 
+import Utilities.RendUtilCupCake;
+import data.CupcakeMapper;
+import data.UserMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,7 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import domain.LineItem;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,28 +34,57 @@ public class ProductControlServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+    
+        CupcakeMapper cupcakeList = new CupcakeMapper();
+       List<LineItem> shoppingCart = new ArrayList<>();
+        RendUtilCupCake rucc = new RendUtilCupCake();
 
-            int invoice_id = request.getIntHeader("invoiceid");
-            ArrayList<LineItem> LIreq = (ArrayList<LineItem>) request.getAttribute("ShoppingeCart");
+            UserMapper um = new UserMapper();
+            String[] chosenName = request.getParameterValues("checkbox");
+            String topname = request.getParameter("topname");
+            String botname = request.getParameter("bottomname");
+            String uname = request.getParameter("username");
 
-            /* TODO output your page here. You may use following sample code. */
-            
-            out.println( LIreq.get(invoice_id));
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductControlServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductControlServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+          
+
+                out.println("<div class=column><h2>Welcome back  " + uname + "</h2></div><br>");
+                out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance() + "</h3>");
+
+            if (topname != null && botname != null) {
+                String cupcakename = rucc.createCakeName(botname, topname);
+                double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
+                request.setAttribute("cupcakeprice", cupcakeprice);
+                request.setAttribute("cupcakename", cupcakename);
+                out.println("<a>" + cupcakename + "</a><td><td>");
+                out.println("<a>" + cupcakeprice + "</a>");
+
+                String[] s = request.getParameterValues("Quantity");
+                try {
+                    double qty = Double.parseDouble(request.getParameter("quantity"));
+
+                    if (qty > 0 ) {
+                        cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
+                        cupcakename = rucc.createCakeName(botname, topname);
+                        double typeCupCakeprice = qty * cupcakeprice;
+                        request.setAttribute("typeCupCakeprice", typeCupCakeprice);
+
+                        out.println("<a>test</a>");
+
+                    }
+                    else{
+                        if (qty!=0 && topname == null && botname == null){
+                            out.println("<a> go play with the dog</a>");
+                        }}
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+  request.getRequestDispatcher("products.jsp").forward(request, response);
+            }}}
+
+  
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -62,7 +98,11 @@ public class ProductControlServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductControlServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -76,7 +116,11 @@ public class ProductControlServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductControlServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
