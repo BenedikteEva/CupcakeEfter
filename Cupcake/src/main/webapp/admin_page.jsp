@@ -4,7 +4,7 @@
     Author     : Bo Henriksen 
 --%>
 
-<%@page import="Controller.Utilities.RendUtilAllId"%>
+<%@page import="Utilities.RendUtilAllId"%>
 <%@page import="domain.InfoToAdmin"%>
 <%@page import="data.InfoToAdminMapper"%>
 <%@page import="java.util.List"%>
@@ -27,14 +27,14 @@
         InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
         
         List<InfoToAdmin> idList = infoToAdmin.getAllOrderId();
-        
-        RendUtilAllId.allInvoiceIdTabel(idList);
+         %>
+       <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
         
         //out.print(infoToAdmin.getAllOrderId());
         
 
 
-        %>
+       
         
         
     </body>

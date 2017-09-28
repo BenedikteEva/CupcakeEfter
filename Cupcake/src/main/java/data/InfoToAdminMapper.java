@@ -19,7 +19,7 @@ public class InfoToAdminMapper {
    public List<InfoToAdmin> getAllOrderId() throws SQLException {
         List<InfoToAdmin> allOrderId = new ArrayList();
 
-        String sql = "SELECT order_id FROM orderlist";
+        String sql = "SELECT order_id FROM orderlist;";
 
         ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
         int lastId = -1;
@@ -41,12 +41,12 @@ public class InfoToAdminMapper {
     public static void main(String[] args) {
         
         InfoToAdminMapper info = new InfoToAdminMapper();
-        
        try {
-           System.out.println(info.getAllOrderId());
+           System.out.println(info.getAllOrderId().toString()); 
        } catch (SQLException ex) {
            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
        }
+     
     }
     
 }
