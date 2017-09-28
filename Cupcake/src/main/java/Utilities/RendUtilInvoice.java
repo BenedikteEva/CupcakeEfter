@@ -1,25 +1,31 @@
 package Utilities;
 
+import domain.InfoToAdmin;
+import java.util.List;
+
 /**
  *
  * @author Bo Henriksen
  */
 public class RendUtilInvoice {
     
-//    public static String bottomTable(List<Bottom> boot) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("<table>\n"
-//                + "<tr><th>Bottom</th><th>Pris</th><th></th><th></th></tr>\n");
-//        for (Bottom b : boot) {
-//            sb.append("<tr><form action=\"products.jsp\">");
-//            sb.append("<td>").append(b.getBotName()).append("</td>");
-//            sb.append("<td>").append(b.getBot_Price()).append("</td>");
-//            sb.append("<td> \n <input type=\"checkbox\" name=\"bottomname\" value=\"" + b.getBotName() + "\"><br>\n\n</td>");
-//          
-//        }
-//        sb.append("</table>\n");
-//        return sb.toString();
-//
-//    }
+    public static String invoiceTable(List<InfoToAdmin> info) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<table>\n"
+                + "<tr><th>Invoice number</th><th>Quantity</th><th>Name</th><th>Price pr. cake</th><th>Total Price</th></tr>\n");
+        for (InfoToAdmin i : info) {
+            sb.append("<tr><form action=\"products.jsp\">");
+            sb.append("<td>").append(i.getInvoiceId()).append("</td>");
+            sb.append("<td>").append(i.getQuantity()).append("</td>");
+            sb.append("<td>").append(i.getCupcakeName()).append("</td>");
+            sb.append("<td>").append(i.getPricePrCc()).append("</td>");
+            sb.append("<td>").append(i.getTotalPrice()).append("</td>");
+            //sb.append("<td> \n <input type=\"checkbox\" name=\"bottomname\" value=\"" + i.getBotName() + "\"><br>\n\n</td>");
+          
+        }
+        sb.append("</table>\n");
+        return sb.toString();
+
+    }
     
 }

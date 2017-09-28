@@ -41,24 +41,23 @@ public class InvoiceDetailServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             //Parser den som int da den kommer som String
-            int invoiceId = Integer.parseInt(request.getParameter("id"));
+            int invId = Integer.parseInt(request.getParameter("id"));
             
-            out.print(invoiceId);
-            
+            InfoToAdmin invoiceInfo = new InfoToAdmin();
             InfoToAdminMapper infoMapper = new InfoToAdminMapper();
             
             try {
-                InfoToAdmin invoiceInfo = infoMapper.getODetail(invoiceId);
+                invoiceInfo = infoMapper.getODetail(invId);
                 request.setAttribute("invoiceId", invoiceInfo);
                 request.setAttribute("pricePrCc", invoiceInfo);
                 request.setAttribute("totalPrice", invoiceInfo);
                 request.setAttribute("quantity", invoiceInfo);
                 
-                InfoToAdmin cupcakeNameInvoice = infoMapper.getCupcakeName(invoiceId);
+                InfoToAdmin cupcakeNameInvoice = infoMapper.getCupcakeName(invId);
                 request.setAttribute("cupcakeName", cupcakeNameInvoice);
                 
                 if(invoiceInfo != null && cupcakeNameInvoice != null) {
-                    out.print("Du er på vej til bogholderiet...");
+                    
                     request.getRequestDispatcher("/invoice_detail.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("/error_page.jsp").forward(request, response);

@@ -31,7 +31,7 @@
         <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
 
 
-        <form name="FormLogin" action="InvoiceDetailServlet" method="POST">
+        <form name="FormInvoice" action="/InvoiceDetailServlet" method="POST">
             
             <div class="container">
                 <label><b>Enter the invoice number you want to inspect</b></label>
