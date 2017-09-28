@@ -39,7 +39,9 @@ public class LoginServlet extends HttpServlet {
             String userName = request.getParameter("username");
             String password = request.getParameter("password");
             System.out.println("LoginServlet");
-
+            
+            User user = new User();
+            
             //Laver user objekt
             User loginUser = new User();
             loginUser.setUserName(userName);

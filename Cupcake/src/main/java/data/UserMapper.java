@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static data.DBConnector.getConnection;
 
 /**
  *
@@ -173,11 +174,11 @@ public class UserMapper {
         UserMapper pm = new UserMapper();
 
         //Test af getUserData
-        System.out.println(pm.getUserData("admin"));
-        System.out.println(pm.getAdminData("admin"));
-
-        pm.changeUserBalance("tr", 25.0);
-        System.out.println(pm.getUserData("tr"));
+        //System.out.println(pm.getUserData("admin"));
+        //System.out.println(pm.getAdminData("admin"));
+        
+        //pm.changeUserBalance("tr", 25.0);
+        //System.out.println(pm.getUserData("tr"));
     }
 }
 

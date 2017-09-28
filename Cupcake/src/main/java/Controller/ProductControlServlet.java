@@ -1,6 +1,6 @@
 package Controller;
 
-import Utilities.RendUtilCupCake;
+import Controller.Utilities.RendUtilCupCake;
 import data.CupcakeMapper;
 import data.UserMapper;
 import java.io.IOException;
