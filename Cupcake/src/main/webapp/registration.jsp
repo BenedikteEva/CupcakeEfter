@@ -13,10 +13,11 @@
         <link href="../resources/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
         
     </head>
+    <center>
     <div id="somewhereelse">
             <img src="images/fasching-cupcakes-rezept-img-19761.jpg" alt="Cuppy" width="25%" height="25% "/>    
         </div>
-    
+    </center>
     <body>
         <h1>Welcome to Cupcake Shop. Please register your self to use our services.</h1>
     </body>
@@ -24,16 +25,16 @@
 
     <form name="Form1" action="UserServlet" method="POST">
         <div class="container">
-            <label><b>User name</b></label>
+            <label><b>User name     </b></label>
             <input type="text" placeholder="Enter user name" name="username" required>
-
+            <br>
 
             <label><b>Email</b></label>
             <input type="text" placeholder="Enter Email" name="email" required>
-
+            <br>
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
-
+            <br>
             <label><b>Repeat Password</b></label>
             <input type="password" placeholder="Repeat Password" name="passwordrepeat" required>
             <input type="checkbox" checked="checked"> Remember me
