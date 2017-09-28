@@ -23,13 +23,13 @@ public class InfoToAdminMapper {
 
         ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
         int lastId = -1;
-        InfoToAdmin lineItem = null;
+        InfoToAdmin id = null;
         while (rs.next()) {
             int order_id = rs.getInt("order_id");
             if (order_id != lastId) {
-                int invoice_id = rs.getInt("order_id");
-                lineItem = new InfoToAdmin(invoice_id);
-                allOrderId.add(lineItem);
+                int invoiceid = rs.getInt("order_id");
+                id = new InfoToAdmin(invoiceid);
+                allOrderId.add(id);
             }
 //            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
 //            lastId = personId;

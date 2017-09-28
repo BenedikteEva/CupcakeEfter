@@ -24,11 +24,13 @@
         
         out.println("Hello " + adminName + ". What are your plans for today?"); 
         
-        InfoToAdminMapper infoAllId = new InfoToAdminMapper();
+        InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
         
-        List<InfoToAdmin> allInvoiceIdList = infoAllId.getAllOrderId();
+        List<InfoToAdmin> idList = infoToAdmin.getAllOrderId();
         
-        RendUtilAllId.allInvoiceId(allInvoiceIdList);
+        RendUtilAllId.allInvoiceIdTabel(idList);
+        
+        //out.print(infoToAdmin.getAllOrderId());
         
 
 
