@@ -34,7 +34,7 @@
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
 
-        <title>JSP Page</title>
+        <title>Products</title>
 
     </head>
     <body>
