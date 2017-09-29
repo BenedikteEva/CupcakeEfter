@@ -135,18 +135,6 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit totam libero expedita magni est delectus pariatur aut, aperiam eveniet velit cum possimus, autem voluptas. Eum qui ut quasi voluptate blanditiis?</p>
             </div>    
 
-            <div class="bg-faded p-4 my-4">
-                <hr class="divider">
-                <h2 class="text-center text-lg text-uppercase my-0">Order Our Cupcakes
-                    <strong>Here</strong>
-                </h2>
-                <hr class="divider">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam soluta dolore voluptatem, deleniti dignissimos excepturi veritatis cum hic sunt perferendis ipsum perspiciatis nam officiis sequi atque enim ut! Velit, consectetur.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam pariatur perspiciatis reprehenderit illo et vitae iste provident debitis quos corporis saepe deserunt ad, officia, minima natus molestias assumenda nisi velit?</p>
-            </div>
-
-
-
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
             <%List<LineItem> shoppingCart = new ArrayList<>();%>
             <% RendUtilCupCake rucc = new RendUtilCupCake();%>
@@ -156,87 +144,100 @@
 
             %>
 
-            <%= RendUtilTopping.toppingTable(toppingList)%>
+            <div class="bg-faded p-4 my-4">
+                <hr class="divider">
+                <h2 class="text-center text-lg text-uppercase my-0">Order Our Cupcakes
+                    <strong>Here</strong>
+                </h2>
+                <hr class="divider">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam soluta dolore voluptatem, deleniti dignissimos excepturi veritatis cum hic sunt perferendis ipsum perspiciatis nam officiis sequi atque enim ut! Velit, consectetur.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam pariatur perspiciatis reprehenderit illo et vitae iste provident debitis quos corporis saepe deserunt ad, officia, minima natus molestias assumenda nisi velit?</p>
 
-            <br>
-            <br>
-            <br>
+                 <div class="flex-container">
+                    <div id="box">
+                        <%= RendUtilTopping.toppingTable(toppingList)%>
+                    </div>
+                    <div id="box">
+                        <%= RendUtilBottom.bottomTable(bottomList)%>
+                    </div>
+                </div>
 
-            <%= RendUtilBottom.bottomTable(bottomList)%>
+                <div class="flex-container">
+                    <div id="box">    
+                        <button type="submit" >See your CupCake </button>
+                    </div>
+                    <div id="box">
+                        <form>Quantity
+                            <input type="number" name="quantity" min="0.0" value="Quantity" default="1.0" >
+                        </form> 
+                        <form name="formProducts" action="ProductControlServlet" method="POST"> 
+                    </div>
+                </div>
+                
+                <%
 
-            <section>
+                    UserMapper um = new UserMapper();
+                    String[] chosenName = request.getParameterValues("checkbox");
+                    String topname = request.getParameter("topname");
+                    String botname = request.getParameter("bottomname");
+                    String uname = request.getParameter("username");
 
-                <button type="submit" >See your CupCake </button>
+                    if (topname == null || botname == null) {
 
+                        out.println("<div class=column><h2>Hello  " + uname + "</h2></div><br>");
+                        out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance() + "</h3>");
 
-                <form>Quantity
-                    <input type="number" name="quantity" min="0.0" value="Quantity" default="1.0" >
-                </form> 
-                <form name="formProducts" action="ProductControlServlet" method="POST"> 
-
-
-                    <%
-
-                        UserMapper um = new UserMapper();
-                        String[] chosenName = request.getParameterValues("checkbox");
-                        String topname = request.getParameter("topname");
-                        String botname = request.getParameter("bottomname");
-                        String uname = request.getParameter("username");
-
-                        if (topname == null || botname == null) {
-
-                            out.println("<div class=column><h2>Welcome back  " + uname + "</h2></div><br>");
-                            out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance() + "</h3>");
-
-                        }
-                        if (topname != null && botname != null) {
-                            String cupcakename = rucc.createCakeName(botname, topname);
-                            double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
-                            request.setAttribute("cupcakeprice", cupcakeprice);
-                            request.setAttribute("cupcakename", cupcakename);
-                            out.println("<a>" + cupcakename + "</a><td><td>");
-                            out.println("<a>" + cupcakeprice + "</a>");
+                    } 
+                    
+                    if (topname != null && botname != null) {
+                        String cupcakename = rucc.createCakeName(botname, topname);
+                        double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
+                        request.setAttribute("cupcakeprice", cupcakeprice);
+                        request.setAttribute("cupcakename", cupcakename);
+                        out.println("<a>" + cupcakename + "</a><td><td>");
+                        out.println("<a>" + cupcakeprice + "</a>");
 
 
-                    %>
+                %>
+                
+                
+               
 
-                    <button type="submit" >add to shoppingcart   </button>    
-                    <%        try {
-                                int qty = Integer.parseInt(request.getParameter("quantity"));
+                
 
-                                if (qty != 0) {
-                                    cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
-                                    cupcakename = request.getParameter("cupcakename");
-                                    double typeCupCakeprice = qty * cupcakeprice;
-                                    request.setAttribute("typeCupCakeprice", typeCupCakeprice);
-                                    double b = um.getUserData(uname).getBalance();
-                                    um.changeUserBalance(uname, b);
+                <button type="submit" >add to shoppingcart   </button>    
+                <%        try {
+                            int qty = Integer.parseInt(request.getParameter("quantity"));
 
-                                    out.println("<a> Your new balance is: " + um.getUserData(uname).getBalance() + "</a>");
+                            if (qty != 0) {
+                                cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
+                                cupcakename = request.getParameter("cupcakename");
+                                double typeCupCakeprice = qty * cupcakeprice;
+                                request.setAttribute("typeCupCakeprice", typeCupCakeprice);
+                                double b = um.getUserData(uname).getBalance();
+                                um.changeUserBalance(uname, b);
 
-                                } else {
-                                    if (qty != 0 && topname == null && botname == null) {
-                                        out.println("<a> go play with the dog</a>");
-                                    }
+                                out.println("<a> Your new balance is: " + um.getUserData(uname).getBalance() + "</a>");
+
+                            } else {
+                                if (qty != 0 && topname == null && botname == null) {
+                                    out.println("<a> go play with the dog</a>");
                                 }
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
                             }
-
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
 
+                    }
 
-                    %>
+
+                %>
                 </form>
-
-
-
-
-
 
                 <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
 
-            </section>
+
+            </div>
 
         </div>
         <!-- /.container -->

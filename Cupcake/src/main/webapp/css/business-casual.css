@@ -6,7 +6,7 @@
 
 body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  background: url('../img/bg.jpg') no-repeat center center fixed;
+  background: url('../images/bg.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -63,5 +63,20 @@ hr.divider {
 
 .map-container iframe.clicked {
   pointer-events: auto;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;     /* make main axis horizontal (default setting) */
+    justify-content: center; /* center items horizontally, in this case */
+    /*align-items: center;*/     /* center items vertically, in this case */
+}
+
+#box {
+    margin: 30px;
+    /*justify-content: center; TODO Få de 2 kolonner i formen til at aligne lodret
+    align-self: center;
+    align-items: center;
+    */
 }
 
