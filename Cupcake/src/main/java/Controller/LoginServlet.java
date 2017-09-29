@@ -54,8 +54,7 @@ public class LoginServlet extends HttpServlet {
                 try {
                     boolean userAdmin = userMapper.getUserData(userName).isAdminStatus();
                     HttpSession session = request.getSession();
-                    session.setAttribute(userName, loginUser);
-                    session.setAttribute(password, loginUser);
+                    session.setAttribute("user", loginUser); //Her sættes attributen user på session objektet
                     
                     if (userAdmin == true) {
                     request.getRequestDispatcher("/admin_page.jsp").forward(request, response);

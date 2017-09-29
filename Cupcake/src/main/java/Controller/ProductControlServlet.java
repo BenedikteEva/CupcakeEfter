@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import domain.LineItem;
+import domain.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,21 +39,24 @@ public class ProductControlServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-    
-        CupcakeMapper cupcakeList = new CupcakeMapper();
-       List<LineItem> shoppingCart = new ArrayList<>();
-        RendUtilCupCake rucc = new RendUtilCupCake();
+
+            CupcakeMapper cupcakeList = new CupcakeMapper();
+            List<LineItem> shoppingCart = new ArrayList<>();
+            RendUtilCupCake rucc = new RendUtilCupCake();
 
             UserMapper um = new UserMapper();
             String[] chosenName = request.getParameterValues("checkbox");
             String topname = request.getParameter("topname");
             String botname = request.getParameter("bottomname");
-            String uname = request.getParameter("username");
 
-          
+            //Sessionen kaldes
+            HttpSession session = request.getSession();
 
-                out.println("<div class=column><h2>Welcome back  " + uname + "</h2></div><br>");
-                out.println("<h3>Your account balance is: " + um.getUserData(uname).getBalance() + "</h3>");
+            //Vi caster "user" da vi bruger det som et objekt
+            User uname = (User) session.getAttribute("user");
+            
+            out.println("<div class=column><h2>Welcome back  " + uname.getUserName() + "</h2></div><br>");
+            out.println("<h3>Your account balance is: " + uname.getBalance() + "</h3>");
 
             if (topname != null && botname != null) {
                 String cupcakename = rucc.createCakeName(botname, topname);
@@ -65,7 +70,7 @@ public class ProductControlServlet extends HttpServlet {
                 try {
                     double qty = Double.parseDouble(request.getParameter("quantity"));
 
-                    if (qty > 0 ) {
+                    if (qty > 0) {
                         cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
                         cupcakename = rucc.createCakeName(botname, topname);
                         double typeCupCakeprice = qty * cupcakeprice;
@@ -73,18 +78,18 @@ public class ProductControlServlet extends HttpServlet {
 
                         out.println("<a>test</a>");
 
-                    }
-                    else{
-                        if (qty!=0 && topname == null && botname == null){
+                    } else {
+                        if (qty != 0 && topname == null && botname == null) {
                             out.println("<a> go play with the dog</a>");
-                        }}
+                        }
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 //  request.getRequestDispatcher("products.jsp").forward(request, response);
-            }}}
-
-  
+            }
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
