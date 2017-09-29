@@ -9,9 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
-        <link href="../resources/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
-
+        <link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+        
     </head>
 
     <body>
