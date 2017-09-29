@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/registrationStylecupcake.css" rel="stylesheet" type="text/css"/>
         <title>Start Page</title>
     </head>
     <body>
@@ -16,16 +17,15 @@
 
         <div class="dropdown-content">
 
-           <a href="login.jsp">Make a Cupcake</a> 
+            <a href="login.jsp">Make a Cupcake</a> 
             <br>
             <a href="login.jsp">User login page</a>   
             <br>
             <a href="registration.jsp">Register new user</a> 
-
-            
-            
-            
         </div>
 
+        
     </body>
+
+</body>
 </html>

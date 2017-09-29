@@ -11,11 +11,77 @@ p {
     color: #eca979; /*Find en cream farve*/
 }
 
+/* Forklaring til menuen http://matthewjamestaylor.com/blog/beautiful-css-centered-menus-no-hacks-full-cross-browser-support */
+
+.top_menu {
+   float:left;
+   width:100%;
+   background:#fff;
+   border-bottom:2px solid #000;
+   overflow:hidden;
+   position:relative;
+   margin-bottom: 20px;
+}
+
+.top_menu ul {
+   clear:left;
+   float:left;
+   list-style:none; /*Fjerner bullet points*/
+   margin:0; /*Denne og næste linje fjerner browserens default indstillinger*/
+   padding:0;
+   position:relative;
+   left:50%;
+   text-align:center;
+}
+
+.top_menu ul li {
+   display:block;
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   right:50%;
+}
+
+.top_menu ul li a {
+   display:block;
+   margin:0 0 0 1px;
+   padding:6px 10px;
+   background:#ddd;
+   color:#000;
+   text-decoration:none;
+   line-height:1.3em;
+}
+
+.top_menu ul li a:hover {
+   background:#864313;
+   color:#eca979; /*text color*/
+}
+
+.top_menu ul li a.active,
+.top_menu ul li a.active:hover {
+   color:#fff;
+   background:#000;
+   font-weight:bold;
+}
+
+#logo {
+    width: 30%;
+    
+}
+
+#span-logo ul li a {
+    background: white;
+}
+
+
 .flex-container {
     display: flex;
     flex-direction: row;     /* make main axis horizontal (default setting) */
     justify-content: center; /* center items horizontally, in this case */
     align-items: center;     /* center items vertically, in this case */
+    
     width: 50%;
     height: 400px;
     margin: 30px;
@@ -28,7 +94,10 @@ p {
 
 #box {
     margin: auto;
-    
+    /*justify-content: center; TODO Få de 2 kolonner i formen til at aligne lodret
+    align-self: center;
+    align-items: center;
+    */
 }
 
 
