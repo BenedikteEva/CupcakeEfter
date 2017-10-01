@@ -92,12 +92,11 @@
                 </h2>
                 <hr class="divider">
                 <img class="img-fluid float-left mr-4 d-none d-lg-block" src="images/cupcake_sharing.jpg" alt="" width="30%">
-                <p>If you have accidently fallen over this page, you should know that this is just a student project and we do not sell cup cakes.</p>
+                <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
 
             </div>    
 
             <input type="hidden" name="origin" value="Data from the hidden field" >
-
 
 
 
@@ -119,34 +118,49 @@
                 </h2>
                 <hr class="divider">
 
-
+                <%                    UserMapper um = new UserMapper();
+                    User user = (User) session.getAttribute("user");
+                    if (user != null) {
+                        out.println("<div class=column><h2><br>Hello  " + user.getUserName() + "</h2></div><br>");
+                        out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
+                    }
+                %>
 
 
                 <div class="flex-container">
                     <div id="box">
                         <%= RendUtilTopping.toppingTable(toppingList)%>
-                        <% String [] topnames =request.getParameterValues("t.topname");%>
-                     
+
+
                     </div>
                     <div id="box">
                         <%= RendUtilBottom.bottomTable(bottomList)%>
-                        <% String [] botnames =request.getParameterValues("b.botname");%>
+
                     </div>
-                       
+
                 </div>
 
                 <%-- her kan man trykke og se sin cupcake på et tidspunkt skal der også et billede med --%> 
-                <form name="formProducts" action="NewProductControlServlet" method="POST">
+                <form name="formProducts" action="/NewProductControlServlet/processForm" method="POST">
                     <div class="flex-container">
                         <div id="box">    
                             <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
                         </div>
                     </div>
                     <%
-                        if (request.getParameter("cupcakeshow") != null) {
-                            out.println("<a>" + request.getAttribute("cupcakename") + session.getAttribute("cupcakename")+"</a><td><td>");
-                            out.println("<a>" + request.getAttribute("cupcakeprice") + "</a>");
-                        } else {
+
+                        rucc = new RendUtilCupCake();
+                        try {
+                            if (request.getParameter("cupcakeshow") != null) {
+                                String cupcakename = rucc.createCakeName((String) request.getParameter("bottomname"), (String) request.getParameter("topname"));
+                                out.println("<a>" + cupcakename + "</a><td><td>");
+
+                                out.println("<a>" + (double) request.getAttribute("cupcakeprice") + "</a>");
+
+                            } else {
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     %>
 
@@ -157,9 +171,11 @@
                         <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
                     </div>
                     <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
+
                     <%
                         if (request.getParameter("shoppingcart") != null) {
-                            out.println("<a> you have added: " + session.getAttribute("li") + "to your shoppingcart</a> ");
+                            out.println("<a> you have added: " + (String) session.getAttribute("li") + "to your shoppingcart</a> ");
+                            out.println("<a> you have : " + (String) session.getAttribute("shoppingCart") + "in your shoppingcart</a> ");
                         } else {
 
                         }
