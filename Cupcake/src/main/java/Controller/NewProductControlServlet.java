@@ -52,7 +52,7 @@ public class NewProductControlServlet extends HttpServlet {
             String origin = request.getParameter("origin");
             //Sessionen kaldes
             HttpSession session = request.getSession();
-
+            
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
             RendUtilCupCake rucc = new RendUtilCupCake();

@@ -122,7 +122,8 @@
                 <p class="m-0">Copyright &copy; The Data Builders 2017</p>
             </div>
         </footer>
-
+        
+        <script src="script/javascript.js" type="text/javascript"></script>
         <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="script/popper/popper.min.js" type="text/javascript"></script>
         <script src="css/js/bootstrap.min.js" type="text/javascript"></script>

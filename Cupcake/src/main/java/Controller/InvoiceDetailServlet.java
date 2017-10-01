@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +41,9 @@ public class InvoiceDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
+            
+
+
             //Parser den som int da den kommer som String
             int invId = Integer.parseInt(request.getParameter("id"));
             
@@ -48,6 +52,7 @@ public class InvoiceDetailServlet extends HttpServlet {
             
             try {
                 invoiceInfo = infoMapper.getODetail(invId);
+                HttpSession session = request.getSession();
                 request.setAttribute("invoiceId", invoiceInfo);
                 request.setAttribute("pricePrCc", invoiceInfo);
                 request.setAttribute("totalPrice", invoiceInfo);

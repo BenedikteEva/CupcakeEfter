@@ -93,6 +93,9 @@
                 <hr class="divider">
                 <img class="img-fluid float-left mr-4 d-none d-lg-block" src="images/cupcake_sharing.jpg" alt="" width="30%">
                 <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
+                <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
+                <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
+                <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
 
             </div>    
 

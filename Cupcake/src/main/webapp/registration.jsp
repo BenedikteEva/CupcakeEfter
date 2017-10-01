@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
-        
+
     </head>
 
     <body>
@@ -25,13 +25,13 @@
 
 
         <ul>
-           <!-- <li>
-            <a href="index.jsp">
-                <span id="span-logo">
-                    <img src="images/cupcake_logo.jpg" id="logo" alt="Logo_cupcake"/>
-                </span>
-            </a>
-                </li> -->
+            <!-- <li>
+             <a href="index.jsp">
+                 <span id="span-logo">
+                     <img src="images/cupcake_logo.jpg" id="logo" alt="Logo_cupcake"/>
+                 </span>
+             </a>
+                 </li> -->
             <li>
                 <a href="index.jsp">Home</a>
             </li>
@@ -44,7 +44,7 @@
             <li>
                 <a href="login.jsp">Admin Login</a>
             </li>
-            
+
         </ul>
     </div>
 
@@ -53,7 +53,7 @@
             <form name="Form1" action="UserServlet" method="POST">
                 <div class="container">
                     <label><b>User name     </b></label>
-                    <input type="text" placeholder="Enter user name" name="username" required>
+                    <input type="text" placeholder="Enter user name" name="username" required onsubmit="return validate()">
                     <br>
 
                     <label><b>Email</b></label>
@@ -85,7 +85,7 @@
     </div>
 
 
-
+    <script src="script/javascript.js" type="text/javascript"></script>
 </body>
 </html>
 

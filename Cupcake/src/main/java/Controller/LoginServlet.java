@@ -70,6 +70,7 @@ public class LoginServlet extends HttpServlet {
                 //request.setAttribute("userName", userName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
                 
             } else {
+                
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
 

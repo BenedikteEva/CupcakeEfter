@@ -20,20 +20,22 @@
         
         <h1>Invoic Detail</h1>
         
-        <% String adminName = request.getParameter("username");
+        <% //String adminName = (String)request.getAttribute("user");
 
-            out.println("Hello " + adminName + ". What are your plans for today?");
-
-            InfoToAdminMapper invoice = new InfoToAdminMapper();
+            //out.println("Hello " + adminName + ". What are your plans for today?");
+            
+            int id =(Integer) session.getAttribute("totalPrice");
+            out.println(id);
+            //InfoToAdminMapper invoice = new InfoToAdminMapper();
 
             //List<InfoToAdmin> invoiceList = invoice.getODetail("intId");
-            InvoiceDetailServlet inv = new InvoiceDetailServlet();
+            //InvoiceDetailServlet inv = new InvoiceDetailServlet();
             
-            InfoToAdmin invo = new InfoToAdmin();
+            //InfoToAdmin invo = new InfoToAdmin();
             
             
         %>
-        <%= //RendUtilInvoice.invoiceTable(invoiceList)%>
+        <%//= RendUtilInvoice.invoiceTable(invoiceList)%>
         
         
     </body>
