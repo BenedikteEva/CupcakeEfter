@@ -96,12 +96,6 @@
 
             </div>    
 
-            <input type="hidden" name="origin" value="Data from the hidden field" >
-
-
-
-
-
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
             <%--List<LineItem> shoppingCart = new ArrayList<>();--%>
             <% RendUtilCupCake rucc = new RendUtilCupCake();%>
@@ -111,7 +105,6 @@
 
             %>
 
-
             <div class="bg-faded p-4 my-4">
                 <hr class="divider">
                 <h2 class="text-center text-lg text-uppercase my-0">Order Our Cupcakes
@@ -119,67 +112,80 @@
                 </h2>
                 <hr class="divider">
 
-
-
+                <p>Det er lidt hurtigere at scrolle ned til bunden uden alt det latinsk agtige ævl</p>
 
                 <div class="flex-container">
                     <div id="box">
                         <%= RendUtilTopping.toppingTable(toppingList)%>
-                        <% String [] topnames =request.getParameterValues("t.topname");%>
-                     
                     </div>
                     <div id="box">
                         <%= RendUtilBottom.bottomTable(bottomList)%>
-                        <% String [] botnames =request.getParameterValues("b.botname");%>
                     </div>
-                       
                 </div>
 
-                <%-- her kan man trykke og se sin cupcake på et tidspunkt skal der også et billede med --%> 
-                <form name="formProducts" action="NewProductControlServlet" method="POST">
-                    <div class="flex-container">
-                        <div id="box">    
-                            <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
-                        </div>
+                <div class="flex-container">
+                    <div id="box">    
+                        <button type="submit" >See your CupCake </button>
                     </div>
-                    <%
-                        if (request.getParameter("cupcakeshow") != null) {
-                            out.println("<a>" + request.getAttribute("cupcakename") + session.getAttribute("cupcakename")+"</a><td><td>");
-                            out.println("<a>" + request.getAttribute("cupcakeprice") + "</a>");
-                        } else {
-                        }
-                    %>
-
-
-                    <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
                     <div id="box">
-                        Quantity
-                        <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
+                        <form>Quantity
+                            <input type="number" name="quantity" min="1" value="Quantity" placeholder="1" >
+                        </form> 
+
+
+
                     </div>
-                    <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
+                </div>
+                <form name="formProducts" action="ProductControlServlet" method="POST"> 
                     <%
-                        if (request.getParameter("shoppingcart") != null) {
-                            out.println("<a> you have added: " + session.getAttribute("li") + "to your shoppingcart</a> ");
-                        } else {
+
+                        UserMapper um = new UserMapper();
+                        String[] chosenName = request.getParameterValues("checkbox");
+                        String topname = request.getParameter("topname");
+                        String botname = request.getParameter("bottomname");
+
+                        User user = (User) session.getAttribute("user");
+
+                        if (topname == null || botname == null) {
+
+                            out.println("<div class=column><h2>Hello  " + user.getUserName() + "</h2></div><br>");
+                            out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
 
                         }
+
+                        if (topname != null && botname != null) {
+                            String cupcakename = rucc.createCakeName(botname, topname);
+                            
+                            double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
+                            session.setAttribute("cupcakeprice", cupcakeprice);
+                            // request.setAttribute("cupcakeprice",cupcakeprice );
+                            session.setAttribute("cupcakename", cupcakename);
+                            //request.setAttribute("cupcakename", cupcakename);
+                            out.println("<a>" + cupcakename + "</a><td><td>");
+                            out.println("<a>" + cupcakeprice + "</a>");
+                        }
+
                     %>
 
 
 
-                    <button type="submit" value="action" name="checkout" >Checkout </button>  
-
-
-
-
-                </form>
+                    <button type="submit" >add to shoppingcart   </button>    
+</form>
+                    <%--                  
+                        
+                    int qty = Integer.parseInt(request.getParameter("quantity"));
+                            out.println("<a> You've added " + qty
+                                    + "  " + session.getAttribute("cupcakename") + "  to you shoppingcart</a>");
+                   
+                    --%>
+                
 
                 <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
 
+
             </div>
+
         </div>
-
-
         <!-- /.container -->
 
         <footer class="bg-faded text-center py-5">
@@ -191,6 +197,5 @@
         <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="script/popper/popper.min.js" type="text/javascript"></script>
         <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-
     </body>
 </html>

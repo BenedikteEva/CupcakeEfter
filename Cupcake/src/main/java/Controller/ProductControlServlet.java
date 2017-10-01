@@ -38,57 +38,43 @@ public class ProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+
         try (PrintWriter out = response.getWriter()) {
-
-            CupcakeMapper cupcakeList = new CupcakeMapper();
-            List<LineItem> shoppingCart = new ArrayList<>();
-            RendUtilCupCake rucc = new RendUtilCupCake();
-
-            UserMapper um = new UserMapper();
-            String[] chosenName = request.getParameterValues("checkbox");
-            String topname = request.getParameter("topname");
-            String botname = request.getParameter("bottomname");
-
+          
             //Sessionen kaldes
             HttpSession session = request.getSession();
-
             //Vi caster "user" da vi bruger det som et objekt
-            User uname = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("user");
             
-            out.println("<div class=column><h2>Welcome back  " + uname.getUserName() + "</h2></div><br>");
-            out.println("<h3>Your account balance is: " + uname.getBalance() + "</h3>");
+               
 
-            if (topname != null && botname != null) {
-                String cupcakename = rucc.createCakeName(botname, topname);
-                double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
-                request.setAttribute("cupcakeprice", cupcakeprice);
-                request.setAttribute("cupcakename", cupcakename);
-                out.println("<a>" + cupcakename + "</a><td><td>");
-                out.println("<a>" + cupcakeprice + "</a>");
+           
+            List<LineItem> shoppingCart = new ArrayList<>();
+            
+            int qty = Integer.parseInt(request.getParameter("quantity"));
+            session.setAttribute("qty", qty);
+            
+            
+            double cupcakeprice = (double) session.getAttribute("cupcakeprice");
+            String cupcakename = (String) session.getAttribute("cupcakename");
+            double typeCupCakeprice = qty * cupcakeprice;
+            session.setAttribute("typeCupCakeprice", typeCupCakeprice);
+            double b = user.getBalance();
+            // denne skal egentlig først bruges når der betales
+//             um.changeUserBalance(uname, b);
 
-                String[] s = request.getParameterValues("Quantity");
-                try {
-                    double qty = Double.parseDouble(request.getParameter("quantity"));
+            LineItem li = new LineItem(cupcakename, cupcakeprice, qty, typeCupCakeprice);
+            
+            shoppingCart.add(li);
+            session.setAttribute("shoppingCart", shoppingCart);
+//            out.println("<a> Your new balance is: " +shoppingCart.toString() + "</a>");
+            
 
-                    if (qty > 0) {
-                        cupcakeprice = Double.parseDouble(request.getParameter("cupcakeprice"));
-                        cupcakename = rucc.createCakeName(botname, topname);
-                        double typeCupCakeprice = qty * cupcakeprice;
-                        request.setAttribute("typeCupCakeprice", typeCupCakeprice);
-
-                        out.println("<a>test</a>");
-
-                    } else {
-                        if (qty != 0 && topname == null && botname == null) {
-                            out.println("<a> go play with the dog</a>");
-                        }
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-//  request.getRequestDispatcher("products.jsp").forward(request, response);
-            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        request.getRequestDispatcher("products.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
