@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 /**
@@ -40,5 +35,19 @@ public class Topping {
     public double getTop_Price() {
         return top_Price;
     }
+
+    public void setTop_id(int top_id) {
+        this.top_id = top_id;
+    }
+
+    public void setTopname(String topname) {
+        this.topname = topname;
+    }
+
+    public void setTop_Price(double top_Price) {
+        this.top_Price = top_Price;
+    }
+    
+    
     
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 /**
@@ -12,8 +7,40 @@ package domain;
 public class Odetail {
     
     private int qty;
-    CupCake cupCakedetails = new CupCake();
     private double priceprcc;
-    Order Orderdetail = new Order();
+    
+    public Odetail(int qty, double priceprcc) {
+        this.qty = qty;
+        this.priceprcc = priceprcc;
+    }
+    
+    public Odetail() {
+        
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public double getPriceprcc() {
+        return priceprcc;
+    }
+
+    public void setPriceprcc(double priceprcc) {
+        this.priceprcc = priceprcc;
+    }
+
+    @Override
+    public String toString() {
+        return "Odetail{" + "qty=" + qty + ", priceprcc=" + priceprcc + '}';
+    }
+    
+    
+    
+    
     
 }

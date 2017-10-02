@@ -51,19 +51,20 @@ public class ProductControlServlet extends HttpServlet {
            
             List<LineItem> shoppingCart = new ArrayList<>();
             
-            int qty = Integer.parseInt(request.getParameter("quantity"));
-            session.setAttribute("qty", qty);
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            session.setAttribute("qty", quantity);
             
             
-            double cupcakeprice = (double) session.getAttribute("cupcakeprice");
-            String cupcakename = (String) session.getAttribute("cupcakename");
-            double typeCupCakeprice = qty * cupcakeprice;
-            session.setAttribute("typeCupCakeprice", typeCupCakeprice);
+            double pricePrCc = (double) session.getAttribute("cupcakeprice");
+            String cupcakeName = (String) session.getAttribute("cupcakename");
+            double totalPrice = quantity * pricePrCc;
+            session.setAttribute("typeCupCakeprice", totalPrice);
             double b = user.getBalance();
             // denne skal egentlig først bruges når der betales
 //             um.changeUserBalance(uname, b);
 
-            LineItem li = new LineItem(cupcakename, cupcakeprice, qty, typeCupCakeprice);
+            //!!!OBS DENNE ER FORKERT!!!
+            LineItem li = new LineItem(quantity, quantity, quantity, cupcakeName);//(cupcakename, cupcakeprice, quantity, typeCupCakeprice);
             
             shoppingCart.add(li);
             session.setAttribute("shoppingCart", shoppingCart);

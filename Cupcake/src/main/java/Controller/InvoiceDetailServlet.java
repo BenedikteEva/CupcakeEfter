@@ -6,7 +6,7 @@
 package Controller;
 
 import data.InfoToAdminMapper;
-import domain.InfoToAdmin;
+import domain.LineItem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -47,7 +47,7 @@ public class InvoiceDetailServlet extends HttpServlet {
             //Parser den som int da den kommer som String
             int invId = Integer.parseInt(request.getParameter("id"));
             
-            InfoToAdmin invoiceInfo = new InfoToAdmin();
+            LineItem invoiceInfo = new LineItem();
             InfoToAdminMapper infoMapper = new InfoToAdminMapper();
             
             try {
@@ -58,7 +58,7 @@ public class InvoiceDetailServlet extends HttpServlet {
                 request.setAttribute("totalPrice", invoiceInfo);
                 request.setAttribute("quantity", invoiceInfo);
                 
-                InfoToAdmin cupcakeNameInvoice = infoMapper.getCupcakeName(invId);
+                LineItem cupcakeNameInvoice = infoMapper.getCupcakeName(invId);
                 request.setAttribute("cupcakeName", cupcakeNameInvoice);
                 
                 if(invoiceInfo != null && cupcakeNameInvoice != null) {

@@ -1,7 +1,7 @@
 package data;
 
 import static data.DBConnector.getConnection;
-import domain.InfoToAdmin;
+import domain.LineItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,19 +18,19 @@ import java.util.logging.Logger;
 public class InfoToAdminMapper {
 
     //Denne metode er til admin page og henter order id 
-    public List<InfoToAdmin> getAllOrderId() throws SQLException {
-        List<InfoToAdmin> allOrderId = new ArrayList();
+    public List<LineItem> getAllOrderId() throws SQLException {
+        List<LineItem> allOrderId = new ArrayList();
 
         String sql = "SELECT order_id FROM orderlist;";
 
         ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
         int lastId = -1;
-        InfoToAdmin id = null;
+        LineItem id = null;
         while (rs.next()) {
             int order_id = rs.getInt("order_id");
             if (order_id != lastId) {
                 int invoiceid = rs.getInt("order_id");
-                id = new InfoToAdmin(invoiceid);
+                id = new LineItem(invoiceid);
                 allOrderId.add(id);
             }
 //            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
@@ -39,9 +39,9 @@ public class InfoToAdminMapper {
         return allOrderId;
     }
 
-    public InfoToAdmin getODetail(int invoiceID) throws SQLException {
+    public LineItem getODetail(int invoiceID) throws SQLException {
 
-        InfoToAdmin oDetail = null;
+        LineItem oDetail = null;
         try {
 
             Connection conn = new Connector().getConnection();
@@ -57,7 +57,7 @@ public class InfoToAdminMapper {
                 int totalPrice = rs.getInt("total_price");
                 int quantity = rs.getInt("quantity");
 
-                oDetail = new InfoToAdmin(invoiceId, pricePrCc, totalPrice, quantity);
+                oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -66,9 +66,9 @@ public class InfoToAdminMapper {
         return oDetail;
     }
     
-    public InfoToAdmin getCupcakeName(int invoiceID) throws SQLException {
+    public LineItem getCupcakeName(int invoiceID) throws SQLException {
 
-        InfoToAdmin name = null;
+        LineItem name = null;
         try {
 
             Connection conn = new Connector().getConnection();
@@ -81,7 +81,7 @@ public class InfoToAdminMapper {
 
                 String cupcakeName = rs.getString("cupcakename");
                 
-                name = new InfoToAdmin(cupcakeName);
+                name = new LineItem(cupcakeName);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -1,54 +1,67 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 /**
  *
- * @author Ticondrus
+ * @author Bo Henriksen
  */
 public class LineItem {
-
-
-//    static void add(String invoice_id) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//    public int invoice_id;
-//   private User u = new User();
-  
-    private String cupcakename;
-    private double cupcakepriceapiece;
+    
+    private int invoiceId;
+    private int pricePrCc;
+    private int totalPrice;
     private int quantity;
-    private double totalprice;
+    private String cupcakeName;
 
-    public LineItem(String cupcakename, double cupcakepriceapiece, int quantity, double totalprice) {
-
-        this.cupcakename = cupcakename;
-        this.cupcakepriceapiece = cupcakepriceapiece;
+    public LineItem(int invoiceId, int pricePrCc, int totalPrice, int quantity) {
+        this.invoiceId = invoiceId;
+        this.pricePrCc = pricePrCc;
+        this.totalPrice = totalPrice;
         this.quantity = quantity;
-        this.totalprice = totalprice;
     }
 
-    public String getAllLineItems() {
-        return cupcakename + cupcakepriceapiece + quantity + totalprice;
+    public LineItem(int invoiceId, int pricePrCc, int totalPrice, int quantity, String cupcakeName) {
+        this.invoiceId = invoiceId;
+        this.pricePrCc = pricePrCc;
+        this.totalPrice = totalPrice;
+        this.quantity = quantity;
+        this.cupcakeName = cupcakeName;
     }
 
-    public String getCupcakename() {
-        return cupcakename;
+    public LineItem(int pricePrCc, int totalPrice, int quantity, String cupcakeName) {
+        this.pricePrCc = pricePrCc;
+        this.totalPrice = totalPrice;
+        this.quantity = quantity;
+        this.cupcakeName = cupcakeName;
+    }
+    
+    
+    
+    public LineItem(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public void setCupcakename(String cupcakename) {
-        this.cupcakename = cupcakename;
+    public LineItem(String cupcakeName) {
+        this.cupcakeName = cupcakeName;
+    }
+    
+    public LineItem () {
+        
     }
 
-    public double getCupcakepriceapiece() {
-        return cupcakepriceapiece;
+    public int getPricePrCc() {
+        return pricePrCc;
     }
 
-    public void setCupcakepriceapiece(double cupcakepriceapiece) {
-        this.cupcakepriceapiece = cupcakepriceapiece;
+    public void setPricePrCc(int pricePrCc) {
+        this.pricePrCc = pricePrCc;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getQuantity() {
@@ -59,21 +72,25 @@ public class LineItem {
         this.quantity = quantity;
     }
 
-    public double getTotalprice() {
-        return totalprice;
+    public String getCupcakeName() {
+        return cupcakeName;
     }
 
-    public void setTotalprice(double totalprice) {
-        this.totalprice = totalprice;
+    public void setCupcakeName(String cupcakeName) {
+        this.cupcakeName = cupcakeName;
     }
-    
-    
+
+    public int getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
     @Override
     public String toString() {
-        return quantity+"  " +cupcakename + " à " + cupcakepriceapiece + " fiktive currency pr. cake       total=" + totalprice + '}';
+        return "InfoToAdmin{" + "invoiceId=" + invoiceId + ", pricePrCc=" + pricePrCc + ", totalPrice=" + totalPrice + ", quantity=" + quantity + ", cupcakeName=" + cupcakeName + '}';
     }
- 
-}
 
-/*I lineItem skal der være String cupcakename double cupcakepriceapiece int quantity 
-og double totalprice*/
+}

@@ -1,6 +1,6 @@
 package Utilities;
 
-import domain.InfoToAdmin;
+import domain.LineItem;
 import java.util.List;
 
 /**
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class RendUtilAllId {
 
-    public static String allInvoiceIdTabel(List<InfoToAdmin> allId) {
+    public static String allInvoiceIdTabel(List<LineItem> allId) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"
                 + "<tr><th>Invoices</th><th></th><th></th></tr>\n");
-        for (InfoToAdmin i : allId) {
+        for (LineItem i : allId) {
             sb.append("<tr><form action=\"InvoiceDetailServlet\" method=POST>"); //Method kan være skrevet forkert!
             sb.append("<td>").append("Invoice " + i.getInvoiceId()).append("</td>");
             //sb.append("<a href=invoice_detail.jsp").append(i.getInvoiceId()).append(">").append(i).append("</a>\n");

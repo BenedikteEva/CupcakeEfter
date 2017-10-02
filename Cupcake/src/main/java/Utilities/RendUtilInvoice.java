@@ -1,6 +1,6 @@
 package Utilities;
 
-import domain.InfoToAdmin;
+import domain.LineItem;
 import java.util.List;
 
 /**
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class RendUtilInvoice {
     
-    public static String invoiceTable(List<InfoToAdmin> info) {
+    public static String invoiceTable(List<LineItem> info) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"
                 + "<tr><th>Invoice number</th><th>Quantity</th><th>Name</th><th>Price pr. cake</th><th>Total Price</th></tr>\n");
-        for (InfoToAdmin i : info) {
+        for (LineItem i : info) {
             sb.append("<tr><form action=\"products.jsp\">");
             sb.append("<td>").append(i.getInvoiceId()).append("</td>");
             sb.append("<td>").append(i.getQuantity()).append("</td>");

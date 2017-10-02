@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 
@@ -15,15 +10,38 @@ import java.util.Date;
 public class Order {
     
     private int order_id;
-    User Users = new User();
     private Date reciveddate;
+    User Users = new User();
+
+    public Order(int order_id, Date reciveddate) {
+        this.order_id = order_id;
+        this.reciveddate = reciveddate;
+    }
     
-        public int getOrder_id() {
+    public int getOrder_id() {
         return order_id;
     }
 
     public User getUsers() {
         return Users;
     }
+
+    public Date getReciveddate() {
+        return reciveddate;
+    }
+
+    public void setReciveddate(Date reciveddate) {
+        this.reciveddate = reciveddate;
+    }
+
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
+    }
+
+    public void setUsers(User Users) {
+        this.Users = Users;
+    }
+    
+    
     
 }

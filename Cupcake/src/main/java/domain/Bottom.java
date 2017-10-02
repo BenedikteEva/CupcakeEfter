@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 /**
@@ -40,6 +35,17 @@ public class Bottom {
     public double getBot_Price() {
         return bot_Price;
     }
-    
-    
-}
+
+    public void setBot_id(int bot_id) {
+        this.bot_id = bot_id;
+    }
+
+    public void setBotName(String botName) {
+        this.botName = botName;
+    }
+
+    public void setBot_Price(double bot_Price) {
+        this.bot_Price = bot_Price;
+    }
+   
+ }
