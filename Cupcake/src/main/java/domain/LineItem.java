@@ -7,19 +7,19 @@ package domain;
 public class LineItem {
     
     private int invoiceId;
-    private int pricePrCc;
-    private int totalPrice;
+    private double pricePrCc;
+    private double totalPrice;
     private int quantity;
     private String cupcakeName;
 
-    public LineItem(int invoiceId, int pricePrCc, int totalPrice, int quantity) {
+    public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity) {
         this.invoiceId = invoiceId;
         this.pricePrCc = pricePrCc;
         this.totalPrice = totalPrice;
         this.quantity = quantity;
     }
 
-    public LineItem(int invoiceId, int pricePrCc, int totalPrice, int quantity, String cupcakeName) {
+    public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity, String cupcakeName) {
         this.invoiceId = invoiceId;
         this.pricePrCc = pricePrCc;
         this.totalPrice = totalPrice;
@@ -27,12 +27,13 @@ public class LineItem {
         this.cupcakeName = cupcakeName;
     }
 
-    public LineItem(int pricePrCc, int totalPrice, int quantity, String cupcakeName) {
+    public LineItem(int quantity, String cupcakeName, double pricePrCc, double totalPrice ) {
         this.pricePrCc = pricePrCc;
         this.totalPrice = totalPrice;
         this.quantity = quantity;
         this.cupcakeName = cupcakeName;
     }
+    
     
     
     
@@ -48,19 +49,19 @@ public class LineItem {
         
     }
 
-    public int getPricePrCc() {
+    public double getPricePrCc() {
         return pricePrCc;
     }
 
-    public void setPricePrCc(int pricePrCc) {
+    public void setPricePrCc(double pricePrCc) {
         this.pricePrCc = pricePrCc;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

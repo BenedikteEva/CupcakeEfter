@@ -63,8 +63,8 @@ public class ProductControlServlet extends HttpServlet {
             // denne skal egentlig først bruges når der betales
 //             um.changeUserBalance(uname, b);
 
-            //!!!OBS DENNE ER FORKERT!!!
-            LineItem li = new LineItem(quantity, quantity, quantity, cupcakeName);//(cupcakename, cupcakeprice, quantity, typeCupCakeprice);
+         
+      LineItem li = new LineItem( (int) session.getAttribute("qty"),(String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"), (double) session.getAttribute("typeCupCakeprice") );
             
             shoppingCart.add(li);
             session.setAttribute("shoppingCart", shoppingCart);

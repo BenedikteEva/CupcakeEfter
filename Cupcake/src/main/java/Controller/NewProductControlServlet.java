@@ -74,7 +74,8 @@ public class NewProductControlServlet extends HttpServlet {
 
                             double typeCupCakeprice = qty * (int) session.getAttribute("cupcakeprice");
                             session.setAttribute("typeCupCakeprice", typeCupCakeprice);
-                            LineItem li = new LineItem((String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"), (int) session.getAttribute("qty"), typeCupCakeprice);
+                           
+                            LineItem li = new LineItem( (int) session.getAttribute("qty"),(String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"),  typeCupCakeprice);
                             shoppingCart.add(li);
                             session.setAttribute("li", li);
                             session.setAttribute("shoppingCart", shoppingCart);
