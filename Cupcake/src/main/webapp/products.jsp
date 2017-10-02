@@ -101,7 +101,10 @@
 
             <input type="hidden" name="origin" value="Data from the hidden field" >
 
-
+            <% double cupcakeprice = 0;
+                double typeCupCakeprice = 0;
+                int qty = 0;
+                String cupcakename = null;%>
 
 
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
@@ -153,16 +156,19 @@
                         rucc = new RendUtilCupCake();
                         try {
                             if (request.getParameter("cupcakeshow") != null) {
-                                String top=(String) request.getParameter("topname");
-                                String bot=(String) request.getParameter("bottomname");
-                                String cupcakename = rucc.createCakeName(bot,top );
-                                request.setAttribute("cupcakename", cupcakename);
+                                String top = (String) request.getParameter("topname");
+                                String bot = (String) request.getParameter("bottomname");
 
-                                double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+                                cupcakename = rucc.createCakeName(bot, top);
+                                cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+                                session.setAttribute("cupcakename", cupcakename);
+                                session.setAttribute("cupcakeprice", cupcakeprice);
+                                session.setAttribute("top", top);
+                                session.setAttribute("bot", bot);
+
                                 out.println("<a>" + cupcakename + "</a><td><td>");
                                 out.println("<a>" + cupcakeprice + "</a>");
-                                request.setAttribute("cupcakename", cupcakename);
-                                request.setAttribute("cupcakeprice", cupcakeprice);
+
                             } else {
                             }
                         } catch (Exception ex) {
@@ -179,11 +185,33 @@
                     <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
 
                     <%
-                        if (request.getParameter("shoppingcart") != null) {
-                            out.println("<a> you have added: " + (String) session.getAttribute("li") + "to your shoppingcart</a> ");
-                            out.println("<a> you have : " + (String) session.getAttribute("shoppingCart") + "in your shoppingcart</a> ");
-                        } else {
+                        try {
+                            if (request.getParameter("shoppingcart") != null) {
+                                List<LineItem> shoppingCart = new ArrayList<>();
+                                qty = Integer.parseInt(request.getParameter("quantity"));
+                                String top = request.getParameter("topname");
+                                String bot = request.getParameter("bottomname");
+                                double topprice = cupcakeList.getToppingPricebyName(top);
+                                double botprice = cupcakeList.getBottomPricebyName(bot);
+
+                                cupcakename = rucc.createCakeName(bot, top);
+                                cupcakeprice = topprice + botprice;
+                                double totalprice = (qty * cupcakeprice);
+
+                                LineItem li = new LineItem(qty, (cupcakename), cupcakeprice, totalprice);
+//                           
+                                shoppingCart.add(li);
+                              
+                                out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
+                                out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
+                                  request.setAttribute("li", li);
+                                request.setAttribute("shoppingCart", shoppingCart);
+                            } else {
+                            }
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
                         }
+
                     %>
 
 

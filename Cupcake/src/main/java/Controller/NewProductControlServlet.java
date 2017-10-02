@@ -52,7 +52,7 @@ public class NewProductControlServlet extends HttpServlet {
             String origin = request.getParameter("origin");
             //Sessionen kaldes
             HttpSession session = request.getSession();
-            
+
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
             RendUtilCupCake rucc = new RendUtilCupCake();
@@ -63,6 +63,27 @@ public class NewProductControlServlet extends HttpServlet {
                     request.getRequestDispatcher("confirmation.jsp").forward(request, response);
                     break;
 
+                case "cupcakeshow":
+                    String[] chosenName = request.getParameterValues("checkbox");
+                    String topname = (String) session.getAttribute("top");
+                    String botname = (String) session.getAttribute("bot");
+
+                    if (topname != null && botname != null) {
+//                        double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
+////                        double cupcakeprice = (double) session.getAttribute("cupcakeprice");
+//                        request.setAttribute("cupcakeprice", cupcakeprice);
+//                        session.setAttribute("cupcakeprice", cupcakeprice);
+//                         String cupcakename = rucc.createCakeName(botname, topname);
+////                        String cupcakename = (String) session.getAttribute("cupcakename");
+//
+//                        session.setAttribute("cupcakename", cupcakename);
+//                        request.setAttribute("cupcakename", cupcakename);
+//
+//                        request.getRequestDispatcher("products.jsp").forward(request, response);
+                    }
+
+                    break;
+
                 case "shoppingcart":
                     try {
 
@@ -70,42 +91,23 @@ public class NewProductControlServlet extends HttpServlet {
 
                         int qty = Integer.parseInt((String) request.getAttribute("quantity"));
 
-                        if (qty > 0) {
+                        if (qty >= 0) {
 
-                            double typeCupCakeprice = qty * (int) session.getAttribute("cupcakeprice");
+                            double typeCupCakeprice = qty * (double) session.getAttribute("cupcakeprice");
                             session.setAttribute("typeCupCakeprice", typeCupCakeprice);
-                           
-                            LineItem li = new LineItem( (int) session.getAttribute("qty"),(String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"),  typeCupCakeprice);
+                            LineItem li = new LineItem(1, "yummi", 20, 20);
+//                            LineItem li = new LineItem(qty, (String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"), typeCupCakeprice);
                             shoppingCart.add(li);
-                            session.setAttribute("li", li);
-                            session.setAttribute("shoppingCart", shoppingCart);
-
-                            request.getRequestDispatcher("products.jsp").forward(request, response);
+                            request.setAttribute("li", li);
+                            request.setAttribute("shoppingCart", shoppingCart);
+                            getServletContext().getRequestDispatcher("products.jsp").forward(request, response);
+//                            request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
 
                     break;
-
-                case "cupcakeshow":
-                    String[] chosenName = request.getParameterValues("checkbox");
-                    String topname = request.getParameter("topname");
-                    String botname = request.getParameter("bottomname");
-                    if (topname != null && botname != null) {
-                        String cupcakename = rucc.createCakeName(botname, topname);
-
-                        double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
-                        session.setAttribute("cupcakeprice", cupcakeprice);
-                         request.setAttribute("cupcakeprice",cupcakeprice );
-                        session.setAttribute("cupcakename", cupcakename);
-                        request.setAttribute("cupcakename", cupcakename);
-
-                        request.getRequestDispatcher("products.jsp").forward(request, response);
-                    }
-
-                    break;
-
                 default:
                     throw new AssertionError();
             }

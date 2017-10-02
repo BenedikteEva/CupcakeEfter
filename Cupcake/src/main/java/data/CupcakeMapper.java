@@ -46,11 +46,11 @@ public class CupcakeMapper {
         }
         return cupcakeToppingList;
     }
-// jeg forstår ikke hvorfor min get topping og bottomprice by name ikke virker. 
+// Har være et problem med en nullpointer dereference grundet tOpping t= null og topprice= 0 er løst
 
     public double getToppingPricebyName(String topname) throws SQLException {
-        Topping t = null;
-        double topprice = 0;
+        Topping t = new Topping();
+        double topprice;
         try {
             String sql = "SELECT top_id, top_price, topname FROM toppinglist where topname =" + "'" + topname + "'";
             ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
@@ -69,8 +69,8 @@ public class CupcakeMapper {
     }
 
     public double getBottomPricebyName(String botname) throws SQLException {
-        double botprice = 0;
-        Bottom b = null;
+        double botprice ;
+        Bottom b = new Bottom();
         try {
             String sql = "SELECT bot_id, bot_price, bottomname FROM bottomlist WHERE bottomname =" + "'" + botname + "'";
             ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
