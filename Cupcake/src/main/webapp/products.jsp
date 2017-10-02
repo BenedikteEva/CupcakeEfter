@@ -110,7 +110,6 @@
             <%
                 List<Topping> toppingList = cupcakeList.getAllTopping();
                 List<Bottom> bottomList = cupcakeList.getAllBottom();
-
             %>
 
 
@@ -151,15 +150,19 @@
                         </div>
                     </div>
                     <%
-
                         rucc = new RendUtilCupCake();
                         try {
                             if (request.getParameter("cupcakeshow") != null) {
-                                String cupcakename = rucc.createCakeName((String) request.getParameter("bottomname"), (String) request.getParameter("topname"));
+                                String top=(String) request.getParameter("topname");
+                                String bot=(String) request.getParameter("bottomname");
+                                String cupcakename = rucc.createCakeName(bot,top );
+                                request.setAttribute("cupcakename", cupcakename);
+
+                                double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                                 out.println("<a>" + cupcakename + "</a><td><td>");
-
-                                out.println("<a>" + (double) request.getAttribute("cupcakeprice") + "</a>");
-
+                                out.println("<a>" + cupcakeprice + "</a>");
+                                request.setAttribute("cupcakename", cupcakename);
+                                request.setAttribute("cupcakeprice", cupcakeprice);
                             } else {
                             }
                         } catch (Exception ex) {
@@ -180,7 +183,6 @@
                             out.println("<a> you have added: " + (String) session.getAttribute("li") + "to your shoppingcart</a> ");
                             out.println("<a> you have : " + (String) session.getAttribute("shoppingCart") + "in your shoppingcart</a> ");
                         } else {
-
                         }
                     %>
 
