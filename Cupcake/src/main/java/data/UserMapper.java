@@ -23,7 +23,7 @@ public class UserMapper {
         User user = null;
         try {
 
-            Connection conn = new Connector().getConnection();
+            Connection conn = new DBConnector().getConnection();
             String sql = "SELECT * FROM userlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
@@ -48,7 +48,7 @@ public class UserMapper {
     }
 
     public int addUser(User u) throws Exception {
-        Connection conn = Connector.getConnection();
+        Connection conn = DBConnector.getConnection();
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
         PreparedStatement userPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
 
@@ -70,7 +70,7 @@ public class UserMapper {
 
         try {
 
-            Connection conn = new Connector().getConnection();
+            Connection conn = new DBConnector().getConnection();
 
             String sql = "SELECT username, password FROM userlist WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class UserMapper {
 
         try {
 
-            Connection conn = new Connector().getConnection();
+            Connection conn = new DBConnector().getConnection();
 
             String sql = "SELECT adminUser, adminPassword FROM adminList WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -123,7 +123,7 @@ public class UserMapper {
         Admin admin = null;
         try {
 
-            Connection conn = new Connector().getConnection();
+            Connection conn = new DBConnector().getConnection();
             String sql = "SELECT * FROM adminlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, adminUsername);
@@ -150,7 +150,7 @@ public class UserMapper {
         double total = 0;
         UserRendUtil uru = new UserRendUtil();
         try {
-            Connection conn = new Connector().getConnection();
+            Connection conn = new DBConnector().getConnection();
             String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
             PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
             total = 15;

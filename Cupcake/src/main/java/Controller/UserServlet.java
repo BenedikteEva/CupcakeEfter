@@ -68,7 +68,7 @@ public class UserServlet extends HttpServlet {
                  Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
              }
               
-             request.getRequestDispatcher("products.jsp").forward(request, response);
+             request.getRequestDispatcher("login.jsp").forward(request, response);
              HttpSession session = request.getSession();
             
             

@@ -53,7 +53,7 @@
             <form name="Form1" action="UserServlet" method="POST">
                 <div class="container">
                     <label><b>User name     </b></label>
-                    <input type="text" placeholder="Enter user name" name="username" required onsubmit="return validate()">
+                    <input type="text" placeholder="Enter user name" name="username">
                     <br>
 
                     <label><b>Email</b></label>
@@ -85,7 +85,7 @@
     </div>
 
 
-    <script src="script/javascript.js" type="text/javascript"></script>
+    
 </body>
 </html>
 
