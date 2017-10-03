@@ -201,11 +201,12 @@
                                 LineItem li = new LineItem(qty, (cupcakename), cupcakeprice, totalprice);
 //                           
                                 shoppingCart.add(li);
-                              
+                                request.getSession().setAttribute("li", li);
+                                request.getSession().setAttribute("shoppingCart", shoppingCart);
+                                
                                 out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
                                 out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
-                                  request.setAttribute("li", li);
-                                request.setAttribute("shoppingCart", shoppingCart);
+
                             } else {
                             }
                         } catch (SQLException ex) {
