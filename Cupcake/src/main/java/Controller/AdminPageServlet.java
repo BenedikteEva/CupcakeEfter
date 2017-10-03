@@ -33,29 +33,12 @@ public class AdminPageServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            //Henter brugens input
-            String adminUserName = request.getParameter("adminUsername");
-            String adminPassword = request.getParameter("adminPassword");
-            System.out.println("AdminLoginServlet");
-
-            //Laver user objekt
-            Admin adminLogin = new Admin();
-            adminLogin.setAdminUserName(adminUserName);
-            adminLogin.setAdminPassword(adminPassword);
             
-            UserMapper userMapper = new UserMapper();
-            boolean adminValidate = userMapper.godkendAdmin(adminLogin);
-            if (adminValidate) {
-                //Sætter et key value pair så det kan hentes senere med getAttribute("key")
-                //request.setAttribute("adminUserName", adminUserName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
-                HttpSession session = request.getSession();
-                session.setAttribute(adminUserName, out);
-                session.setAttribute(adminPassword, out);
-                                
-                request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
-            } else {
-                request.getRequestDispatcher("/index.html").forward(request, response);
-            }
+
+            
+            
+            
+            
             
         }
     }

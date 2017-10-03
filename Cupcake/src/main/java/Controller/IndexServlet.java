@@ -29,26 +29,9 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             
-            // Laver session object 
-            // !Læs evt mere om sessions her: http://www.tutorialspoint.com/servlets/servlets-session-tracking.htm
-            // !https://netbeans.org/kb/docs/javaee/ecommerce/manage-sessions.html
-            // !https://www.journaldev.com/1907/java-session-management-servlet-httpsession-url-rewriting
-            HttpSession session = request.getSession();
             
-            String titel; 
-            if(session.isNew()) {
-                
-                titel = "Welcome to our cupcakes";
-                out.println("<H1 ALIGN=\\\"CENTER\\\">\" + titel + \"</H1>\\nn");
-            } else {
-                titel = "Welcome back!";
-                out.println("<H1 ALIGN=\\\"CENTER\\\">\" + titel + \"</H1>\\nn");
-            }
             
-            //TODO Metode der checker om det er ny eller gammel user og henter sessions id.
-            //Se eksempel i link.
             
             
         }

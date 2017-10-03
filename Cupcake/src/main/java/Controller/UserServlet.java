@@ -34,46 +34,10 @@ public class UserServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            String name = request.getParameter("username");
-            String password = request.getParameter("password");
-            String passwordrepeat = request.getParameter("passwordrepeat");
-            String email = request.getParameter("email");
-
-            //System.out.print(name + ingredients + instruct);
-//            if (!password.equalsIgnoreCase(passwordrepeat)){
-////                System.out.println("passwords don't match try again");
-//                request.getRequestDispatcher("registration.jsp").forward(request, response);
-//            }
-//            else{
-            request.setAttribute("username", name);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-//             request.getRequestDispatcher("products.jsp").forward(request, response);
-
-            //Vi opretter et user objekt og setter navn, password og email til det som brugeren har indtastet
-            User user = new User();
-            user.setUserName(name);
-            user.setPassword(password);
-            user.setEmail(email);
             
-            //Vi laver objektet usermapper
-            UserMapper usermapper = new UserMapper();
             
-            //Bruger addUser til at indsætte user i databasen
-            //Kan evt. bruge userRegistered til at verificer at brugeren blev oprettet.
-            //Kræver dog at vi ændre i databasen og ændrer addUser metoden
-            try {
-                int userRegistered = usermapper.addUser(user);
-            } catch (Exception ex) {
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
             
-            request.getRequestDispatcher("products.jsp").forward(request, response);
-            HttpSession session = request.getSession();
 
-//          
-
-//}
         }
     }
 
