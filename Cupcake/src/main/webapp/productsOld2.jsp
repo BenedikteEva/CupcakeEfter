@@ -1,9 +1,9 @@
-<%-- 
+%-- 
     Document   : products
     Created on : 21-09-2017, 10:57:03
     Author     : Ejer
 --%>
-<%@page import="domain.Cart"%>
+
 <%@page import="domain.User"%>
 <%@page import="domain.LineItem"%>
 <%@page import="java.util.ArrayList"%>
@@ -104,9 +104,7 @@
             <% double cupcakeprice = 0;
                 double typeCupCakeprice = 0;
                 int qty = 0;
-                String cupcakename = null;
-                ArrayList<LineItem> shoppingCart = new ArrayList<>();
-            %>
+                String cupcakename = null;%>
 
 
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
@@ -149,33 +147,31 @@
 
                 <%-- her kan man trykke og se sin cupcake på et tidspunkt skal der også et billede med --%> 
                 <form name="formProducts" action="/NewProductControlServlet/processForm" method="POST">
-                    <%--   <div class="flex-container">
+                    <div class="flex-container">
                         <div id="box">    
                             <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
                         </div>
-                    </div> --%>
-                    <%--
+                    </div>
+                    <%
                         rucc = new RendUtilCupCake();
                         try {
                             if (request.getParameter("cupcakeshow") != null) {
                                 String top = (String) request.getParameter("topname");
                                 String bot = (String) request.getParameter("bottomname");
-                                request.getSession().setAttribute("top", top);
-                                request.getSession().setAttribute("bot", bot);
                                 cupcakename = rucc.createCakeName(bot, top);
                                 cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                                request.getSession().setAttribute("cupcakename", cupcakename);
-                                request.getSession().setAttribute("cupcakeprice", cupcakeprice);
-
+                                session.setAttribute("cupcakename", cupcakename);
+                                session.setAttribute("cupcakeprice", cupcakeprice);
+                                session.setAttribute("top", top);
+                                session.setAttribute("bot", bot);
                                 out.println("<a>" + cupcakename + "</a><td><td>");
                                 out.println("<a>" + cupcakeprice + "</a>");
-
                             } else {
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-                    --%>
+                    %>
 
 
                     <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
@@ -188,37 +184,28 @@
                     <%
                         try {
                             if (request.getParameter("shoppingcart") != null) {
-                                Cart cart = new Cart();
-
+                                List<LineItem> shoppingCart = new ArrayList<>();
                                 qty = Integer.parseInt(request.getParameter("quantity"));
-                                String top = (String) request.getParameter("topname");
-                                String bot = (String) request.getParameter("bottomname");
-                                request.getSession().setAttribute("top", top);
-                                request.getSession().setAttribute("bot", bot);
+                                String top = request.getParameter("topname");
+                                String bot = request.getParameter("bottomname");
+                                double topprice = cupcakeList.getToppingPricebyName(top);
+                                double botprice = cupcakeList.getBottomPricebyName(bot);
                                 cupcakename = rucc.createCakeName(bot, top);
-                                cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                                request.getSession().setAttribute("cupcakename", cupcakename);
-                                request.getSession().setAttribute("cupcakeprice", cupcakeprice);
-
+                                cupcakeprice = topprice + botprice;
                                 double totalprice = (qty * cupcakeprice);
-                                request.getSession().setAttribute("totalprice", totalprice);
-
-                                LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
+                                LineItem li = new LineItem(qty, (cupcakename), cupcakeprice, totalprice);
 //                           
                                 shoppingCart.add(li);
-
                                 request.getSession().setAttribute("li", li);
                                 request.getSession().setAttribute("shoppingCart", shoppingCart);
-
+                                
                                 out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
                                 out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
                             } else {
-
                             }
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
-
                     %>
 
 
