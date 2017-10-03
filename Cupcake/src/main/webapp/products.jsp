@@ -105,7 +105,7 @@
                 double typeCupCakeprice = 0;
                 int qty = 0;
                 String cupcakename = null;
-                ArrayList<LineItem> shoppingCart = new ArrayList<>();
+                ArrayList<LineItem> shoppingCart;
             %>
 
 
@@ -178,17 +178,19 @@
                     --%>
 
 
+
                     <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
                     <div id="box">
                         Quantity
                         <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
                     </div>
                     <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
-
+                    <% shoppingCart = new ArrayList<>();%>
                     <%
+
                         try {
+
                             if (request.getParameter("shoppingcart") != null) {
-                                Cart cart = new Cart();
 
                                 qty = Integer.parseInt(request.getParameter("quantity"));
                                 String top = (String) request.getParameter("topname");
@@ -204,14 +206,14 @@
                                 request.getSession().setAttribute("totalprice", totalprice);
 
                                 LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
-//                           
-                                shoppingCart.add(li);
 
-                                request.getSession().setAttribute("li", li);
-                                request.getSession().setAttribute("shoppingCart", shoppingCart);
+                                shoppingCart.add(li);
 
                                 out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
                                 out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
+                                request.getSession().setAttribute("li", li);
+                                request.getSession().setAttribute("shoppingCart", shoppingCart);
+
                             } else {
 
                             }
