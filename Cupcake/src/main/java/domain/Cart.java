@@ -7,7 +7,7 @@ import domain.LineItem;
  *
  * @author Ticondrus
  */
-public class ShoppingeCart {
+public class Cart {
     
 ArrayList<LineItem> LineItems =  new ArrayList<LineItem>();
 
