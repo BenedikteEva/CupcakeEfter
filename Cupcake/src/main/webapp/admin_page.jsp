@@ -48,11 +48,11 @@
                             </a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="#">Order History</a>
+                            <a class="nav-link text-uppercase text-expanded" href="admin_page.jsp">Customers Order</a>
                         </li>
-                        <li class="nav-item px-lg-4">
+                        <!--<li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="index.jsp">Logout</a>
                         </li>
