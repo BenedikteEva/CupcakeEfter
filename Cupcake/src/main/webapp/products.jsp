@@ -105,7 +105,7 @@
                 double typeCupCakeprice = 0;
                 int qty = 0;
                 String cupcakename = null;
-                ArrayList<LineItem> shoppingCart;
+
             %>
 
 
@@ -127,9 +127,11 @@
 
                 <%                    UserMapper um = new UserMapper();
                     User user = (User) session.getAttribute("user");
+
                     if (user != null) {
                         out.println("<div class=column><h2><br>Hello  " + user.getUserName() + "</h2></div><br>");
                         out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
+
                     }
                 %>
 
@@ -148,24 +150,24 @@
                 </div>
 
                 <%-- her kan man trykke og se sin cupcake på et tidspunkt skal der også et billede med --%> 
-                <form name="formProducts" action="/NewProductControlServlet/processForm" method="POST">
-                    <%--   <div class="flex-container">
-                        <div id="box">    
-                            <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
-                        </div>
-                    </div> --%>
-                    <%--
-                        rucc = new RendUtilCupCake();
-                        try {
-                            if (request.getParameter("cupcakeshow") != null) {
-                                String top = (String) request.getParameter("topname");
-                                String bot = (String) request.getParameter("bottomname");
-                                request.getSession().setAttribute("top", top);
-                                request.getSession().setAttribute("bot", bot);
-                                cupcakename = rucc.createCakeName(bot, top);
-                                cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                                request.getSession().setAttribute("cupcakename", cupcakename);
-                                request.getSession().setAttribute("cupcakeprice", cupcakeprice);
+
+                <%--   <div class="flex-container">
+                    <div id="box">    
+                        <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
+                    </div>
+                </div> --%>
+                <%--
+                    rucc = new RendUtilCupCake();
+                    try {
+                        if (request.getParameter("cupcakeshow") != null) {
+                            String top = (String) request.getParameter("topname");
+                            String bot = (String) request.getParameter("bottomname");
+                            request.getSession().setAttribute("top", top);
+                            request.getSession().setAttribute("bot", bot);
+                            cupcakename = rucc.createCakeName(bot, top);
+                            cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+                            request.getSession().setAttribute("cupcakename", cupcakename);
+                            request.getSession().setAttribute("cupcakeprice", cupcakeprice);
 
                                 out.println("<a>" + cupcakename + "</a><td><td>");
                                 out.println("<a>" + cupcakeprice + "</a>");
@@ -175,17 +177,19 @@
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-                    --%>
+                --%>
 
 
 
-                    <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
-                    <div id="box">
-                        Quantity
-                        <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
-                    </div>
-                    <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
-                    <% shoppingCart = new ArrayList<>();%>
+                <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
+                <div id="box">
+                    Quantity
+                    <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
+                </div>
+                <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
+                <%-- shoppingCart = new ArrayList<>();--%>
+                <form name="formShoppingCart" action="ShoppingCartServlet" method="POST">
+
                     <%
 
                         try {
@@ -204,32 +208,31 @@
 
                                 double totalprice = (qty * cupcakeprice);
                                 request.getSession().setAttribute("totalprice", totalprice);
-
                                 LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
 
-                                shoppingCart.add(li);
+                                ArrayList<LineItem> shoppingCart = new ArrayList<>();
 
-                                out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
-                                out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
-                                request.getSession().setAttribute("li", li);
-                                request.getSession().setAttribute("shoppingCart", shoppingCart);
+                                if (li != null) {
 
-                            } else {
+                                    shoppingCart.add(li);
+
+                                    out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
+                                    out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
+                                    request.getSession().setAttribute("shoppingCart", shoppingCart);
+
+                                } else {
+
+                                }
 
                             }
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
 
+
                     %>
 
-
-
-                    <button type="submit" value="action" name="checkout" >Checkout </button>  
-
-
-
-
+                    <button type="submit" name="checkout" >Checkout </button>  
                 </form>
 
                 <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
