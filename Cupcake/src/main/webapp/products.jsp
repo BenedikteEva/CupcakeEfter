@@ -101,11 +101,11 @@
 
 
 
-        
+
 
 
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
-            <%--List<LineItem> shoppingCart = new ArrayList<>();--%>
+
             <% RendUtilCupCake rucc = new RendUtilCupCake();%>
             <%
                 List<Topping> toppingList = cupcakeList.getAllTopping();
@@ -122,6 +122,7 @@
 
                 <%                    UserMapper um = new UserMapper();
                     User user = (User) session.getAttribute("user");
+                    
 
                     if (user != null) {
                         out.println("<div class=column><h2><br>Hello  " + user.getUserName() + "</h2></div><br>");
@@ -185,24 +186,27 @@
                         <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
                     </div>
 
-                    <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
-            
+                    <button type="submit" value=action name="shoppingCart" >add to shoppingcart   </button>   
 
 
-                   
+
+
                     <%
                         try {
-                            if (request.getParameter("shoppingcart") != null) {
-                                out.println("<a> you have added: " + request.getSession().getAttribute("li") + "to your shoppingcart</a> ");
-                             out.println("<a> you have : " + (List)request.getSession().getAttribute("shopppingCart") + "in your shoppingcart</a> ");
+                            if (request.getParameter("shoppingCart") != null) {
+ 
+                                out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
+                                out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
+                             
+                                
                             } else {
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     %>
-                    
-                  
+
+
                     <button type="submit" value="action" name="checkout">Checkout </button>  
                 </form>
 

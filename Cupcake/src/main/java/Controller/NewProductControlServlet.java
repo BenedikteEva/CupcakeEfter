@@ -6,6 +6,7 @@
 package Controller;
 
 import Utilities.RendUtilCupCake;
+import Utilities.ShoppingCart;
 import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
 import data.LineItemsMapper;
@@ -48,19 +49,23 @@ public class NewProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
+         HttpSession session = request.getSession();
+List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
             //Sessionen kaldes
-            HttpSession session = request.getSession();
+           
 
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
+            
 
             switch (origin) {
 
                 case "addProduct":
+
                     String checkout = request.getParameter("checkout");
                     RendUtilCupCake rucc = new RendUtilCupCake();
                     CupcakeMapper cupcakeList = new CupcakeMapper();
@@ -68,23 +73,30 @@ public class NewProductControlServlet extends HttpServlet {
                     double totalprice;
                     int qty;
                     String cupcakename;
-                    List<LineItem> shoppingCart = new ArrayList<>();
-                    
+
                     if (checkout == null) {
+
                         qty = Integer.parseInt(request.getParameter("quantity"));
                         String top = (String) request.getParameter("topname");
                         String bot = (String) request.getParameter("bottomname");
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
+
                         LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
+                        request.setAttribute("li", li);
 
-                        shoppingCart.add(li);
-                        request.getSession().setAttribute("li", li);
+                        if (cart == null) {
 
-                        request.getSession().setAttribute("shoppingCart", shoppingCart);
-                        request.getRequestDispatcher("products.jsp").forward(request, response);
-
+                            cart = new ArrayList<>();
+                            session.setAttribute("cart", cart);
+                            cart.add(li);
+                            request.getRequestDispatcher("products.jsp").forward(request, response);
+                        } if(cart.size()>0){
+                            cart.add(li);
+                            
+                            request.getRequestDispatcher("products.jsp").forward(request, response);
+                        }
                     } else {
 
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
