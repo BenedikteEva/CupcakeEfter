@@ -99,14 +99,9 @@
 
             </div>    
 
-            <input type="hidden" name="origin" value="Data from the hidden field" >
 
-            <% double cupcakeprice = 0;
-                double typeCupCakeprice = 0;
-                int qty = 0;
-                String cupcakename = null;
 
-            %>
+        
 
 
             <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
@@ -134,6 +129,7 @@
 
                     }
                 %>
+
 
 
                 <div class="flex-container">
@@ -179,18 +175,21 @@
                         }
                 --%>
 
+                <form id="addProduct" action="NewProductControlServlet" method="POST">
+                    <input type="hidden" name="origin" value="addProduct">
+
+                    <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
+
+                    <div id="box">
+                        Quantity
+                        <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
+                    </div>
+
+                    <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
+                    <%-- shoppingCart = new ArrayList<>();--%>
 
 
-                <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
-                <div id="box">
-                    Quantity
-                    <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
-                </div>
-                <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
-                <%-- shoppingCart = new ArrayList<>();--%>
-                <form name="formShoppingCart" action="ShoppingCartServlet" method="POST">
-
-                    <%
+                    <%--
 
                         try {
 
@@ -218,21 +217,28 @@
 
                                     out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
                                     out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
-                                    request.getSession().setAttribute("shoppingCart", shoppingCart);
+                                   request.getSession().setAttribute("shoppingCart", shoppingCart);
 
-                                } else {
-
-                                }
-
+                                } 
                             }
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
 
 
+                    --%>
+                    <%
+                        try {
+                            if (request.getParameter("shoppingcart") != null) {
+                                out.println("<a> you have added: " + session.getAttribute("li") + "to your shoppingcart</a> ");
+                              out.println("<a> you have : " + session.getAttribute("shopppingCart") + "in your shoppingcart</a> ");
+                            } else {
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     %>
-
-                    <button type="submit" name="checkout" >Checkout </button>  
+                    <button type="submit" value="action" name="checkout">Checkout </button>  
                 </form>
 
                 <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>

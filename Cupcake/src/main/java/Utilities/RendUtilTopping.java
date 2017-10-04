@@ -15,7 +15,7 @@ public class RendUtilTopping {
         sb.append("<table>\n"
                 + "<tr><th>Topping</th><th>Pris</th><th></th><th></th></tr>\n");
         for (Topping t : topps) {
-            sb.append("<tr><form action=\"products.jsp\">");
+            sb.append("<tr><form action=\"NewProductControlServlet\" name=\"toppings\">");
             sb.append("<td>").append(t.getTopname()).append("</td>");
             sb.append("<td>").append(t.getTop_Price()).append("</td>");
             sb.append("<td> \n <input type=\"checkbox\" name=\"topname\" value=\"" + t.getTopname() + "\"><br>\n\n</td>");

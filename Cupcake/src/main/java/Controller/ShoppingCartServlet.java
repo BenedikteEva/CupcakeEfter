@@ -35,7 +35,7 @@ public class ShoppingCartServlet extends HttpServlet {
             out.println("<title>Servlet ShoppingCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShoppingCartServlet at " + request.getSession().getAttribute("shoppingCart") + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

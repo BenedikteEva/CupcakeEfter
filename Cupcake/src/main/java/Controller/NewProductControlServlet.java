@@ -8,6 +8,7 @@ package Controller;
 import Utilities.RendUtilCupCake;
 import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
+import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
 import domain.User;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,87 +57,105 @@ public class NewProductControlServlet extends HttpServlet {
 
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
-            RendUtilCupCake rucc = new RendUtilCupCake();
-            CupcakeMapper cupcakeList = new CupcakeMapper();
-            switch ("origin") {
+
+            switch (origin) {
 
                 case "checkout":
-                    request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+                    request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
                     break;
 
-                case "cupcakeshow":
-                    String[] chosenName = request.getParameterValues("checkbox");
-                    String topname = (String) session.getAttribute("top");
-                    String botname = (String) session.getAttribute("bot");
+                case "addProduct":
+                 
+                    RendUtilCupCake rucc = new RendUtilCupCake();
+                    CupcakeMapper cupcakeList = new CupcakeMapper();
+                    double cupcakeprice;
+                    double typeCupCakeprice;
+                    int qty;
+                    String cupcakename;
 
-                    if (topname != null && botname != null) {
-//                        double cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(botname), cupcakeList.getToppingPricebyName(topname));
-////                        double cupcakeprice = (double) session.getAttribute("cupcakeprice");
-//                        request.setAttribute("cupcakeprice", cupcakeprice);
-//                        session.setAttribute("cupcakeprice", cupcakeprice);
-//                         String cupcakename = rucc.createCakeName(botname, topname);
-////                        String cupcakename = (String) session.getAttribute("cupcakename");
-//
-//                        session.setAttribute("cupcakename", cupcakename);
-//                        request.setAttribute("cupcakename", cupcakename);
-//
-//                        request.getRequestDispatcher("products.jsp").forward(request, response);
-                    }
+                    qty = Integer.parseInt(request.getParameter("quantity"));
+                    String top = (String) request.getParameter("topname");
+                    String bot = (String) request.getParameter("bottomname");
+                    cupcakename = rucc.createCakeName(bot, top);
+                    cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+                    double totalprice = (qty * cupcakeprice);
+//                       
+                    LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
 
-                    break;
+                    List<LineItem> shoppingCart = new ArrayList<>();
 
-                case "shoppingcart":
-                    try {
+                    shoppingCart.add(li);
+                    request.getSession().setAttribute("li", li);
+                    request.getSession().setAttribute("shoppingCart", shoppingCart);
+                    request.getRequestDispatcher("products.jsp").forward(request, response);
+//                 
+         
+            break;
 
-                        List<LineItem> shoppingCart = new ArrayList<>();
-
-                        int qty = Integer.parseInt((String) request.getAttribute("quantity"));
-
-                        if (qty >= 0) {
-
-                            double typeCupCakeprice = qty * (double) session.getAttribute("cupcakeprice");
-                            session.setAttribute("typeCupCakeprice", typeCupCakeprice);
-                            LineItem li = new LineItem(1, "yummi", 20, 20);
-//                            LineItem li = new LineItem(qty, (String) session.getAttribute("cupcakename"), (double) session.getAttribute("cupcakeprice"), typeCupCakeprice);
-                            shoppingCart.add(li);
-                            request.setAttribute("li", li);
-                            request.setAttribute("shoppingCart", shoppingCart);
-                            getServletContext().getRequestDispatcher("products.jsp").forward(request, response);
-//                            request.getRequestDispatcher("products.jsp").forward(request, response);
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-
-                    break;
-                default:
+        
+    
+    default:
                     throw new AssertionError();
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex
 
+    
+        ) {
+            ex.printStackTrace();
     }
 
+}
+
+//private void addProduct(LineItem li, HttpServletRequest request) throws NumberFormatException, SQLException {
+//        HttpSession session = request.getSession();
+//        RendUtilCupCake rucc = new RendUtilCupCake();
+//        CupcakeMapper cupcakeList = new CupcakeMapper();
+//        double cupcakeprice;
+//        double typeCupCakeprice;
+//        int qty;
+//        String cupcakename;
+//
+//        qty = Integer.parseInt(request.getParameter("quantity"));
+//        String top = (String) request.getParameter("topname");
+//        String bot = (String) request.getParameter("bottomname");
+//        cupcakename = rucc.createCakeName(bot, top);
+//        cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+//        double totalprice = (qty * cupcakeprice);
+////                       
+//        li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
+//
+//        ArrayList<LineItem> shoppingCart = new ArrayList<>();
+//
+//        shoppingCart.add(li);
+//        request.getSession().setAttribute("li", li);
+//        request.getSession().setAttribute("shoppingCart", shoppingCart);
+//
+//    }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
 
-        } catch (SQLException ex) {
+        
+
+
+
+} catch (SQLException ex) {
             Logger.getLogger(NewProductControlServlet.class
-                    .getName()).log(Level.SEVERE, null, ex);
+
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -148,14 +168,22 @@ public class NewProductControlServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            
+           
             processRequest(request, response);
+ response.sendRedirect("/products.jsp");
+        
 
-        } catch (SQLException ex) {
+
+
+} catch (SQLException ex) {
             Logger.getLogger(NewProductControlServlet.class
-                    .getName()).log(Level.SEVERE, null, ex);
+
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -165,7 +193,7 @@ public class NewProductControlServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
