@@ -175,7 +175,7 @@
                         }
                 --%>
 
-                <form id="addProduct" action="NewProductControlServlet" method="POST">
+                <form id="formProducts" action="NewProductControlServlet" method="POST">
                     <input type="hidden" name="origin" value="addProduct">
 
                     <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
@@ -186,58 +186,23 @@
                     </div>
 
                     <button type="submit" value=action name="shoppingcart" >add to shoppingcart   </button>   
-                    <%-- shoppingCart = new ArrayList<>();--%>
+            
 
 
-                    <%--
-
-                        try {
-
-                            if (request.getParameter("shoppingcart") != null) {
-
-                                qty = Integer.parseInt(request.getParameter("quantity"));
-                                String top = (String) request.getParameter("topname");
-                                String bot = (String) request.getParameter("bottomname");
-                                request.getSession().setAttribute("top", top);
-                                request.getSession().setAttribute("bot", bot);
-                                cupcakename = rucc.createCakeName(bot, top);
-                                cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                                request.getSession().setAttribute("cupcakename", cupcakename);
-                                request.getSession().setAttribute("cupcakeprice", cupcakeprice);
-
-                                double totalprice = (qty * cupcakeprice);
-                                request.getSession().setAttribute("totalprice", totalprice);
-                                LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
-
-                                ArrayList<LineItem> shoppingCart = new ArrayList<>();
-
-                                if (li != null) {
-
-                                    shoppingCart.add(li);
-
-                                    out.println("<a> you have added: " + li.toString() + "to your shoppingcart</a> ");
-                                    out.println("<a> you have : " + shoppingCart.toString() + "in your shoppingcart</a> ");
-                                   request.getSession().setAttribute("shoppingCart", shoppingCart);
-
-                                } 
-                            }
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
-
-
-                    --%>
+                   
                     <%
                         try {
                             if (request.getParameter("shoppingcart") != null) {
-                                out.println("<a> you have added: " + session.getAttribute("li") + "to your shoppingcart</a> ");
-                              out.println("<a> you have : " + session.getAttribute("shopppingCart") + "in your shoppingcart</a> ");
+                                out.println("<a> you have added: " + request.getSession().getAttribute("li") + "to your shoppingcart</a> ");
+                             out.println("<a> you have : " + (List)request.getSession().getAttribute("shopppingCart") + "in your shoppingcart</a> ");
                             } else {
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     %>
+                    
+                  
                     <button type="submit" value="action" name="checkout">Checkout </button>  
                 </form>
 

@@ -60,102 +60,66 @@ public class NewProductControlServlet extends HttpServlet {
 
             switch (origin) {
 
-                case "checkout":
-                    request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
-                    break;
-
                 case "addProduct":
-                 
+                    String checkout = request.getParameter("checkout");
                     RendUtilCupCake rucc = new RendUtilCupCake();
                     CupcakeMapper cupcakeList = new CupcakeMapper();
                     double cupcakeprice;
-                    double typeCupCakeprice;
+                    double totalprice;
                     int qty;
                     String cupcakename;
-
-                    qty = Integer.parseInt(request.getParameter("quantity"));
-                    String top = (String) request.getParameter("topname");
-                    String bot = (String) request.getParameter("bottomname");
-                    cupcakename = rucc.createCakeName(bot, top);
-                    cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                    double totalprice = (qty * cupcakeprice);
-//                       
-                    LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
-
                     List<LineItem> shoppingCart = new ArrayList<>();
+                    
+                    if (checkout == null) {
+                        qty = Integer.parseInt(request.getParameter("quantity"));
+                        String top = (String) request.getParameter("topname");
+                        String bot = (String) request.getParameter("bottomname");
+                        cupcakename = rucc.createCakeName(bot, top);
+                        cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
+                        totalprice = (qty * cupcakeprice);
+                        LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
 
-                    shoppingCart.add(li);
-                    request.getSession().setAttribute("li", li);
-                    request.getSession().setAttribute("shoppingCart", shoppingCart);
-                    request.getRequestDispatcher("products.jsp").forward(request, response);
-//                 
-         
-            break;
+                        shoppingCart.add(li);
+                        request.getSession().setAttribute("li", li);
 
-        
-    
-    default:
+                        request.getSession().setAttribute("shoppingCart", shoppingCart);
+                        request.getRequestDispatcher("products.jsp").forward(request, response);
+
+                    } else {
+
+                        request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
+
+                    }
+                    break;
+
+                default:
                     throw new AssertionError();
             }
 
-        } catch (Exception ex
-
-    
-        ) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+        }
+
     }
 
-}
-
-//private void addProduct(LineItem li, HttpServletRequest request) throws NumberFormatException, SQLException {
-//        HttpSession session = request.getSession();
-//        RendUtilCupCake rucc = new RendUtilCupCake();
-//        CupcakeMapper cupcakeList = new CupcakeMapper();
-//        double cupcakeprice;
-//        double typeCupCakeprice;
-//        int qty;
-//        String cupcakename;
-//
-//        qty = Integer.parseInt(request.getParameter("quantity"));
-//        String top = (String) request.getParameter("topname");
-//        String bot = (String) request.getParameter("bottomname");
-//        cupcakename = rucc.createCakeName(bot, top);
-//        cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-//        double totalprice = (qty * cupcakeprice);
-////                       
-//        li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
-//
-//        ArrayList<LineItem> shoppingCart = new ArrayList<>();
-//
-//        shoppingCart.add(li);
-//        request.getSession().setAttribute("li", li);
-//        request.getSession().setAttribute("shoppingCart", shoppingCart);
-//
-//    }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
 
-        
-
-
-
-} catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(NewProductControlServlet.class
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -168,22 +132,16 @@ public class NewProductControlServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            
-           
+
             processRequest(request, response);
- response.sendRedirect("/products.jsp");
-        
+            response.sendRedirect("/products.jsp");
 
-
-
-} catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(NewProductControlServlet.class
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -193,7 +151,7 @@ public class NewProductControlServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
