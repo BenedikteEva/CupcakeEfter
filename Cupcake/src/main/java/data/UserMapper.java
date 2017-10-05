@@ -146,17 +146,13 @@ public class UserMapper {
     }
 
     public void changeUserBalance(String username, double b) throws Exception {
-        User u = null;
-        double total = 0;
-        UserRendUtil uru = new UserRendUtil();
+     
+        
         try {
             Connection conn = new Connector().getConnection();
             String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
             PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
-            total = 15;
-//           total = inv.getTotal(); denne skal skrives total er alle de købte kager i en handel lagt sammen 
-            b = uru.calculateBalance(getUserData(username).getBalance(), total);
-
+          
             balancePstmt.setDouble(1, b);
             balancePstmt.setString(2, username);
 
