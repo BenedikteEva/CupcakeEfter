@@ -15,7 +15,6 @@
         <h1>ShoppingCart</h1>
         
         <%
-                                out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
                                 out.println("<br> </br>");
                                 out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
         %>
