@@ -104,10 +104,10 @@
 
 
 
-            <%CupcakeMapper cupcakeList = new CupcakeMapper();%>
+            <%CupcakeMapper cupcakeList = new CupcakeMapper();
 
-            <% RendUtilCupCake rucc = new RendUtilCupCake();%>
-            <%
+             RendUtilCupCake rucc = new RendUtilCupCake();
+            
                 List<Topping> toppingList = cupcakeList.getAllTopping();
                 List<Bottom> bottomList = cupcakeList.getAllBottom();
             %>
