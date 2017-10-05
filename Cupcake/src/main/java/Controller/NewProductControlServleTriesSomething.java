@@ -6,7 +6,7 @@
 package Controller;
 
 import Utilities.RendUtilCupCake;
-import Utilities.ShoppingCart;
+import domain.ShoppingCart;
 import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
 import data.LineItemsMapper;
@@ -35,7 +35,7 @@ import static sun.swing.SwingUtilities2.submit;
  * @author Ejer
  */
 @WebServlet(name = "NewProductControlServlet", urlPatterns = {"/NewProductControlServlet"})
-public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet {
+public class NewProductControlServleTriesSomething extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,7 +51,7 @@ public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
-
+ ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
@@ -63,7 +63,7 @@ public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet
 
                 case "addProduct":
 
-                    ShoppingCart cart = null;
+                 
                     String checkout = request.getParameter("checkout");
                     RendUtilCupCake rucc = new RendUtilCupCake();
                     CupcakeMapper cupcakeList = new CupcakeMapper();
@@ -90,7 +90,7 @@ public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet
                             cart.addProduct(li);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
 
-                        } else {
+                        } if (cart!=null) {
 
                             cart.addProduct(li);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
@@ -128,7 +128,7 @@ public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet
             processRequest(request, response);
 
         } catch (SQLException ex) {
-            Logger.getLogger(NewProductControlServletWhereItriesSomethingNew.class
+            Logger.getLogger(NewProductControlServleTriesSomething.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -150,7 +150,7 @@ public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet
             response.sendRedirect("/products.jsp");
 
         } catch (SQLException ex) {
-            Logger.getLogger(NewProductControlServletWhereItriesSomethingNew.class
+            Logger.getLogger(NewProductControlServleTriesSomething.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }

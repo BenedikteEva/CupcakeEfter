@@ -100,13 +100,6 @@
             </div>    
 
 
-
-
-
-
-           
-
-
             <div class="bg-faded p-4 my-4">
                 <hr class="divider">
                 <h2 class="text-center text-lg text-uppercase my-0">Order Our Cupcakes
@@ -116,8 +109,7 @@
 
                 <%                    UserMapper um = new UserMapper();
                     User user = (User) session.getAttribute("user");
-                    
-
+ 
                     if (user != null) {
                         out.println("<div class=column><h2><br>User account for   " + user.getUserName() + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");

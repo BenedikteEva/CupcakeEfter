@@ -91,7 +91,15 @@ public class LineItem {
 
     @Override
     public String toString() {
-        return "InfoToAdmin{" + "invoiceId=" + invoiceId + ", pricePrCc=" + pricePrCc + ", totalPrice=" + totalPrice + ", quantity=" + quantity + ", cupcakeName=" + cupcakeName + '}';
+        return "\n" + quantity + "   " + cupcakeName+"  price a cupcake:  " + pricePrCc + "  totalPrice:  " + totalPrice + "\n\n";
     }
+    
+    
+    public String toString2() {
+        
+   
+     return "InfoToAdmin{" + "invoiceId=" + invoiceId + ", pricePrCc=" + pricePrCc + ", totalPrice=" + totalPrice + ", quantity=" + quantity + ", cupcakeName=" + cupcakeName + '}';
+    }
+
 
 }

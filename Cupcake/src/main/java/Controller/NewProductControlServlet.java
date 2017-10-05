@@ -6,7 +6,7 @@
 package Controller;
 
 import Utilities.RendUtilCupCake;
-import Utilities.ShoppingCart;
+import domain.ShoppingCart;
 import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
 import data.LineItemsMapper;
@@ -49,13 +49,12 @@ public class NewProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-
+//Sessionen kaldes
         HttpSession session = request.getSession();
         List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
-            //Sessionen kaldes
 
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
@@ -87,18 +86,28 @@ public class NewProductControlServlet extends HttpServlet {
                         if (cart == null) {
 
                             cart = new ArrayList<>();
+
                             session.setAttribute("cart", cart);
+
                             cart.add(li);
+
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                         if (cart.size() > 0) {
                             cart.add(li);
 
+                            double totalPriceInvoice = 0;
+                            for (int i = 0; i < cart.size(); i++) {
+                                totalPriceInvoice += cart.get(i).getTotalPrice();
+                            }
+                            User u = (User)session.getAttribute("user");
+                            double tempBalance = u.getBalance() - totalPriceInvoice;
+
+                            request.setAttribute("tempBalance", tempBalance);
+                            session.setAttribute("totalPriceInvoice", totalPriceInvoice);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                     } else {
-                        session.setAttribute("payUser", user);
-                        session.setAttribute("cart", cart);
 
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
