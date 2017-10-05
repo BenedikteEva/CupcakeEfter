@@ -30,9 +30,9 @@ public class ShoppingCart {
 
    
     /** 
-     * Add the specified Product to this ShoppingCart.
+     * Add the specified LineItem to this ShoppingCart.
      *
-     * @param p the Product to be added to this ShoppingCart.
+     * @param li the LineItem to be added to this ShoppingCart.
      */
     public void addProduct(LineItem li) {
 	cart.add(li);
@@ -45,7 +45,7 @@ public class ShoppingCart {
      */
     public String getContents() {
 	String s = "";
-	// Get the description of each Product in this ShoppingCart
+	// Get the description of each LineItemProduct in this ShoppingCart
 	// and append it to the end of a String, producing one long
 	// string describing all of the Products. 
 	for (int i=0; i<cart.size(); i++) {
@@ -57,35 +57,34 @@ public class ShoppingCart {
     }
 
     /**
-     * Get the ID of the customer who owns this ShoppingCart.
+     * Get the name of the customer who owns this ShoppingCart.
      * 
-     * @param the ID of the customer who owns this ShoppingCart.
+     * @param username of the customer who owns this ShoppingCart.
      */
     public String getUserName() {
 	return user.getUserName();
     }
 
     /**
-     * Get the number of Products contained in this ShoppingCart.
+     * Get the number of LineItem contained in this ShoppingCart.
      *
-     * @return the number of Products contained in this ShoppingCart.
+     * @return the number of LineItem contained in this ShoppingCart.
      */ 
     public int getItemCount() {
 	return cart.size();
     }
 
     /**
-     * Get the total price of all of the Products contained
+     * Get the total price of all of the LineItems contained
      * in this ShoppingCart.
      *
-     * @return the total price of all Products in this 
+     * @return the total price of all LineItems in this 
      *         ShoppingCart.
      */
     public double getTotalOrderPrice() {
 	double totalOrderPrice = 0;
-	// Get the price of each Product in this ShoppingCart and
-	// add it to the totalPrice.  Notice that polymorphism allows
-	// this method to work for both Products and DiscountProducts.
+	// Get the price of each LineItem in this ShoppingCart and
+	// add it to the totalPrice.  
 	for (int i=0; i<cart.size(); i++) {
 	    Object obj = cart.get(i);
 	    LineItem li = (LineItem)obj;
@@ -95,9 +94,9 @@ public class ShoppingCart {
     }
 
     /**
-     * Remove the specified product from this ShoppingCart.
+     * Remove the specified LineIte, from this ShoppingCart.
      *
-     * @param p the Product to be removed from this ShoppingCart.
+     * @param li the LineItem to be removed from this ShoppingCart.
      */
     public void removeLineItem(LineItem li) {
 	cart.remove(li);
