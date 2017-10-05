@@ -35,7 +35,7 @@ import static sun.swing.SwingUtilities2.submit;
  * @author Ejer
  */
 @WebServlet(name = "NewProductControlServlet", urlPatterns = {"/NewProductControlServlet"})
-public class NewProductControlServlet extends HttpServlet {
+public class NewProductControlServletWhereItriesSomethingNew extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,11 +51,10 @@ public class NewProductControlServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
-        List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
+
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
-            //Sessionen kaldes
 
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
@@ -64,6 +63,7 @@ public class NewProductControlServlet extends HttpServlet {
 
                 case "addProduct":
 
+                    ShoppingCart cart = null;
                     String checkout = request.getParameter("checkout");
                     RendUtilCupCake rucc = new RendUtilCupCake();
                     CupcakeMapper cupcakeList = new CupcakeMapper();
@@ -85,20 +85,17 @@ public class NewProductControlServlet extends HttpServlet {
                         request.setAttribute("li", li);
 
                         if (cart == null) {
-
-                            cart = new ArrayList<>();
+                            cart = new ShoppingCart(user);
                             session.setAttribute("cart", cart);
-                            cart.add(li);
+                            cart.addProduct(li);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
-                        }
-                        if (cart.size() > 0) {
-                            cart.add(li);
 
+                        } else {
+
+                            cart.addProduct(li);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                     } else {
-                        session.setAttribute("payUser", user);
-                        session.setAttribute("cart", cart);
 
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
@@ -131,7 +128,7 @@ public class NewProductControlServlet extends HttpServlet {
             processRequest(request, response);
 
         } catch (SQLException ex) {
-            Logger.getLogger(NewProductControlServlet.class
+            Logger.getLogger(NewProductControlServletWhereItriesSomethingNew.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -153,7 +150,7 @@ public class NewProductControlServlet extends HttpServlet {
             response.sendRedirect("/products.jsp");
 
         } catch (SQLException ex) {
-            Logger.getLogger(NewProductControlServlet.class
+            Logger.getLogger(NewProductControlServletWhereItriesSomethingNew.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
