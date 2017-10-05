@@ -113,9 +113,8 @@
                     if (user != null) {
                         out.println("<div class=column><h2><br>User account for   " + user.getUserName() + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
-                          out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
-                                        + " if you buy what is currently in your shopping cart</a>");
-
+                        out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
+                                + " if you buy what is currently in your shopping cart</a>");
 
                     }
                 %>
@@ -129,12 +128,11 @@
 
 
                 <form id="formShoppingCart" action="ShoppingCartServlet" method="POST">
-                    <input type="hidden" name="origin2" value="buyProducts">
+                   
+                    <input type="hidden" name="origin" value="buyMoreProducts">
 
-                 
 
-
-                    <button type="submit" value=action name="shoppingCart" >get more cakes </button>   
+                    <button type="submit" value=action name="shoppingcart" >get more cakes </button>   
 
 
                     <button type="submit" value="action" name="pay">Payment</button>  

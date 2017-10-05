@@ -1,7 +1,11 @@
 package Controller;
 
+import data.UserMapper;
+import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +36,29 @@ public class ShoppingCartServlet extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
          
-             String origin2 = request.getParameter("origin");
+             String origin = request.getParameter("origin");
+             User user = (User) session.getAttribute("user");
+            UserMapper um = new UserMapper();
+          switch (origin) {
+              
+                 case "buyMoreProducts":
+           
+                 try {
+                     um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
+                     
+                 } catch (Exception ex) {
+                     Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                 }request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+            break;
+              
+              case "shoppingcart":
+                  request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+                  break;
             
-         
+              
+           
+            
+          }
         }
     }
 
