@@ -34,6 +34,7 @@
                     User user = (User) session.getAttribute("user");
             out.println("<div class=column><h2><br>Dear  " + user.getUserName() + "</h2></div><br>");
              out.println("<a> you have bought : " + session.getAttribute("cart") + "  please enjoy:-)</a> ");
+              out.println("<a> Total Price : " + session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
                         out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
        %>
     </body>
