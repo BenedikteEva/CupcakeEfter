@@ -113,7 +113,7 @@
                     if (user != null) {
                         out.println("<div class=column><h2><br>User account for   " + user.getUserName() + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
-
+                        
                     }
                 %>
 

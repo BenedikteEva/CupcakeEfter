@@ -106,8 +106,8 @@
 
             <%CupcakeMapper cupcakeList = new CupcakeMapper();
 
-             RendUtilCupCake rucc = new RendUtilCupCake();
-            
+                RendUtilCupCake rucc = new RendUtilCupCake();
+
                 List<Topping> toppingList = cupcakeList.getAllTopping();
                 List<Bottom> bottomList = cupcakeList.getAllBottom();
             %>
@@ -122,7 +122,6 @@
 
                 <%                    UserMapper um = new UserMapper();
                     User user = (User) session.getAttribute("user");
-                    
 
                     if (user != null) {
                         out.println("<div class=column><h2><br>Hello  " + user.getUserName() + "</h2></div><br>");
@@ -194,13 +193,14 @@
                     <%
                         try {
                             if (request.getParameter("shoppingCart") != null) {
- 
+
                                 out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
                                 out.println("<br> </br>");
                                 out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
-                             out.println("<a>Your new balance will be: "+request.getAttribute("tempBalance")
-                                     +" if you buy what is currently in your shopping cart</a>");
-                                
+                                out.println("<br> </br>");
+                                out.println("<a>Your new balance will be: " + request.getAttribute("tempBalance")
+                                        + " if you buy what is currently in your shopping cart</a>");
+
                             } else {
                             }
                         } catch (Exception ex) {

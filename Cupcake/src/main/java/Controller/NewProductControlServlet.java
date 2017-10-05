@@ -70,6 +70,8 @@ public class NewProductControlServlet extends HttpServlet {
                     double totalprice;
                     int qty;
                     String cupcakename;
+                    double totalPriceInvoice = 0;
+                    double tempBalance = 0;
 
                     if (checkout == null) {
 
@@ -86,24 +88,25 @@ public class NewProductControlServlet extends HttpServlet {
                         if (cart == null) {
 
                             cart = new ArrayList<>();
-
                             session.setAttribute("cart", cart);
 
                             cart.add(li);
-
+                            for (int i = 0; i < cart.size(); i++) {
+                                totalPriceInvoice += cart.get(i).getTotalPrice();
+                            }
+                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
+                            request.setAttribute("tempBalance", tempBalance);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                         if (cart.size() > 0) {
                             cart.add(li);
-
-                            double totalPriceInvoice = 0;
                             for (int i = 0; i < cart.size(); i++) {
                                 totalPriceInvoice += cart.get(i).getTotalPrice();
                             }
-                            User u = (User)session.getAttribute("user");
-                            double tempBalance = u.getBalance() - totalPriceInvoice;
 
+                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
                             request.setAttribute("tempBalance", tempBalance);
+
                             session.setAttribute("totalPriceInvoice", totalPriceInvoice);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
