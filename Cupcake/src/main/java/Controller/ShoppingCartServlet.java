@@ -32,7 +32,7 @@ public class ShoppingCartServlet extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
          
-            
+             String origin2 = request.getParameter("origin");
             
          
         }

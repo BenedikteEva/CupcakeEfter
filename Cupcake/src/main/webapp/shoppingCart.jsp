@@ -109,54 +109,38 @@
 
                 <%                    UserMapper um = new UserMapper();
                     User user = (User) session.getAttribute("user");
- 
+
                     if (user != null) {
                         out.println("<div class=column><h2><br>User account for   " + user.getUserName() + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
-                        
+                          out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
+                                        + " if you buy what is currently in your shopping cart</a>");
+
+
                     }
                 %>
 
-  
-        <%
-                                out.println("<br> </br>");
-                                out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
-        %>
+
+                <%
+                    out.println("<br> </br>");
+                    out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
+                %>
 
 
 
                 <form id="formShoppingCart" action="ShoppingCartServlet" method="POST">
-                    <input type="hidden" name="origin" value="buyProducts">
+                    <input type="hidden" name="origin2" value="buyProducts">
 
-                    <%-- her kan man vælge hvor mange man vil have af en specifik cupcake   --%>
-
-
-                    <button type="submit" value=action name="shoppingCart" >add to shoppingcart   </button>   
+                 
 
 
+                    <button type="submit" value=action name="shoppingCart" >get more cakes </button>   
 
 
-                    <%
-                        try {
-                            if (request.getParameter("shoppingCart") != null) {
- 
-                                out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
-                                out.println("<br> </br>");
-                                out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
-                             
-                                
-                            } else {
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    %>
-
-
-                    <button type="submit" value="action" name="checkout">Checkout </button>  
+                    <button type="submit" value="action" name="pay">Payment</button>  
                 </form>
 
-                <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
+                <button type="button" style="background-color: red" id="cancel" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
 
             </div>
         </div>
@@ -173,6 +157,7 @@
         <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="script/popper/popper.min.js" type="text/javascript"></script>
         <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="script/javascript.js" type="text/javascript"></script>
 
     </body>
 </html>
