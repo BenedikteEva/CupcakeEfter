@@ -2,10 +2,13 @@ package data;
 
 import static data.DBConnector.getConnection;
 import domain.LineItem;
+import domain.Order;
+import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -89,6 +92,21 @@ public class InfoToAdminMapper {
 
         return name;
     }
+    public int addConfirmation(int user_id, String conf) throws SQLException{
+          Connection conn = Connector.getConnection();
+        String insertUser = "INSERT INTO orderlist (user_id, confirmation) VALUES (?, ?)";
+        PreparedStatement confPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+
+        confPstmt.setInt(1, user_id);
+        confPstmt.setString(2,conf);
+        
+        int result = confPstmt.executeUpdate();
+        ResultSet rs = confPstmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+        return id;
+    }
+ 
     
     
 

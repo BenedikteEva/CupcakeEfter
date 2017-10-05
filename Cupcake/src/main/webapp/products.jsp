@@ -182,7 +182,7 @@
 
                     <div id="box">
                         Quantity
-                        <input type="number" name="quantity" min="0" value="Quantity" placeholder="0" >
+                        <input type="number" name="quantity" min="-9000" value="Quantity" placeholder="0" >
                     </div>
 
                     <button type="submit" value=action name="shoppingCart" >add to shoppingcart   </button>   

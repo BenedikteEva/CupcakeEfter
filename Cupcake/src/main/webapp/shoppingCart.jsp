@@ -132,7 +132,7 @@
                     <input type="hidden" name="origin" value="buyMoreProducts">
 
 
-                    <button type="submit" value=action name="shoppingcart" >get more cakes </button>   
+                    <button type="button" onclick="location.href = 'products.jsp';" >get more cakes </button>   
 
 
                     <button type="submit" value="action" name="pay">Payment</button>  

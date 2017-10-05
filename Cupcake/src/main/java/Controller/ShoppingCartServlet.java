@@ -1,5 +1,6 @@
 package Controller;
 
+import data.InfoToAdminMapper;
 import data.UserMapper;
 import domain.User;
 import java.io.IOException;
@@ -32,34 +33,42 @@ public class ShoppingCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession session = request.getSession();
-        
+        HttpSession session = request.getSession();
+
         try (PrintWriter out = response.getWriter()) {
-         
-             String origin = request.getParameter("origin");
-             User user = (User) session.getAttribute("user");
+
+            String origin = request.getParameter("origin");
+            User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
-          switch (origin) {
-              
-                 case "buyMoreProducts":
-           
-                 try {
-                     um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
-                     
-                 } catch (Exception ex) {
-                     Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
-                 }request.getRequestDispatcher("confirmation.jsp").forward(request, response);
-            break;
-              
-              case "shoppingcart":
-                  request.getRequestDispatcher("confirmation.jsp").forward(request, response);
-                  break;
-            
-              
-           
-            
-          }
+            InfoToAdminMapper itam= new InfoToAdminMapper();
+            switch (origin) {
+
+                case "buyMoreProducts":
+
+                    try {
+                        um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
+                         
+                        String invoicetext = ""+user.getUserName()+"\n\n"+session.getAttribute("cart")+"\n\n Total"
+                                +session.getAttribute("totalInvoicePrice")+ "\n\n Thank you for buying our CupCakes";
+                        
+                        itam.addConfirmation(user.getUser_id(), invoicetext);
+                        
+
+                    } catch (Exception ex) {
+                        Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+                    break;
+
+//                case "shoppingcart":
+//                    request.getRequestDispatcher("confirmation.jsp").forward(request, response);
+//                    break;
+                default:
+                    throw new AssertionError();
+            }
+
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
