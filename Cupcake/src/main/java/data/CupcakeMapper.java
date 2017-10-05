@@ -1,6 +1,6 @@
 package data;
 
-import static data.Connector.getConnection;
+import static data.DBConnector.getConnection;
 import domain.Bottom;
 import domain.CupCake;
 import domain.LineItem;
