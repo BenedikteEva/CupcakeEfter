@@ -15,6 +15,12 @@ import java.util.List;
  */
 public class UserRendUtil {
     
+    /**
+     * Her oprettes en velkomst tekst til en kunde bruger.
+     * @param userWelcome
+     * @return 
+     */
+    
     
     public static String user(String userWelcome) {
         StringBuilder sb = new StringBuilder();

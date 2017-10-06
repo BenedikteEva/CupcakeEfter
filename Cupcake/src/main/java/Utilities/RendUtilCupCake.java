@@ -13,6 +13,11 @@ import java.util.List;
  * @author Ejer
  */
 public class RendUtilCupCake {
+    
+    /**
+     * Her generes en liste af Cupcake.
+     * @param cuck 
+     */
 
     public static void cupcakeTable(List<CupCake> cuck) {
         StringBuilder sb = new StringBuilder();

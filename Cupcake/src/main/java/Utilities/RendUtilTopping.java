@@ -9,6 +9,12 @@ import java.util.List;
  * @author Bo Henriksen
  */
 public class RendUtilTopping {
+    
+    /**
+     * Her generes en liste af Toppings.
+     * @param topps
+     * @return 
+     */
 
     public static String toppingTable(List<Topping> topps) {
         StringBuilder sb = new StringBuilder();

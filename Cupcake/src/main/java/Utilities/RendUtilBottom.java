@@ -8,6 +8,12 @@ import java.util.List;
  * @author Bo Henriksen
  */
 public class RendUtilBottom {
+    
+    /**
+     * Her generes en liste af Bottom.
+     * @param boot
+     * @return 
+     */
 
     public static String bottomTable(List<Bottom> boot) {
         StringBuilder sb = new StringBuilder();

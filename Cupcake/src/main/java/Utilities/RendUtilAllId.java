@@ -8,6 +8,12 @@ import java.util.List;
  * @author Bo Henriksen
  */
 public class RendUtilAllId {
+    
+    /**
+     * Her generes en liste af LineItem
+     * @param allId
+     * @return 
+     */
 
     public static String allInvoiceIdTabel(List<LineItem> allId) {
         StringBuilder sb = new StringBuilder();

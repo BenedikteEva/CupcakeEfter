@@ -9,6 +9,12 @@ import java.util.List;
  */
 public class RendUtilInvoice {
     
+    /**
+     * Denne metode er endnu ikke færdigkodet.
+     * @param info
+     * @return 
+     */
+    
     public static String invoiceTable(List<LineItem> info) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"
