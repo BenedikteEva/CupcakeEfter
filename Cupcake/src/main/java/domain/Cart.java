@@ -8,6 +8,11 @@ import domain.LineItem;
  * @author Ticondrus
  */
 public class Cart {
+    
+    /**
+     * Her oprettes en Array, LineItem, som benyttes udfyles med en kundes bestillinger af kager.
+     * @return 
+     */
 
     @Override
     public String toString() {

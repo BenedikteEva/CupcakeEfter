@@ -10,6 +10,15 @@ public class Admin {
     private String adminUserName;
     private String adminEmail;
     private String adminPassword;
+    
+    /**
+     * Her oprettes attributterne for Admin brugren, med et unikt id, et navn, email og password.
+     * Programmet har en boolean, som tjekker hvorvidt brugeren er admin eller ej, og det boolean laves i user classen.
+     * @param adminId
+     * @param adminUserName
+     * @param adminEmail
+     * @param adminPassword 
+     */
 
     public Admin(int adminId, String adminUserName, String adminEmail, String adminPassword) {
         this.adminId = adminId;

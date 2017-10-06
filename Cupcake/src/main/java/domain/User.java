@@ -13,6 +13,16 @@ public class User {
     private boolean adminStatus;
     private double balance;
 
+    /**
+     *  Her får useren et unikt id med et navn, en kode, et password, 
+     * en email, og der oprettes en boolean til at adskille brugren mellem en kunde og en admin, og endeligt får brugren en pris i form af balance.
+     * @param user_id
+     * @param userName
+     * @param password
+     * @param email
+     * @param adminStatus
+     * @param balance 
+     */
     public User(int user_id, String userName, String password, String email, boolean adminStatus, double balance) {
         this.user_id = user_id;
         this.userName = userName;

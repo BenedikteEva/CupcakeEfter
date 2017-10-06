@@ -11,6 +11,14 @@ public class LineItem {
     private double totalPrice;
     private int quantity;
     private String cupcakeName;
+    
+    /**
+     * Her oprettes et LineItem af en kundes bestilling.
+     * @param invoiceId
+     * @param pricePrCc
+     * @param totalPrice
+     * @param quantity 
+     */
 
     public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity) {
         this.invoiceId = invoiceId;

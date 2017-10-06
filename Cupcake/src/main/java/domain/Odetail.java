@@ -6,6 +6,10 @@ package domain;
  */
 public class Odetail {
     
+    /**
+     * Her oprettes nogle af attributterne for en ordrer: antal i form qty og pris for en enkelt cupcake i form af priceprcc.
+     */
+    
     private int qty;
     private double priceprcc;
     

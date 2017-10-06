@@ -9,6 +9,13 @@ public class Topping {
     private int top_id;
     private String topname;
     private double top_Price;
+    
+    /**
+     * Her oprettes kagernes toppe. De får et unikt id, et navn og en pris.
+     * @param top_id
+     * @param topname
+     * @param top_Price 
+     */
 
     public Topping(int top_id, String topname, double top_Price) {
         this.top_id = top_id;

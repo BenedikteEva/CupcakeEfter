@@ -8,10 +8,20 @@ import java.util.Date;
  * @author Ticondrus
  */
 public class Order {
+    
+    
 
     public Order() {
         
     }
+    
+    /**
+     * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en order.
+     * @param order_id
+     * @param user_id
+     * @param date
+     * @param confirmation 
+     */
 
     public Order(int order_id, int user_id, Date date, String confirmation) {
        this.order_id = order_id;
