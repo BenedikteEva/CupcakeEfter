@@ -17,10 +17,10 @@ public class Order {
     
     /**
      * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en order.
-     * @param order_id
-     * @param user_id
-     * @param date
-     * @param confirmation 
+     * @param order_id 1
+     * @param user_id 2
+     * @param date 3
+     * @param confirmation 4
      */
 
     public Order(int order_id, int user_id, Date date, String confirmation) {

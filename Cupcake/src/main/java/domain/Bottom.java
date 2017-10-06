@@ -12,9 +12,9 @@ public class Bottom {
     
     /**
      * Her oprettes kagernes toppe. De får et unikt id, et navn og en pris.
-     * @param bot_id
-     * @param botName
-     * @param bot_Price 
+     * @param bot_id 1
+     * @param botName 2
+     * @param bot_Price 3
      */
 
     public Bottom(int bot_id, String botName, double bot_Price) {

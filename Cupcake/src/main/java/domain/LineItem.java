@@ -14,10 +14,10 @@ public class LineItem {
     
     /**
      * Her oprettes et LineItem af en kundes bestilling.
-     * @param invoiceId
-     * @param pricePrCc
-     * @param totalPrice
-     * @param quantity 
+     * @param invoiceId 1
+     * @param pricePrCc 2
+     * @param totalPrice 3
+     * @param quantity  4
      */
 
     public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity) {

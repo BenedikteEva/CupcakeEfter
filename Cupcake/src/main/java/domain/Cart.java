@@ -11,7 +11,7 @@ public class Cart {
     
     /**
      * Her oprettes en Array, LineItem, som benyttes udfyles med en kundes bestillinger af kager.
-     * @return 
+     * @return 1
      */
 
     @Override

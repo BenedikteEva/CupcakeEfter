@@ -14,10 +14,10 @@ public class Admin {
     /**
      * Her oprettes attributterne for Admin brugren, med et unikt id, et navn, email og password.
      * Programmet har en boolean, som tjekker hvorvidt brugeren er admin eller ej, og det boolean laves i user classen.
-     * @param adminId
-     * @param adminUserName
-     * @param adminEmail
-     * @param adminPassword 
+     * @param adminId 1
+     * @param adminUserName 2
+     * @param adminEmail 3
+     * @param adminPassword 4
      */
 
     public Admin(int adminId, String adminUserName, String adminEmail, String adminPassword) {

@@ -12,9 +12,9 @@ public class CupCake {
 
     /**
      * Oprettes et cupcake id som hver cupcake får tildelt, så man kan gemme bestilling på dem. Cupcaken får også et navn og en pris.
-     * @param cupcake_id
-     * @param cupcakeName
-     * @param cupCakePrice 
+     * @param cupcake_id 1
+     * @param cupcakeName 2
+     * @param cupCakePrice 3
      */
     public CupCake(int cupcake_id, String cupcakeName, double cupCakePrice) {
         this.cupcake_id = cupcake_id;
