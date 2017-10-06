@@ -99,7 +99,7 @@ public class NewProductControlServlet extends HttpServlet {
                              session.setAttribute("tempBalance", tempBalance);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
-                        if (cart.size() > 0) {
+                       else {
                             cart.add(li);
                             for (int i = 0; i < cart.size(); i++) {
                                 totalPriceInvoice += cart.get(i).getTotalPrice();

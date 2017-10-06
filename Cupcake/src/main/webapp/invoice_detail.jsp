@@ -18,7 +18,7 @@
     </head>
     <body>
         
-        <h1>Invoic Detail</h1>
+        <h1>Invoice Detail</h1>
         
         <% //String adminName = (String)request.getAttribute("user");
 

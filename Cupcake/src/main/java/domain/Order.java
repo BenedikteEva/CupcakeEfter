@@ -1,5 +1,6 @@
 package domain;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.util.Date;
 
 /**
@@ -8,21 +9,49 @@ import java.util.Date;
  */
 public class Order {
 
+    public Order() {
+        
+    }
+
+    public Order(int order_id, int user_id, Date date, String confirmation) {
+       this.order_id = order_id;
+        this.reciveddate = reciveddate;
+        this.user_id=user_id;
+        this.confirmation = confirmation;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "order_id=" + order_id + ", reciveddate=" + reciveddate + ", Users=" + user_id + ", confirmation=" + confirmation + '}';
+    }
+
     private int order_id;
     private Date reciveddate;
-    private User Users;
+    private int user_id;
     private String confirmation;
 
     public Order(int order_id, Date reciveddate, User Users, String confirmation) {
         this.order_id = order_id;
         this.reciveddate = reciveddate;
-        this.Users = Users;
+        this.user_id = user_id;
         this.confirmation = confirmation;
     }
 
     public Order(int order_id, Date reciveddate) {
         this.order_id = order_id;
         this.reciveddate = reciveddate;
+    }
+
+    public Order(int invoiceid) {
+        this.order_id = order_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getConfirmation() {
@@ -37,24 +66,20 @@ public class Order {
         return order_id;
     }
 
-    public User getUsers() {
-        return Users;
-    }
+   
 
     public Date getReciveddate() {
         return reciveddate;
     }
 
     public void setReciveddate(Date reciveddate) {
-        this.reciveddate = reciveddate;
+        this.reciveddate = new Date();
     }
 
     public void setOrder_id(int order_id) {
         this.order_id = order_id;
     }
 
-    public void setUsers(User Users) {
-        this.Users = Users;
-    }
+ 
 
 }

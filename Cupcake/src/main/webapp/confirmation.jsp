@@ -4,6 +4,7 @@
     Author     : Ejer
 --%>
 
+<%@page import="data.InfoToAdminMapper"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="domain.Cart"%>
 <%@page import="domain.User"%>
@@ -30,7 +31,7 @@
 
         <p>Confirmation Page</p>
         <%
-            
+              InfoToAdminMapper itam= new InfoToAdminMapper();
             UserMapper um = new UserMapper();
             User user = (User) session.getAttribute("user");
             out.println("<div class=column><h2><br>Dear  " + user.getUserName() + "</h2></div><br>");
@@ -38,10 +39,10 @@
             out.println("<a> Total Price : " + session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
             out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
             
-            
+           
          
-            
-            session.invalidate();
+            //out.println("<a>"+itam.getAllOrderId2()+"</a>");
+            //session.invalidate();
         %>
     </body>
 </html>

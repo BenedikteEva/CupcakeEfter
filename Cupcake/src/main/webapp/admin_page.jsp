@@ -87,7 +87,9 @@
                     out.println("Hello " + adminName + ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-
+                    
+                  
+                    
                     List<LineItem> idList = infoToAdmin.getAllOrderId();
                 %>
                 <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
