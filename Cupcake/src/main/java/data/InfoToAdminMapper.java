@@ -3,7 +3,6 @@ package data;
 import static data.Connector.getConnection;
 import domain.LineItem;
 import domain.Order;
-import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +20,6 @@ import java.util.logging.Logger;
 public class InfoToAdminMapper {
    
     //Denne metode er til admin page og henter order id 
-
     public List<LineItem> getAllOrderId() throws SQLException {
         List<LineItem> allOrderId = new ArrayList();
 

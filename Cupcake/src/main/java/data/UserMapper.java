@@ -1,6 +1,5 @@
 package data;
 
-import Utilities.UserRendUtil;
 import domain.Admin;
 import domain.User;
 import java.sql.Connection;
@@ -10,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static data.Connector.getConnection;
 
 /**
  *

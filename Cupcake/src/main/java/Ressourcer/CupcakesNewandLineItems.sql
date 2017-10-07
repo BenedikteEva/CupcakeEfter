@@ -69,19 +69,16 @@ create table `odetail`(
     -- har added walthers lineitem tabel
     
   CREATE TABLE IF NOT EXISTS `lineitem` (
-  `ccname` VARCHAR(100),
+  `ccname` VARCHAR(50),
   `quantity` INT(5) ,
   `prisprcc` double(5,2) ,
   `totalprice` double(9,2) ,
   `order_id` INT(11),
   `lineitem_id` INT(11) NOT NULL auto_increment,
   PRIMARY KEY (`lineitem_id`),
-  INDEX `order_id` (`order_id` ASC),
-  CONSTRAINT `lineitem_ibfk_1`
     FOREIGN KEY (`order_id`)
-    REFERENCES orderlist (`order_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;  
+    REFERENCES orderlist (`order_id`));
+
 
 -- drop table if exists `adminList`;
 -- create table `adminList` ( 
@@ -182,6 +179,7 @@ INSERT INTO odetail VALUES
 
 alter table orderlist add `confirmation` blob;
 
+select * from lineitem;
 
 
 

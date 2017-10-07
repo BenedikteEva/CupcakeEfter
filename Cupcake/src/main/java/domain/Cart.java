@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import domain.LineItem;
 
 /**
  *
