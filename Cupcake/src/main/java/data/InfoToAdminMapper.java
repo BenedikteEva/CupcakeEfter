@@ -1,6 +1,6 @@
 package data;
 
-import static data.DBConnector.getConnection;
+import static data.Connector.getConnection;
 import domain.LineItem;
 import domain.Order;
 import domain.User;
@@ -19,14 +19,9 @@ import java.util.logging.Logger;
  * @author Bo Henriksen
  */
 public class InfoToAdminMapper {
-    
-    /**
-     * Her fås alle ordre id'er fra dabasen, som efterfølgende puttes i en liste.
-     * @return allOrderId
-     * @throws SQLException 
-     */
-
+   
     //Denne metode er til admin page og henter order id 
+
     public List<LineItem> getAllOrderId() throws SQLException {
         List<LineItem> allOrderId = new ArrayList();
 
@@ -47,14 +42,44 @@ public class InfoToAdminMapper {
         }
         return allOrderId;
     }
-    
+
     /**
-     * Her fås alle ordre detaljerne fra databseen, som kunden har bestilt.
-     * @param invoiceID
-     * @return oDetail
-     * @throws SQLException 
+     * Her fås alle ordre id'er fra dabasen, som efterfølgende puttes i en
+     * liste.
+     *
+     * @return allOrderId
+     * @throws SQLException
      */
 
+    //Denne metode er til admin page og henter order id men fra ordrelisten
+    public List<Order> getAllOrderId2(int user_id) throws SQLException {
+        List<Order> allOrderId = new ArrayList();
+         user_id = 0;
+        String sql = "SELECT order_id FROM orderlist where user_id=" + user_id;
+
+        ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+        int lastId = -1;
+        Order id = null;
+        while (rs.next()) {
+            int order_id = rs.getInt("order_id");
+            if (order_id != lastId) {
+                int invoiceid = rs.getInt("order_id");
+                id = new Order(invoiceid);
+
+            }
+//            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
+//            lastId = personId;
+        }
+        return allOrderId;
+    }
+
+    /**
+     * Her fås alle ordre detaljerne fra databseen, som kunden har bestilt.
+     *
+     * @param invoiceID
+     * @return oDetail
+     * @throws SQLException
+     */
     public LineItem getODetail(int invoiceID) throws SQLException {
 
         LineItem oDetail = null;
@@ -81,14 +106,15 @@ public class InfoToAdminMapper {
 
         return oDetail;
     }
-    
+
     /**
-     * Her fås et helt LineItem af en Cupcake, dvs kagens top, bund, navn, pris og id.
+     * Her fås et helt LineItem af en Cupcake, dvs kagens top, bund, navn, pris
+     * og id.
+     *
      * @param invoiceID
      * @return name
-     * @throws SQLException 
+     * @throws SQLException
      */
-    
     public LineItem getCupcakeName(int invoiceID) throws SQLException {
 
         LineItem name = null;
@@ -103,7 +129,7 @@ public class InfoToAdminMapper {
             if (rs.next()) {
 
                 String cupcakeName = rs.getString("cupcakename");
-                
+
                 name = new LineItem(cupcakeName);
             }
         } catch (SQLException ex) {
@@ -112,40 +138,53 @@ public class InfoToAdminMapper {
 
         return name;
     }
-    
+
     /**
      * Her tilføjes en kundes ordrer til databasen.
+     *
      * @param user_id
      * @param conf
      * @return id
-     * @throws SQLException 
+     * @throws SQLException
      */
-    
-    public int addConfirmation(int user_id, String conf) throws SQLException{
-          Connection conn = Connector.getConnection();
+    public int addConfirmation(int user_id, String conf) throws SQLException {
+        Connection conn = Connector.getConnection();
         String insertUser = "INSERT INTO orderlist (user_id, confirmation) VALUES (?, ?)";
         PreparedStatement confPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
 
         confPstmt.setInt(1, user_id);
-        confPstmt.setString(2,conf);
-        
+        confPstmt.setString(2, conf);
+
         int result = confPstmt.executeUpdate();
         ResultSet rs = confPstmt.getGeneratedKeys();
         rs.next();
         int id = rs.getInt(1);
         return id;
     }
- 
+
+    public int addOrder(int user_id) throws SQLException {
+        Connection conn = Connector.getConnection();
+        String insertUser = "INSERT INTO orderlist (user_id) VALUES (?)";
+        PreparedStatement confPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+
+        confPstmt.setInt(1, user_id);
+
+        int result = confPstmt.executeUpdate();
+        ResultSet rs = confPstmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+        return id;
+    }
+
     /**
      * Her udskrives oplysninger til adminbrugren om en kundes ordrer.
-     * @param args 
+     *
+     * @param args
      */
-    
-
     public static void main(String[] args) {
 
         InfoToAdminMapper info = new InfoToAdminMapper();
-        
+
         //Tester getCupcakeName
         System.out.println("CUPCAKENAME");
         try {
@@ -170,6 +209,10 @@ public class InfoToAdminMapper {
             Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void addOrder(Order o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

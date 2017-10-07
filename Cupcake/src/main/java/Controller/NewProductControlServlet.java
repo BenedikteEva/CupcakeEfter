@@ -8,6 +8,7 @@ import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
+import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,7 +75,8 @@ public class NewProductControlServlet extends HttpServlet {
 // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
 // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-
+            int invoiceId = itam.getAllOrderId().size();
+            session.setAttribute("invoiceId", invoiceId);
             switch (origin) {
 
                 case "addProduct":
@@ -86,7 +88,6 @@ public class NewProductControlServlet extends HttpServlet {
                     double totalPriceInvoice = 0;
                     double tempBalance = 0;
                     String cupcakename;
-                    int invoiceId = 0;
 
                     String checkout = request.getParameter("checkout");
 
@@ -98,18 +99,17 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-                         int invoice_Id=  itam.getAllOrderId().size();
-                        LineItem li = new LineItem(invoice_Id, qty, cupcakename, cupcakeprice, totalprice);
-                        request.setAttribute("li", li);
+                        LineItem li = null;
 
                         if (cart == null) {
 
-                        
-
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
-                            session.setAttribute("invoiceId", invoiceId);
+                           
                         }
+
+                        li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
+                        request.setAttribute("li", li);
                         cart.add(li);
                         try {
                             lim.addLineItemToDb(li);
@@ -125,7 +125,12 @@ public class NewProductControlServlet extends HttpServlet {
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
-
+                         try {
+                        Order o = new Order(invoiceId);
+                        itam.addOrder(o);
+                          } catch (Exception ex) {
+                            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }
