@@ -76,12 +76,12 @@ public class LineItemsMapper {
     }
 
     public static void main(String[] args) throws SQLException, Exception {
-        LineItemsMapper lim = new LineItemsMapper();
-
-        LineItem li = new LineItem(2, 2, "ko", 2.00, 4.00);
-     
-        lim.addLineItemToDb(li);
-         System.out.println(lim.getLineItemData(2));
+//        LineItemsMapper lim = new LineItemsMapper();
+//
+//        LineItem li = new LineItem(2, 2, "ko", 2.00, 4.00);
+//     
+//        lim.addLineItemToDb(li);
+//         System.out.println(lim.getLineItemData(2));
         //Test af getUserData
         //System.out.println(pm.getUserData("admin"));
         //System.out.println(pm.getAdminData("admin"));

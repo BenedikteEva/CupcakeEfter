@@ -98,12 +98,13 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-                        LineItem li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
+                         int invoice_Id=  itam.getAllOrderId().size();
+                        LineItem li = new LineItem(invoice_Id, qty, cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
 
                         if (cart == null) {
 
-                         int invoice_Id=  itam.getAllOrderId().size()-1;
+                        
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
