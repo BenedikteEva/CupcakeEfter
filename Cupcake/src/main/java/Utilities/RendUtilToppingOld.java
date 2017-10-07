@@ -1,6 +1,6 @@
 package Utilities;
 
-import static Utilities.RendUtilTopping.toppingTable;
+import static Utilities.RendUtilToppingOld.toppingTable;
 import domain.Topping;
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Bo Henriksen
  */
-public class RendUtilTopping {
+public class RendUtilToppingOld {
     
     /**
      * Her generes en liste af Toppings.
@@ -24,7 +24,7 @@ public class RendUtilTopping {
             sb.append("<tr><form action=\"NewProductControlServlet\" name=\"toppings\">");
             sb.append("<td>").append(t.getTopname()).append("</td>");
             sb.append("<td>").append(t.getTop_Price()).append("</td>");
-            sb.append("<td> \n <input type=\"radio\" name=\"topname\" value=\"" + t.getTopname() + "\"><br>\n\n</td>");
+            sb.append("<td> \n <input type=\"checkbox\" name=\"topname\" value=\"" + t.getTopname() + "\"><br>\n\n</td>");
             sb.append("</tr>\n");
         }
         sb.append("</table>\n");

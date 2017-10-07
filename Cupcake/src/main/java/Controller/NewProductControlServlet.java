@@ -90,20 +90,14 @@ public class NewProductControlServlet extends HttpServlet {
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
 
-                            cart.add(li);
-                            for (int i = 0; i < cart.size(); i++) {
-                                totalPriceInvoice += cart.get(i).getTotalPrice();
-                            }
+                            totalPriceInvoice = computeTotal(cart, li, totalPriceInvoice);
                             tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
                             request.setAttribute("tempBalance", tempBalance);
                              session.setAttribute("tempBalance", tempBalance);
                             request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
                        else {
-                            cart.add(li);
-                            for (int i = 0; i < cart.size(); i++) {
-                                totalPriceInvoice += cart.get(i).getTotalPrice();
-                            }
+                            totalPriceInvoice = computeTotal(cart, li, totalPriceInvoice);
 
                             tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
                             request.setAttribute("tempBalance", tempBalance);
@@ -127,6 +121,14 @@ public class NewProductControlServlet extends HttpServlet {
             ex.printStackTrace();
         }
 
+    }
+
+    private double computeTotal(List<LineItem> cart, LineItem li, double totalPriceInvoice) {
+        cart.add(li);
+        for (int i = 0; i < cart.size(); i++) {
+            totalPriceInvoice += cart.get(i).getTotalPrice();
+        }
+        return totalPriceInvoice;
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

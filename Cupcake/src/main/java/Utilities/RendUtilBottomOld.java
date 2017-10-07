@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Bo Henriksen
  */
-public class RendUtilBottom {
+public class RendUtilBottomOld {
     
     /**
      * Her generes en liste af Bottom.
@@ -23,7 +23,7 @@ public class RendUtilBottom {
             sb.append("<tr><form action=\"NewProductControlServlet\" name=\"bottoms\">");
             sb.append("<td>").append(b.getBotName()).append("</td>");
             sb.append("<td>").append(b.getBot_Price()).append("</td>");
-            sb.append("<td> \n <input type=\"radio\" name=\"bottomname\" value=\"" + b.getBotName() 
+            sb.append("<td> \n <input type=\"checkbox\" name=\"bottomname\" value=\"" + b.getBotName() 
                     + "\"><br>\n\n</td>");
           
         }
