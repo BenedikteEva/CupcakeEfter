@@ -19,6 +19,12 @@ import java.util.logging.Logger;
  * @author Bo Henriksen
  */
 public class InfoToAdminMapper {
+    
+    /**
+     * Her fås alle ordre id'er fra dabasen, som efterfølgende puttes i en liste.
+     * @return allOrderId
+     * @throws SQLException 
+     */
 
     //Denne metode er til admin page og henter order id 
     public List<LineItem> getAllOrderId() throws SQLException {
@@ -41,6 +47,13 @@ public class InfoToAdminMapper {
         }
         return allOrderId;
     }
+    
+    /**
+     * Her fås alle ordre detaljerne fra databseen, som kunden har bestilt.
+     * @param invoiceID
+     * @return oDetail
+     * @throws SQLException 
+     */
 
     public LineItem getODetail(int invoiceID) throws SQLException {
 
@@ -69,6 +82,13 @@ public class InfoToAdminMapper {
         return oDetail;
     }
     
+    /**
+     * Her fås et helt LineItem af en Cupcake, dvs kagens top, bund, navn, pris og id.
+     * @param invoiceID
+     * @return name
+     * @throws SQLException 
+     */
+    
     public LineItem getCupcakeName(int invoiceID) throws SQLException {
 
         LineItem name = null;
@@ -92,6 +112,15 @@ public class InfoToAdminMapper {
 
         return name;
     }
+    
+    /**
+     * Her tilføjes en kundes ordrer til databasen.
+     * @param user_id
+     * @param conf
+     * @return id
+     * @throws SQLException 
+     */
+    
     public int addConfirmation(int user_id, String conf) throws SQLException{
           Connection conn = Connector.getConnection();
         String insertUser = "INSERT INTO orderlist (user_id, confirmation) VALUES (?, ?)";
@@ -107,7 +136,10 @@ public class InfoToAdminMapper {
         return id;
     }
  
-    
+    /**
+     * Her udskrives oplysninger til adminbrugren om en kundes ordrer.
+     * @param args 
+     */
     
 
     public static void main(String[] args) {

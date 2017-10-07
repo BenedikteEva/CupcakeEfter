@@ -21,6 +21,12 @@ import java.util.logging.Logger;
  * @author Ticondrus
  */
 public class CupcakeMapper {
+    
+    /**
+     * Her oprettes en liste af alle kage toppe fra databasen.
+     * @return cupcakeToppingList
+     * @throws SQLException 
+     */
 
     public List<Topping> getAllTopping() throws SQLException {
 
@@ -46,7 +52,14 @@ public class CupcakeMapper {
         }
         return cupcakeToppingList;
     }
-// Har være et problem med en nullpointer dereference grundet tOpping t= null og topprice= 0 er løst
+// Har været et problem med en nullpointer dereference grundet tOpping t= null og topprice= 0 er løst
+    
+    /**
+     * Her fås en top, dens navn og dens pris fra databasen.
+     * @param topname
+     * @return t.getTop_Price()
+     * @throws SQLException 
+     */
 
     public double getToppingPricebyName(String topname) throws SQLException {
         Topping t = new Topping();
@@ -67,6 +80,13 @@ public class CupcakeMapper {
         }
         return t.getTop_Price();
     }
+    
+    /**
+     * Her fås en Bund, dens navn og pris fra databasen.
+     * @param botname
+     * @return b.getBot_Price()
+     * @throws SQLException 
+     */
 
     public double getBottomPricebyName(String botname) throws SQLException {
         double botprice ;
@@ -85,6 +105,12 @@ public class CupcakeMapper {
         }
         return b.getBot_Price();
     }
+    
+    /**
+     * Her fås all Bunde fra databasen.
+     * @return cupcakeBottomList
+     * @throws SQLException 
+     */
 
     public List<Bottom> getAllBottom() throws SQLException {
         List<Bottom> cupcakeBottomList = new ArrayList();
@@ -107,6 +133,12 @@ public class CupcakeMapper {
         }
         return cupcakeBottomList;
     }
+    
+    /**
+     * Her udskrives alle bunde, toppe og deres respektive navne og priser, fra databasen.
+     * @param args
+     * @throws SQLException 
+     */
 
     public static void main(String[] args) throws SQLException {
         List <LineItem> test = new ArrayList <>();

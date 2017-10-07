@@ -17,6 +17,14 @@ import static data.Connector.getConnection;
  * @author Bo Henriksen
  */
 public class UserMapper {
+    
+    /**
+     * Mapperen får forbindelse til MySQL Databasen og opretter en liste af det data den henter,
+     * som så fremvise på products.jsp web siden.
+     * @param username
+     * @return user
+     * @throws SQLException 
+     */
 
     public User getUserData(String username) throws SQLException {
 
@@ -46,6 +54,13 @@ public class UserMapper {
 
         return user;
     }
+    
+    /**
+     * Her tilføjes en bruger, når vedkommende har intastet bruger oplysninger på registration.jsp siden og trykket submit.
+     * @param u
+     * @return id
+     * @throws Exception 
+     */
 
     public int addUser(User u) throws Exception {
         Connection conn = Connector.getConnection();
@@ -61,6 +76,12 @@ public class UserMapper {
         int id = rs.getInt(1);
         return id;
     }
+    
+    /**
+     * Her godkendes en bruger, om vedkommende findes i databasen og om passwordet er korrekt.
+     * @param loginUser
+     * @return rs.next
+     */
 
     public boolean godkendBruger(User loginUser) {
 
@@ -90,6 +111,12 @@ public class UserMapper {
         return false;
     }
 
+    /**
+     * Tjekker om brugeren der logger ind, er Admin eller ej.
+     * @param adminLogin
+     * @return false
+     */
+    
     public boolean godkendAdmin(Admin adminLogin) {
 
         //Holder brugens indtastet værdier her
@@ -117,6 +144,13 @@ public class UserMapper {
         }
         return false;
     }
+    
+    /**
+     * Her fås det data som admin brugeren har krav på.
+     * @param adminUsername
+     * @return admin
+     * @throws SQLException 
+     */
 
     public Admin getAdminData(String adminUsername) throws SQLException {
 
@@ -144,6 +178,13 @@ public class UserMapper {
 
         return admin;
     }
+    
+    /**
+     * Her ændres en brugers kontantbeholdning, her kaldet UserBalance.
+     * @param username
+     * @param b
+     * @throws Exception 
+     */
 
     public void changeUserBalance(String username, double b) throws Exception {
      
@@ -165,6 +206,13 @@ public class UserMapper {
             System.err.println("Got an exception! ");
         }
     }
+    
+    /**
+     * 
+     * @param args
+     * @throws SQLException
+     * @throws Exception 
+     */
 
     public static void main(String[] args) throws SQLException, Exception {
         UserMapper pm = new UserMapper();

@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class ShoppingCart {
     private ArrayList <LineItem>cart;
     private User user;
+    
 
     /**
      * Construct a new ShoppingCart for the customer
      * with the specified customerID.
-     *
-     * @param the id of the customer for which this 
-     *        ShoppingCart is being created.
+     * @param user of the customer who owns this ShoppingCart.
      */
+    
     public ShoppingCart(User user) {
 	
     }
@@ -59,7 +59,6 @@ public class ShoppingCart {
     /**
      * Get the name of the customer who owns this ShoppingCart.
      * 
-     * @param username of the customer who owns this ShoppingCart.
      */
     public String getUserName() {
 	return user.getUserName();
