@@ -51,27 +51,30 @@ public class NewProductControlServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 //Sessionen kaldes
         HttpSession session = request.getSession();
-        List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
+// her får vi fat i de mapper og utility classer der skal bruges        
+        UserMapper um = new UserMapper();
+        RendUtilCupCake rucc = new RendUtilCupCake();
+        CupcakeMapper cupcakeList = new CupcakeMapper();
+// de parametre vi får brug for undervejs i koden til at putte i indkøbskurven
+        double cupcakeprice;
+        double totalprice;
+        int qty;
+        double totalPriceInvoice = 0;
+        double tempBalance = 0;
+        String cupcakename;
+// her er der hvad der sker når user vælger kager, vælger antal, adder to shopping cart 
+// og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
-
             User user = (User) session.getAttribute("user");
-            UserMapper um = new UserMapper();
+            List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
 
             switch (origin) {
 
                 case "addProduct":
 
                     String checkout = request.getParameter("checkout");
-                    RendUtilCupCake rucc = new RendUtilCupCake();
-                    CupcakeMapper cupcakeList = new CupcakeMapper();
-                    double cupcakeprice;
-                    double totalprice;
-                    int qty;
-                    String cupcakename;
-                    double totalPriceInvoice = 0;
-                    double tempBalance = 0;
 
                     if (checkout == null) {
 
@@ -81,7 +84,6 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-
                         LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
 
@@ -91,10 +93,10 @@ public class NewProductControlServlet extends HttpServlet {
                             session.setAttribute("cart", cart);
                         }
                         cart.add(li);
-                        
+
                         totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
                         tempBalance = computeTempBalance(um, user, totalPriceInvoice);
-                       
+
                         request.setAttribute("tempBalance", tempBalance);
                         session.setAttribute("tempBalance", tempBalance);
                         session.setAttribute("totalPriceInvoice", totalPriceInvoice);
