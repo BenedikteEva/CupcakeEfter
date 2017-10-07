@@ -45,7 +45,7 @@
         <div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
 
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
+       <nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
             <div class="container">
                 <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,13 +59,13 @@
                             </a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="login.jsp">Products</a>
+                            <a class="nav-link text-uppercase text-expanded" href="#">Order History</a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="registration.jsp">New Customer</a>
+                            <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="login.jsp">Login</a>
+                            <a class="nav-link text-uppercase text-expanded" href="index.jsp">Logout</a>
                         </li>
                     </ul>
                 </div>
