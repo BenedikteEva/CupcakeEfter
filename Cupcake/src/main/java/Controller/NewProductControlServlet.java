@@ -4,6 +4,7 @@ import Utilities.RendUtilCupCake;
 import domain.ShoppingCart;
 import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
+import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
@@ -41,15 +42,16 @@ public class NewProductControlServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
+     *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException ServletException if a servlet-specific error occurs
+     * @throws ServletException ServletException if a servlet-specific error
+     * occurs
      * @throws IOException IOException if an I/O error occurs
-     * @throws SQLException  SQLException if an SQL error occurs
+     * @throws SQLException SQLException if an SQL error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -60,7 +62,8 @@ public class NewProductControlServlet extends HttpServlet {
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
-
+        LineItemsMapper lim = new LineItemsMapper();
+        InfoToAdminMapper itam = new InfoToAdminMapper();
 // herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
 // adder to shopping cart og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
@@ -99,15 +102,19 @@ public class NewProductControlServlet extends HttpServlet {
                         request.setAttribute("li", li);
 
                         if (cart == null) {
-  
-                        invoiceId++;
+
+                         int invoice_Id=  itam.getAllOrderId().size()-1;
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
                             session.setAttribute("invoiceId", invoiceId);
                         }
                         cart.add(li);
-
+                        try {
+                            lim.addLineItemToDb(li);
+                        } catch (Exception ex) {
+                            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
                         tempBalance = computeTempBalance(um, user, totalPriceInvoice);
 
