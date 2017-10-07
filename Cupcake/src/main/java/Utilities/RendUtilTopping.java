@@ -1,6 +1,5 @@
 package Utilities;
 
-import static Utilities.RendUtilTopping.toppingTable;
 import domain.Topping;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class RendUtilTopping {
     
     /**
      * Her generes en liste af Toppings.
-     * @param topps
-     * @return 
+     * @param topps topps is the name of the list that holds all the toppings.
+     * @return Returns a tabel og all the toppings.
      */
 
     public static String toppingTable(List<Topping> topps) {

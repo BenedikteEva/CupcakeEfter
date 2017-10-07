@@ -10,11 +10,12 @@ import java.util.List;
 public class RendUtilInvoice {
     
     /**
-     * Denne metode er endnu ikke færdigkodet.
-     * @param info
-     * @return 
+     * This method is not not finished and not implemented. The method is going to make a table with all the invoice information.
+     * The sql query to get the invoice details is wrong.
+     * @see data.InfoToAdminMapper#getODetail(int invoiceID) The sql querry needs to be changed.
+     * @param info info is the name of the list that holds all the line items.
+     * @return Returns a table with all the invoice information
      */
-    
     public static String invoiceTable(List<LineItem> info) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"

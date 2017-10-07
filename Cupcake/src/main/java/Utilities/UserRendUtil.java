@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Utilities;
 
-import domain.CupCake;
 import domain.User;
-import java.util.List;
 
 /**
  *
@@ -17,16 +10,13 @@ public class UserRendUtil {
     
     /**
      * Her oprettes en velkomst tekst til en kunde bruger.
-     * @param userWelcome
-     * @return 
+     * @param userWelcome The method takes a string and create a message for the user.
+     * @return Returns the created string.
      */
-    
-    
     public static String user(String userWelcome) {
         StringBuilder sb = new StringBuilder();
         User u = new User();
         
-
         sb.append("<table>\n"
                 + "<tr><th>CupCake</th><th>Pris</th><th></th><th></th></tr>\n");
     

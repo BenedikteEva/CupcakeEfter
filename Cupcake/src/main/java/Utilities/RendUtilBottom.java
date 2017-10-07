@@ -11,10 +11,9 @@ public class RendUtilBottom {
     
     /**
      * Her generes en liste af Bottom.
-     * @param boot
-     * @return 
+     * @param boot boot is the list og all the cupcake bottoms.
+     * @return Returns a tabel with all the bottoms.
      */
-
     public static String bottomTable(List<Bottom> boot) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"

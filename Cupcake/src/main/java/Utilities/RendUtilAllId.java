@@ -10,11 +10,10 @@ import java.util.List;
 public class RendUtilAllId {
     
     /**
-     * Her generes en liste af LineItem
-     * @param allId
-     * @return 
+     * Generates a tabel with invoice id's. 
+     * @param allId allId is the list og all the invoice id's.
+     * @return Returns a tabel with all the invoice id's.
      */
-
     public static String allInvoiceIdTabel(List<LineItem> allId) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n"

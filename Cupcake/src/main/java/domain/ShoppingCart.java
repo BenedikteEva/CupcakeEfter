@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
-import domain.LineItem;
-import domain.User;
 import java.util.ArrayList;
 
 /**
@@ -18,17 +11,15 @@ public class ShoppingCart {
     private User user;
 
     /**
-     * Construct a new ShoppingCart for the customer
-     * with the specified customerID.
+     * Construct a new ShoppingCart for the customer.
      *
-     * @param the id of the customer for which this 
-     *        ShoppingCart is being created.
+     * @param user - user is the customers userename in the object User. That holdes the information about the user.
+     * @see User
      */
     public ShoppingCart(User user) {
 	
     }
 
-   
     /** 
      * Add the specified LineItem to this ShoppingCart.
      *
@@ -56,25 +47,7 @@ public class ShoppingCart {
 	return s;
     }
 
-    /**
-     * Get the name of the customer who owns this ShoppingCart.
-     * 
-     * @param username of the customer who owns this ShoppingCart.
-     */
-    public String getUserName() {
-	return user.getUserName();
-    }
-
-    /**
-     * Get the number of LineItem contained in this ShoppingCart.
-     *
-     * @return the number of LineItem contained in this ShoppingCart.
-     */ 
-    public int getItemCount() {
-	return cart.size();
-    }
-
-    /**
+     /**
      * Get the total price of all of the LineItems contained
      * in this ShoppingCart.
      *
@@ -101,7 +74,14 @@ public class ShoppingCart {
     public void removeLineItem(LineItem li) {
 	cart.remove(li);
     }
-}
     
+     public String getUserName() {
+	return user.getUserName();
+    }
+
+    public int getItemCount() {
+	return cart.size();
+    }
+}    
 
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Utilities;
 
 import domain.CupCake;
@@ -16,9 +11,8 @@ public class RendUtilCupCake {
     
     /**
      * Her generes en liste af Cupcake.
-     * @param cuck 
+     * @param cuck cuck is the name of the list that holds all the cupcakes.
      */
-
     public static void cupcakeTable(List<CupCake> cuck) {
         StringBuilder sb = new StringBuilder();
 
