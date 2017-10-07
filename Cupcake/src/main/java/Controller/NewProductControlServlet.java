@@ -72,7 +72,7 @@ public class NewProductControlServlet extends HttpServlet {
                     String cupcakename;
                     double totalPriceInvoice = 0;
                     double tempBalance = 0;
-                   
+
                     if (checkout == null) {
 
                         qty = Integer.parseInt(request.getParameter("quantity"));
@@ -89,25 +89,19 @@ public class NewProductControlServlet extends HttpServlet {
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
-
-                            totalPriceInvoice = computeTotal(cart, li, totalPriceInvoice);
-                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-                            request.setAttribute("tempBalance", tempBalance);
-                             session.setAttribute("tempBalance", tempBalance);
-                            request.getRequestDispatcher("products.jsp").forward(request, response);
                         }
-                       else {
-                            totalPriceInvoice = computeTotal(cart, li, totalPriceInvoice);
-
-                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-                            request.setAttribute("tempBalance", tempBalance);
-                             session.setAttribute("tempBalance", tempBalance);
-                            session.setAttribute("totalPriceInvoice", totalPriceInvoice);
-                            request.getRequestDispatcher("products.jsp").forward(request, response);
-                        }
-                    } else {
+                        cart.add(li);
                         
+                        totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
+                        tempBalance = computeTempBalance(um, user, totalPriceInvoice);
                        
+                        request.setAttribute("tempBalance", tempBalance);
+                        session.setAttribute("tempBalance", tempBalance);
+                        session.setAttribute("totalPriceInvoice", totalPriceInvoice);
+                        request.getRequestDispatcher("products.jsp").forward(request, response);
+
+                    } else {
+
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }
@@ -123,8 +117,14 @@ public class NewProductControlServlet extends HttpServlet {
 
     }
 
-    private double computeTotal(List<LineItem> cart, LineItem li, double totalPriceInvoice) {
-        cart.add(li);
+    private double computeTempBalance(UserMapper um, User user, double totalPriceInvoice) throws SQLException {
+        double tempBalance;
+        tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
+        return tempBalance;
+    }
+
+    private double computeTotal(List<LineItem> cart, double totalPriceInvoice) {
+
         for (int i = 0; i < cart.size(); i++) {
             totalPriceInvoice += cart.get(i).getTotalPrice();
         }
