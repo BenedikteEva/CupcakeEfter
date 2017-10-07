@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Ticondrus
+ * The class CupcakeMapper handels all the methods that makes querries to the database about the cupcakes.
+ * 
  */
-public class CupcakeMapper {
+ public class CupcakeMapper {
     
     /**
      * Her oprettes en liste af alle kage toppe fra databasen.
-     * @return cupcakeToppingList
-     * @throws SQLException 
+     * @return Return a list of cupcake toppings.
+     * @throws SQLException if an sql error occur.
      */
 
     public List<Topping> getAllTopping() throws SQLException {
@@ -49,9 +49,9 @@ public class CupcakeMapper {
     
     /**
      * Her fås en top, dens navn og dens pris fra databasen.
-     * @param topname
-     * @return t.getTop_Price()
-     * @throws SQLException 
+     * @param topname is the name of the topping that you want to find in the database.
+     * @return the price of the topping
+     * @throws SQLException if an sql error occur.
      */
 
     public double getToppingPricebyName(String topname) throws SQLException {
@@ -76,9 +76,9 @@ public class CupcakeMapper {
     
     /**
      * Her fås en Bund, dens navn og pris fra databasen.
-     * @param botname
-     * @return b.getBot_Price()
-     * @throws SQLException 
+     * @param botname is the name of the bottom you want to find in the database.
+     * @return the price of the botton based on the name.
+     * @throws SQLException if an sql error occur.
      */
 
     public double getBottomPricebyName(String botname) throws SQLException {
@@ -101,10 +101,9 @@ public class CupcakeMapper {
     
     /**
      * Her fås all Bunde fra databasen.
-     * @return cupcakeBottomList
-     * @throws SQLException 
+     * @return a list of all the bottoms
+     * @throws SQLException if an sql error occur.
      */
-
     public List<Bottom> getAllBottom() throws SQLException {
         List<Bottom> cupcakeBottomList = new ArrayList();
 
@@ -127,12 +126,7 @@ public class CupcakeMapper {
         return cupcakeBottomList;
     }
     
-    /**
-     * Her udskrives alle bunde, toppe og deres respektive navne og priser, fra databasen.
-     * @param args
-     * @throws SQLException 
-     */
-
+    //This is for test purpose.
     public static void main(String[] args) throws SQLException {
         List <LineItem> test = new ArrayList <>();
 //         LineItem li = new LineItem("kage2", 11.00, 2,22.00);

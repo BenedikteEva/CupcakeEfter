@@ -1,7 +1,6 @@
 package Controller;
 
 import Utilities.RendUtilCupCake;
-import static Utilities.UserRendUtil.user;
 import data.CupcakeMapper;
 import data.InfoToAdminMapper;
 import data.LineItemsMapper;

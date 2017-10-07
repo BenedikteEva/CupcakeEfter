@@ -14,12 +14,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * The class InfoToAdmin handels all the methods that makes querries about line items to the database.
  * @author Bo Henriksen
  */
 public class InfoToAdminMapper {
    
-    //Denne metode er til admin page og henter order id 
+     /**
+     * TODO The method gets all order id. Is not implemented.
+     * (Denne metode er til admin page og henter order id )
+     * @return a list of order id's.
+     * @throws SQLException if an sql error occur.
+     */
     public List<LineItem> getAllOrderId() throws SQLException {
         List<LineItem> allOrderId = new ArrayList();
 
@@ -42,14 +47,12 @@ public class InfoToAdminMapper {
     }
 
     /**
-     * Her fås alle ordre id'er fra dabasen, som efterfølgende puttes i en
-     * liste.
-     *
-     * @return allOrderId
-     * @throws SQLException
+     * TODO Her fås alle ordre id'er fra dabasen, som efterfølgende puttes i en liste.
+     * (Denne metode er til admin page og henter order id men fra ordrelisten)
+     * @param user_id takes the user id to get the order id.
+     * @return a list of all the order id's.
+     * @throws SQLException if an sql error occur.
      */
-
-    //Denne metode er til admin page og henter order id men fra ordrelisten
     public List<Order> getAllOrderId2(int user_id) throws SQLException {
         List<Order> allOrderId = new ArrayList();
          user_id = 0;
@@ -72,11 +75,11 @@ public class InfoToAdminMapper {
     }
 
     /**
-     * Her fås alle ordre detaljerne fra databseen, som kunden har bestilt.
-     *
-     * @param invoiceID
-     * @return oDetail
-     * @throws SQLException
+     * TODO Her fås alle ordre detaljerne fra databseen, som kunden har bestilt.
+     * This method does not work and is not implemented.
+     * @param invoiceID gets the invoice id from the admin_page and find the order based on the id.
+     * @return a list all the order details
+     * @throws SQLException if an sql error occur.
      */
     public LineItem getODetail(int invoiceID) throws SQLException {
 
@@ -106,12 +109,10 @@ public class InfoToAdminMapper {
     }
 
     /**
-     * Her fås et helt LineItem af en Cupcake, dvs kagens top, bund, navn, pris
-     * og id.
-     *
-     * @param invoiceID
-     * @return name
-     * @throws SQLException
+     *  TODO Get the cupcake name based on an id. The method does not work and is not implemented.    
+     * @param invoiceID gets the invoice id from the admin_page
+     * @return a cupcake name.
+     * @throws SQLException if an sql error occur.
      */
     public LineItem getCupcakeName(int invoiceID) throws SQLException {
 
@@ -140,10 +141,10 @@ public class InfoToAdminMapper {
     /**
      * Her tilføjes en kundes ordrer til databasen.
      *
-     * @param user_id
-     * @param conf
-     * @return id
-     * @throws SQLException
+     * @param user_id insert the users id in the method
+     * @param conf insert the string confirmation in the method.
+     * @return an id.
+     * @throws SQLException if an sql error occur.
      */
     public int addConfirmation(int user_id, String conf) throws SQLException {
         Connection conn = Connector.getConnection();
@@ -160,6 +161,12 @@ public class InfoToAdminMapper {
         return id;
     }
 
+    /**
+     * Adds the users id into the orderlist.
+     * @param user_id the method takes the users id.
+     * @return the users id.
+     * @throws SQLException if an sql error occur.
+     */
     public int addOrder(int user_id) throws SQLException {
         Connection conn = Connector.getConnection();
         String insertUser = "INSERT INTO orderlist (user_id) VALUES (?)";
@@ -174,11 +181,7 @@ public class InfoToAdminMapper {
         return id;
     }
 
-    /**
-     * Her udskrives oplysninger til adminbrugren om en kundes ordrer.
-     *
-     * @param args
-     */
+    //The main method is the test purpose
     public static void main(String[] args) {
 
         InfoToAdminMapper info = new InfoToAdminMapper();

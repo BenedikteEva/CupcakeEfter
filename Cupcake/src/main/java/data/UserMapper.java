@@ -11,19 +11,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * The class UserMapper handels all the querries to the databse about the user.
  * @author Bo Henriksen
  */
 public class UserMapper {
     
     /**
-     * Mapperen får forbindelse til MySQL Databasen og opretter en liste af det data den henter,
-     * som så fremvise på products.jsp web siden.
-     * @param username
-     * @return user
-     * @throws SQLException 
+     * This method gets all the data that is in the database for a user.
+     * @param username the name of the user that is going to find data about.
+     * @return a user object with information about the user.
+     * @throws SQLException if an sql error occur.
      */
-
     public User getUserData(String username) throws SQLException {
 
         User user = null;
@@ -54,12 +52,11 @@ public class UserMapper {
     }
     
     /**
-     * Her tilføjes en bruger, når vedkommende har intastet bruger oplysninger på registration.jsp siden og trykket submit.
-     * @param u
+     * Her tilføjes en bruger i databasen, når vedkommende har intastet bruger oplysninger på registration.jsp siden og trykket submit.
+     * @param u is the user that is going to be added to the database.
      * @return id
-     * @throws Exception 
+     * @throws Exception if an sql error occur.
      */
-
     public int addUser(User u) throws Exception {
         Connection conn = Connector.getConnection();
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
@@ -77,10 +74,9 @@ public class UserMapper {
     
     /**
      * Her godkendes en bruger, om vedkommende findes i databasen og om passwordet er korrekt.
-     * @param loginUser
-     * @return rs.next
+     * @param loginUser is the name of the user that is tring to login.
+     * @return true if there is a next record and false if there is'nt.
      */
-
     public boolean godkendBruger(User loginUser) {
 
         //Holder brugens indtastet værdier her
@@ -111,10 +107,9 @@ public class UserMapper {
 
     /**
      * Tjekker om brugeren der logger ind, er Admin eller ej.
-     * @param adminLogin
-     * @return false
+     * @param adminLogin the name of the admin that is tring to login.
+     * @return true if there is a next record in resultset and false if there is'nt.
      */
-    
     public boolean godkendAdmin(Admin adminLogin) {
 
         //Holder brugens indtastet værdier her
@@ -144,12 +139,11 @@ public class UserMapper {
     }
     
     /**
-     * Her fås det data som admin brugeren har krav på.
-     * @param adminUsername
-     * @return admin
-     * @throws SQLException 
+     * Her fås det data om admin brugeren.
+     * @param adminUsername is the admin data your looking for.
+     * @return an object with admin userdata.
+     * @throws SQLException if an sql error occur.
      */
-
     public Admin getAdminData(String adminUsername) throws SQLException {
 
         Admin admin = null;
@@ -179,9 +173,9 @@ public class UserMapper {
     
     /**
      * Her ændres en brugers kontantbeholdning, her kaldet UserBalance.
-     * @param username
-     * @param b
-     * @throws Exception 
+     * @param username the username which balance is going to be changed.
+     * @param b the amount that is going to be changed to.
+     * @throws Exception if an sql error occur.
      */
 
     public void changeUserBalance(String username, double b) throws Exception {
@@ -205,13 +199,7 @@ public class UserMapper {
         }
     }
     
-    /**
-     * 
-     * @param args
-     * @throws SQLException
-     * @throws Exception 
-     */
-
+    //For test purpose.
     public static void main(String[] args) throws SQLException, Exception {
         UserMapper pm = new UserMapper();
 
