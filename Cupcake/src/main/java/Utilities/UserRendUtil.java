@@ -4,7 +4,7 @@ import domain.User;
 
 /**
  *
- * @author Ejer
+ * @author BenedikteEva
  */
 public class UserRendUtil {
     

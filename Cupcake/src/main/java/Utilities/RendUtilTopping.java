@@ -23,7 +23,7 @@ public class RendUtilTopping {
             sb.append("<tr><form action=\"NewProductControlServlet\" name=\"toppings\">");
             sb.append("<td>").append(t.getTopname()).append("</td>");
             sb.append("<td>").append(t.getTop_Price()).append("</td>");
-            sb.append("<td> \n <input type=\"checkbox\" name=\"topname\" value=\"" + t.getTopname() + "\"><br>\n\n</td>");
+            sb.append("<td> \n <input type=\"radio\" name=\"topname\" value=\"" + t.getTopname() + "\"><br>\n\n</td>");
             sb.append("</tr>\n");
         }
         sb.append("</table>\n");

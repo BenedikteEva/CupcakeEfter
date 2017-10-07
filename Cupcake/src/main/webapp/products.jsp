@@ -1,7 +1,7 @@
 <%-- 
     Document   : products
     Created on : 21-09-2017, 10:57:03
-    Author     : Ejer
+    Author     : BenedikteEva
 --%>
 <%@page import="domain.Cart"%>
 <%@page import="domain.User"%>
@@ -182,7 +182,7 @@
 
                     <div id="box">
                         Quantity
-                        <input type="number" name="quantity" min="-9000" value="Quantity" placeholder="0" >
+                        <input type="number" name="quantity" min="1" value="1" placeholder="1" >
                     </div>
 
                     <button type="submit" value=action name="shoppingCart" >add to shoppingcart   </button>   
@@ -198,7 +198,7 @@
                                 out.println("<br> </br>");
                                 out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
                                 out.println("<br> </br>");
-                                out.println("<a>Your new balance will be: " + request.getAttribute("tempBalance")
+                                out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
                                         + " if you buy what is currently in your shopping cart</a>");
 
                             } else {

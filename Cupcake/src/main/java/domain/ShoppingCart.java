@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class ShoppingCart {
     private ArrayList <LineItem>cart;
     private User user;
+    
 
     /**
      * Construct a new ShoppingCart for the customer.
@@ -16,6 +17,7 @@ public class ShoppingCart {
      * @param user - user is the customers userename in the object User. That holdes the information about the user.
      * @see User
      */
+    
     public ShoppingCart(User user) {
 	
     }

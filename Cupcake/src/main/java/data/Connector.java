@@ -10,10 +10,10 @@ import javax.servlet.annotation.WebServlet;
 /**
  *
  * @author Benedikte
- * This DBConnector should connect to my remote server and a database called RecipesDB
+ * This DBConnector should connect to my remote server and a database called cupcake
  * 
  */
-@WebServlet(name = "RecipesServlet", urlPatterns = {"/recipesServlet"})
+
 
 public class Connector {
     

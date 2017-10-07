@@ -27,7 +27,7 @@ import static sun.swing.SwingUtilities2.submit;
 
 /**
  *
- * @author Ejer
+ * @author BenedikteEva
  */
 @WebServlet(name = "NewProductControlServlet", urlPatterns = {"/NewProductControlServlet"})
 public class NewProductControlServlet extends HttpServlet {
@@ -56,28 +56,37 @@ public class NewProductControlServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 //Sessionen kaldes
         HttpSession session = request.getSession();
-        List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
+// her får vi fat i de mapper og utility classer der skal bruges        
+        UserMapper um = new UserMapper();
+        RendUtilCupCake rucc = new RendUtilCupCake();
+        CupcakeMapper cupcakeList = new CupcakeMapper();
+
+// herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
+// adder to shopping cart og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
-
+// får fat i hidden             
             String origin = request.getParameter("origin");
-
+// den user der er gemt i sessions ved login kaldes
             User user = (User) session.getAttribute("user");
-            UserMapper um = new UserMapper();
+// vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
+// længere nede når kunden får brug for det
+            List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
 
             switch (origin) {
 
                 case "addProduct":
 
-                    String checkout = request.getParameter("checkout");
-                    RendUtilCupCake rucc = new RendUtilCupCake();
-                    CupcakeMapper cupcakeList = new CupcakeMapper();
+                    // de parametre vi får brug for undervejs i koden til at putte i indkøbskurven
                     double cupcakeprice;
                     double totalprice;
                     int qty;
-                    String cupcakename;
                     double totalPriceInvoice = 0;
                     double tempBalance = 0;
-                   
+                    String cupcakename;
+                    int invoiceId = 0;
+
+                    String checkout = request.getParameter("checkout");
+
                     if (checkout == null) {
 
                         qty = Integer.parseInt(request.getParameter("quantity"));
@@ -86,39 +95,29 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-
-                        LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
+                        LineItem li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
 
                         if (cart == null) {
+  
+                        invoiceId++;
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
-
-                            cart.add(li);
-                            for (int i = 0; i < cart.size(); i++) {
-                                totalPriceInvoice += cart.get(i).getTotalPrice();
-                            }
-                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-                            request.setAttribute("tempBalance", tempBalance);
-                             session.setAttribute("tempBalance", tempBalance);
-                            request.getRequestDispatcher("products.jsp").forward(request, response);
+                            session.setAttribute("invoiceId", invoiceId);
                         }
-                       else {
-                            cart.add(li);
-                            for (int i = 0; i < cart.size(); i++) {
-                                totalPriceInvoice += cart.get(i).getTotalPrice();
-                            }
+                        cart.add(li);
 
-                            tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-                            request.setAttribute("tempBalance", tempBalance);
-                             session.setAttribute("tempBalance", tempBalance);
-                            session.setAttribute("totalPriceInvoice", totalPriceInvoice);
-                            request.getRequestDispatcher("products.jsp").forward(request, response);
-                        }
+                        totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
+                        tempBalance = computeTempBalance(um, user, totalPriceInvoice);
+
+                        session.setAttribute("tempBalance", tempBalance);
+                        session.setAttribute("totalPriceInvoice", totalPriceInvoice);
+
+                        request.getRequestDispatcher("products.jsp").forward(request, response);
+
                     } else {
-                        
-                       
+
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }
@@ -132,6 +131,21 @@ public class NewProductControlServlet extends HttpServlet {
             ex.printStackTrace();
         }
 
+    }
+
+    //hjælpemetoder til ar udregne nogle doubles
+    private double computeTempBalance(UserMapper um, User user, double totalPriceInvoice) throws SQLException {
+        double tempBalance;
+        tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
+        return tempBalance;
+    }
+
+    private double computeTotal(List<LineItem> cart, double totalPriceInvoice) {
+
+        for (int i = 0; i < cart.size(); i++) {
+            totalPriceInvoice += cart.get(i).getTotalPrice();
+        }
+        return totalPriceInvoice;
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
