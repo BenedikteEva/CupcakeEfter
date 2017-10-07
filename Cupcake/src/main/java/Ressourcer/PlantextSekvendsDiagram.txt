@@ -1,0 +1,28 @@
+
+
+
+
+title "Cupcake to buy - Sequence Diagram"
+
+actor User
+boundary products.jsp
+participant ProductControlServlet
+participant ShoppingCartServlet
+boundary shoppingcart.jsp
+boundary confirmation.jsp
+
+database cupcake
+
+User --> products.jsp: choose bottom & topping
+products.jsp-->
+products.jsp --> ProductControlServlet: addToShoppingcart()
+ProductControlServlet --> products.jsp: print lineitem added
+products.jsp --> ShoppingCartServlet: go to shoppingCart
+ShoppingCartServlet-->shoppingcart.jsp:  all lineitems()
+shoppingcart.jsp-->ShoppingCartServlet: payment()
+ShoppingCartServlet-->cupcake: addInvoice()
+ShoppingCartServlet-->confirmation.jsp: printInvoice()
+confirmation.jsp-->User: deliver cupcake and invoice
+
+
+@enduml
