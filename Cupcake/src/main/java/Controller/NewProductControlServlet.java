@@ -99,6 +99,7 @@ public class NewProductControlServlet extends HttpServlet {
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
+                            session.setAttribute("invoiceId", invoiceId);
                         }
                         cart.add(li);
 
