@@ -55,24 +55,29 @@ public class NewProductControlServlet extends HttpServlet {
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
-// de parametre vi får brug for undervejs i koden til at putte i indkøbskurven
-        double cupcakeprice;
-        double totalprice;
-        int qty;
-        double totalPriceInvoice = 0;
-        double tempBalance = 0;
-        String cupcakename;
-// her er der hvad der sker når user vælger kager, vælger antal, adder to shopping cart 
-// og trykker på checkout
-        try (PrintWriter out = response.getWriter()) {
 
+// herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
+// adder to shopping cart og trykker på checkout
+        try (PrintWriter out = response.getWriter()) {
+// får fat i hidden             
             String origin = request.getParameter("origin");
+// den user der er gemt i sessions ved login kaldes
             User user = (User) session.getAttribute("user");
+// vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
+// længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
 
             switch (origin) {
 
                 case "addProduct":
+
+                    // de parametre vi får brug for undervejs i koden til at putte i indkøbskurven
+                    double cupcakeprice;
+                    double totalprice;
+                    int qty;
+                    double totalPriceInvoice = 0;
+                    double tempBalance = 0;
+                    String cupcakename;
 
                     String checkout = request.getParameter("checkout");
 
@@ -97,9 +102,9 @@ public class NewProductControlServlet extends HttpServlet {
                         totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
                         tempBalance = computeTempBalance(um, user, totalPriceInvoice);
 
-                        request.setAttribute("tempBalance", tempBalance);
                         session.setAttribute("tempBalance", tempBalance);
                         session.setAttribute("totalPriceInvoice", totalPriceInvoice);
+
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
@@ -119,6 +124,7 @@ public class NewProductControlServlet extends HttpServlet {
 
     }
 
+    //hjælpemetoder til ar udregne nogle doubles
     private double computeTempBalance(UserMapper um, User user, double totalPriceInvoice) throws SQLException {
         double tempBalance;
         tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
