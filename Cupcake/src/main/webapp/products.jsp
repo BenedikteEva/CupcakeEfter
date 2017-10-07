@@ -1,7 +1,7 @@
 <%-- 
     Document   : products
     Created on : 21-09-2017, 10:57:03
-    Author     : Ejer
+    Author     : BenedikteEva
 --%>
 <%@page import="domain.Cart"%>
 <%@page import="domain.User"%>

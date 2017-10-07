@@ -32,7 +32,7 @@ import static sun.swing.SwingUtilities2.submit;
 
 /**
  *
- * @author Ejer
+ * @author BenedikteEva
  */
 @WebServlet(name = "NewProductControlServlet", urlPatterns = {"/NewProductControlServlet"})
 public class NewProductControlServlet extends HttpServlet {

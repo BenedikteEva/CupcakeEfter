@@ -1,7 +1,7 @@
 <%-- 
     Document   : shoppingCart
     Created on : 03-10-2017, 08:42:22
-    Author     : Bo Henriksen 
+    Author     : Bo Henriksen / BenedikteEva 
 --%>
 <%@page import="domain.Cart"%>
 <%@page import="domain.User"%>

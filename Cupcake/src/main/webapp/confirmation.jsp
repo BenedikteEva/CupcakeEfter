@@ -1,7 +1,7 @@
 <%-- 
     Document   : confirmation
     Created on : 21-09-2017, 10:58:10
-    Author     : Ejer
+    Author     : BenedikteEva
 --%>
 
 <%@page import="data.InfoToAdminMapper"%>
@@ -92,14 +92,16 @@
            
          
             //out.println("<a>"+itam.getAllOrderId2()+"</a>");
-            //session.invalidate();
+            session.invalidate();
         %>
                 
                 
                 <br>
+                
+                <p> Your cupcakes are ready for pick up</p>
                 <p>Thanks for doing business with us</p>
                 <br>
-                <p>We sincerely hope you will enjoy your cupcakes and return soon for more. </p>
+                <p> </p>
             </div>
 
         </div>

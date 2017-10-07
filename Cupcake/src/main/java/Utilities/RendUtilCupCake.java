@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Ejer
+ * @author BenedikteEva
  */
 public class RendUtilCupCake {
     
