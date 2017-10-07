@@ -6,7 +6,7 @@
 
 <%@page import="Controller.InvoiceDetailServlet"%>
 <%@page import="Utilities.RendUtilInvoice"%>
-<%@page import="domain.InfoToAdmin"%>
+
 <%@page import="java.util.List"%>
 <%@page import="data.InfoToAdminMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

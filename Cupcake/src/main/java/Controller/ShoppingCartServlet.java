@@ -36,26 +36,23 @@ public class ShoppingCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
-           
+
             String origin = request.getParameter("origin");
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
             InfoToAdminMapper itam = new InfoToAdminMapper();
-            
-           String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
-                                + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
-            
+
+            String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
+                    + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
+
             switch (origin) {
 
                 case "buyMoreProducts":
 
                     try {
                         um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
-
-                        
-
+                      
 //                        itam.addConfirmation(user.getUser_id(), invoicetext);
-
                         request.setAttribute("invoicetext", invoicetext);
 
                     } catch (Exception ex) {

@@ -35,7 +35,8 @@ public class LineItem {
         this.cupcakeName = cupcakeName;
     }
 
-    public LineItem(int quantity, String cupcakeName, double pricePrCc, double totalPrice ) {
+    public LineItem(int invoiceId, int quantity, String cupcakeName, double pricePrCc, double totalPrice ) {
+        this.invoiceId = invoiceId;
         this.pricePrCc = pricePrCc;
         this.totalPrice = totalPrice;
         this.quantity = quantity;
@@ -56,6 +57,8 @@ public class LineItem {
     public LineItem () {
         
     }
+
+  
 
     public double getPricePrCc() {
         return pricePrCc;

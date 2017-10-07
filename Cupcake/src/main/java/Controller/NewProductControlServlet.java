@@ -78,6 +78,7 @@ public class NewProductControlServlet extends HttpServlet {
                     double totalPriceInvoice = 0;
                     double tempBalance = 0;
                     String cupcakename;
+                    int invoiceId = 0;
 
                     String checkout = request.getParameter("checkout");
 
@@ -89,10 +90,12 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-                        LineItem li = new LineItem(qty, cupcakename, cupcakeprice, totalprice);
+                        LineItem li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
 
                         if (cart == null) {
+  
+                        invoiceId++;
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
