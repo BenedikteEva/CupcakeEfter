@@ -14,8 +14,8 @@ import java.sql.Statement;
 public class LineItemsMapper {
 
     public int addLineItemToDb(LineItem li) throws Exception {
-         int id = 0;
-      
+     
+     
             Connection conn = Connector.getConnection();
             String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
@@ -29,13 +29,16 @@ public class LineItemsMapper {
             int result = confPstmt.executeUpdate();
             ResultSet rs = confPstmt.getGeneratedKeys();
             rs.next();
-            id = rs.getInt(1);
+            int id = rs.getInt(1);
 
             return id;
 
-       
+      
 
     }
+    
+    
+
 
     public LineItem getLineItemData(int lineItemId) throws SQLException {
 

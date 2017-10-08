@@ -180,7 +180,24 @@ public class InfoToAdminMapper {
         int id = rs.getInt(1);
         return id;
     }
+  public int getLastInvoiceId(int invoiceid) throws SQLException {
 
+        try {
+
+            String sql = "SELECT MAX(order_id) as order_id from orderlist";
+            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+
+            if (rs.next()) {
+
+                invoiceid = rs.getInt("order_id");
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return invoiceid;
+    }
     //The main method is the test purpose
     public static void main(String[] args) {
 

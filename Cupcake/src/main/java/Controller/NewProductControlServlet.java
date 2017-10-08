@@ -10,6 +10,7 @@ import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,11 @@ public class NewProductControlServlet extends HttpServlet {
 // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
 // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-            int invoiceId = itam.getAllOrderId().size();
+           int invoiceId = itam.getLastInvoiceId(0) + 1;
+            session.setAttribute("invoiceId", invoiceId);
+            int userid = user.getUser_id();
+            Order or = null;
+            Date date = null;
             session.setAttribute("invoiceId", invoiceId);
             switch (origin) {
 
@@ -100,7 +105,7 @@ public class NewProductControlServlet extends HttpServlet {
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
-                           
+
                         }
 
                         li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
@@ -120,10 +125,10 @@ public class NewProductControlServlet extends HttpServlet {
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
-                         try {
-                        Order o = new Order(invoiceId);
-                        itam.addOrder(o);
-                          } catch (Exception ex) {
+                        try {
+                            Order o = new Order(invoiceId);
+                            itam.addOrder(o);
+                        } catch (Exception ex) {
                             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
