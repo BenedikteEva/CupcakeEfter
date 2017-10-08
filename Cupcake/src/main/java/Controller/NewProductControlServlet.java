@@ -71,12 +71,10 @@ public class NewProductControlServlet extends HttpServlet {
 // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
 // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-           int invoiceId = itam.getLastInvoiceId(0) + 1;
+            int invoiceId = itam.getLastInvoiceId(0) + 1;
             session.setAttribute("invoiceId", invoiceId);
             int userid = user.getUser_id();
-            Order or = null;
-            Date date = null;
-            session.setAttribute("invoiceId", invoiceId);
+            LineItem li = null;
             switch (origin) {
 
                 case "addProduct":
@@ -99,7 +97,6 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakename = rucc.createCakeName(bot, top);
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
-                        LineItem li = null;
 
                         if (cart == null) {
 
@@ -112,7 +109,7 @@ public class NewProductControlServlet extends HttpServlet {
                         request.setAttribute("li", li);
                         cart.add(li);
                         try {
-                            lim.addLineItemToDb(li);
+                            int addLineItemToDb = lim.addLineItemToDb(li);
                         } catch (Exception ex) {
                             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -125,12 +122,7 @@ public class NewProductControlServlet extends HttpServlet {
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
-                        try {
-                            Order o = new Order(invoiceId);
-                            itam.addOrder(o);
-                        } catch (Exception ex) {
-                            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }

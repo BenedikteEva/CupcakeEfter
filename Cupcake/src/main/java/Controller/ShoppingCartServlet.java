@@ -2,9 +2,11 @@ package Controller;
 
 import data.InfoToAdminMapper;
 import data.UserMapper;
+import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,6 +43,7 @@ public class ShoppingCartServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
             InfoToAdminMapper itam = new InfoToAdminMapper();
+           
 
             String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
                     + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
@@ -50,8 +53,12 @@ public class ShoppingCartServlet extends HttpServlet {
                 case "buyMoreProducts":
 
                     try {
+
+                       Order or = new Order(user.getUser_id());
+                        itam.addOrder(or);
+                        
                         um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
-                      
+
 //                        itam.addConfirmation(user.getUser_id(), invoicetext);
                         request.setAttribute("invoicetext", invoicetext);
 

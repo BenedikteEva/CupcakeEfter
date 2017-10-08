@@ -188,29 +188,20 @@ public class InfoToAdminMapper {
      */
     public int addOrder(Order o) throws SQLException {
 
-        try {
-
             int user_id = 0;
-            Date datetime = null;
 
-            String insertOrder = "INSERT INTO orderlist ( user_id, received) VALUES (?, ?);";
+            String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
             PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
             confPstmt.setInt(1, user_id);
-            confPstmt.setDate(user_id, datetime);
+        
 
             int result = confPstmt.executeUpdate();
             ResultSet rs = confPstmt.getGeneratedKeys();
             rs.next();
             int id = rs.getInt(1);
             return id;
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoToAdminMapper.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
-
-    }
+        } 
 
     public int getLastInvoiceId(int invoiceid) throws SQLException {
 
