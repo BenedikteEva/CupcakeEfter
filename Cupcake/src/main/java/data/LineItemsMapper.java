@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static data.DBConnector.getConnection;
 
 /**
  *
@@ -16,7 +17,7 @@ public class LineItemsMapper {
     public int addLineItemToDb(LineItem li) throws Exception {
      
      
-            Connection conn = Connector.getConnection();
+            Connection conn = DBConnector.getConnection();
             String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
 
