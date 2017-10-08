@@ -15,19 +15,24 @@ import java.util.logging.Logger;
  * @author Bo Henriksen
  */
 public class UserMapper {
-    
+Connection conn;
+
+    public UserMapper() {
+        this.conn = DBConnector.getConnection();
+    }
     /**
      * This method gets all the data that is in the database for a user.
      * @param username the name of the user that is going to find data about.
      * @return a user object with information about the user.
      * @throws SQLException if an sql error occur.
      */
+   
+   
     public User getUserData(String username) throws SQLException {
 
         User user = null;
         try {
-
-            Connection conn = new Connector().getConnection();
+   
             String sql = "SELECT * FROM userlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
@@ -58,7 +63,7 @@ public class UserMapper {
      * @throws Exception if an sql error occur.
      */
     public int addUser(User u) throws Exception {
-        Connection conn = Connector.getConnection();
+    
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
         PreparedStatement userPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
 
@@ -84,8 +89,6 @@ public class UserMapper {
         String password = loginUser.getPassword();
 
         try {
-
-            Connection conn = new Connector().getConnection();
 
             String sql = "SELECT username, password FROM userlist WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -118,8 +121,6 @@ public class UserMapper {
 
         try {
 
-            Connection conn = new Connector().getConnection();
-
             String sql = "SELECT adminUser, adminPassword FROM adminList WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, adminUserName);//Det som sættes ind sql stringen
@@ -149,7 +150,6 @@ public class UserMapper {
         Admin admin = null;
         try {
 
-            Connection conn = new Connector().getConnection();
             String sql = "SELECT * FROM adminlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, adminUsername);
@@ -182,16 +182,15 @@ public class UserMapper {
      
         
         try {
-            Connection conn = new Connector().getConnection();
-            String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
-            PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
-          
-            balancePstmt.setDouble(1, b);
-            balancePstmt.setString(2, username);
-
-            balancePstmt.executeUpdate();
-
-            conn.close();
+           
+                String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
+                PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
+                
+                balancePstmt.setDouble(1, b);
+                balancePstmt.setString(2, username);
+                
+                balancePstmt.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
 

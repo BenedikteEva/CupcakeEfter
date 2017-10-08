@@ -6,18 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import static data.DBConnector.getConnection;
 
 /**
  *
  * @author BenedikteEva
  */
 public class LineItemsMapper {
+ Connection conn;
 
+    public LineItemsMapper() {
+        this.conn = DBConnector.getConnection();
+    }
     public int addLineItemToDb(LineItem li) throws Exception {
      
      
-            Connection conn = DBConnector.getConnection();
+           
             String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
 
@@ -46,7 +49,7 @@ public class LineItemsMapper {
         LineItem li = null;
         try {
 
-            Connection conn = new Connector().getConnection();
+        
             String sql = "SELECT * FROM lineitem WHERE lineitem_id=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, lineItemId);

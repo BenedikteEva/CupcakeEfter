@@ -1,29 +1,29 @@
 package data;
 
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
  *
- * @author Bo Henriksen
+ * @author Benedikte
+ * This DBConnector should connect to my remote server and a database called cupcake
+ * 
  */
+
+
 public class DBConnector {
     
     
     
-    private static String DRIVER = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://138.197.181.3/cupcake"; //"jdbc:mysql://localhost:3306/test"
-    private static String USER = "henriksen";
-    private static String PASSWORD = "tryl";
-    private static Connection conn = null;
-    
-    /**
-     * Her etableres forbindelse med vores MySQL Database cupcake.
-     * @return conn
-     */
-       
+    private final static String DRIVER = "com.mysql.jdbc.Driver";
+    private final static String URL = "jdbc:mysql://46.101.179.58:3306/cupcake";
+    private final static String USER = "testuser";
+    private final static String PASSWORD = "password123";
+ private static Connection conn = null;
+ 
     public static Connection getConnection() {
         if (conn == null) {
             try { 
@@ -38,19 +38,4 @@ public class DBConnector {
         } 
         return conn;
     }
-    
- 
-    public static void main(String[] args) {
-        //Test connection 
-        try { 
-            String sql = "SELECT * FROM bottomlist where bot_id=1";
-            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getString("bottomname")+" koster: "+rs.getString("bot_price"));
-            } 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } 
-    } 
-    
-}
+}  

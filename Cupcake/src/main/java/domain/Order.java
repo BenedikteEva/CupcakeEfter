@@ -18,15 +18,27 @@ public class Order {
      * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en order.
      * @param order_id 1
      * @param user_id 2
-     * @param date 3
+     * @param reciveddate 3
      * @param confirmation 4
      */
 
-    public Order(int order_id, int user_id, Date date, String confirmation) {
+   
+
+    private int order_id;
+    private Date reciveddate;
+    private int user_id;
+    private String confirmation;
+    
+    
+     public Order(int order_id, int user_id, Date reciveddate, String confirmation) {
        this.order_id = order_id;
         this.reciveddate = reciveddate;
         this.user_id=user_id;
         this.confirmation = confirmation;
+    }
+
+    public Order(int order_id) {
+   this.order_id = order_id;
     }
 
     @Override
@@ -34,12 +46,7 @@ public class Order {
         return "Order{" + "order_id=" + order_id + ", reciveddate=" + reciveddate + ", Users=" + user_id + ", confirmation=" + confirmation + '}';
     }
 
-    private int order_id;
-    private Date reciveddate;
-    private int user_id;
-    private String confirmation;
-
-    public Order(int order_id, Date reciveddate, User Users, String confirmation) {
+    public Order(int order_id, Date reciveddate, int user_id, String confirmation) {
         this.order_id = order_id;
         this.reciveddate = reciveddate;
         this.user_id = user_id;
@@ -51,9 +58,6 @@ public class Order {
         this.reciveddate = reciveddate;
     }
 
-    public Order(int invoiceid) {
-        this.order_id = order_id;
-    }
 
     public int getUser_id() {
         return user_id;
@@ -82,7 +86,7 @@ public class Order {
     }
 
     public void setReciveddate(Date reciveddate) {
-        this.reciveddate = new Date();
+        this.reciveddate = reciveddate;
     }
 
     public void setOrder_id(int order_id) {

@@ -1,9 +1,10 @@
 package data;
 
-import static data.DBConnector.getConnection;
+
 import domain.Bottom;
 import domain.LineItem;
 import domain.Topping;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +15,11 @@ import java.util.List;
  * 
  */
  public class CupcakeMapper {
-    
+     Connection conn;
+
+    public CupcakeMapper() {
+        this.conn = DBConnector.getConnection();
+    }
     /**
      * Her oprettes en liste af alle kage toppe fra databasen.
      * @return Return a list of cupcake toppings.
@@ -25,8 +30,9 @@ import java.util.List;
 
         List<Topping> cupcakeToppingList = new ArrayList();
         try {
+           
             String sql = "SELECT top_id, topname, top_price FROM toppinglist";
-            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
             int lastId = -1;
             Topping topping = null;
             while (rs.next()) {
@@ -58,8 +64,9 @@ import java.util.List;
         Topping t = new Topping();
         double topprice;
         try {
+          
             String sql = "SELECT top_id, top_price, topname FROM toppinglist where topname =" + "'" + topname + "'";
-            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
             if (rs.next()) {
 
                 int top_id = rs.getInt("top_id");
@@ -85,8 +92,9 @@ import java.util.List;
         double botprice ;
         Bottom b = new Bottom();
         try {
+       
             String sql = "SELECT bot_id, bot_price, bottomname FROM bottomlist WHERE bottomname =" + "'" + botname + "'";
-            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
             if (rs.next()) {
                 int bot_id = rs.getInt("bot_id");
                 botname = rs.getString("bottomname");
@@ -109,7 +117,7 @@ import java.util.List;
 
         String sql = "SELECT bot_id, bottomname, bot_price FROM bottomlist";
 
-        ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
+        ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
         Bottom bottom = null;
         while (rs.next()) {

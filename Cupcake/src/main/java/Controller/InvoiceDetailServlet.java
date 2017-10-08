@@ -52,7 +52,7 @@ public class InvoiceDetailServlet extends HttpServlet {
                 request.setAttribute("totalPrice", invoiceInfo);
                 request.setAttribute("quantity", invoiceInfo);
                 
-                LineItem cupcakeNameInvoice = infoMapper.getCupcakeName(invId);
+                LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
                 request.setAttribute("cupcakeName", cupcakeNameInvoice);
                 
                 if(invoiceInfo != null && cupcakeNameInvoice != null) {
