@@ -43,7 +43,6 @@ public class ShoppingCartServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
             InfoToAdminMapper itam = new InfoToAdminMapper();
-           
 
             String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
                     + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
@@ -54,9 +53,9 @@ public class ShoppingCartServlet extends HttpServlet {
 
                     try {
 
-                       Order or = new Order(user.getUser_id());
+                        Order or = new Order(user.getUser_id());
                         itam.addOrder(or);
-                        
+
                         um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
 
 //                        itam.addConfirmation(user.getUser_id(), invoicetext);

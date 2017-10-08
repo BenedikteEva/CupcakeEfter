@@ -19,8 +19,6 @@ public class LineItemsMapper {
     }
     public int addLineItemToDb(LineItem li) throws Exception {
      
-     
-           
             String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
 
@@ -36,20 +34,13 @@ public class LineItemsMapper {
             int id = rs.getInt(1);
 
             return id;
-
-      
-
     }
     
-    
-
-
     public LineItem getLineItemData(int lineItemId) throws SQLException {
 
         LineItem li = null;
         try {
 
-        
             String sql = "SELECT * FROM lineitem WHERE lineitem_id=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, lineItemId);

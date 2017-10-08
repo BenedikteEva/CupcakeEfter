@@ -3,7 +3,6 @@ package data;
 import domain.LineItem;
 import domain.Order;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,11 +19,13 @@ import java.util.logging.Logger;
  * @author Bo Henriksen
  */
 public class InfoToAdminMapper {
- Connection conn;
+
+    Connection conn;
 
     public InfoToAdminMapper() {
         this.conn = DBConnector.getConnection();
     }
+
     /**
      * TODO The method gets all order id. Is not implemented. (Denne metode er
      * til admin page og henter order id )
@@ -36,7 +37,7 @@ public class InfoToAdminMapper {
         List<LineItem> allOrderId = new ArrayList();
 
         String sql = "SELECT order_id FROM orderlist;";
-     
+
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
         LineItem id = null;
@@ -66,7 +67,7 @@ public class InfoToAdminMapper {
         List<Order> allOrderId = new ArrayList();
         user_id = 0;
         String sql = "SELECT order_id FROM orderlist where user_id=" + user_id;
-     
+
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
         Order id = null;
@@ -93,7 +94,7 @@ public class InfoToAdminMapper {
      * @throws SQLException if an sql error occur.
      */
     public LineItem getODetail(int invoiceID) throws SQLException {
-     
+
         LineItem oDetail = null;
         try {
 
@@ -148,9 +149,9 @@ public class InfoToAdminMapper {
 //
 //        return name;
 //    }
-
     /**
-     * Her tilføjes en kundes ordrer til databasen.
+     * Her tilføjes en kundes ordrer til databasen. Metoden blev brugt da vi
+     * indsatte ordren som en blop string.
      *
      * @param user_id insert the users id in the method
      * @param conf insert the string confirmation in the method.
@@ -171,7 +172,6 @@ public class InfoToAdminMapper {
 //        int id = rs.getInt(1);
 //        return id;
 //    }
-
     /**
      * Adds the users id into the orderlist.
      *
@@ -188,25 +188,24 @@ public class InfoToAdminMapper {
      */
     public int addOrder(Order o) throws SQLException {
 
-            int user_id = 0;
+        int user_id = 0;
 
-            String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
-            PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
+        String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
+        PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
-            confPstmt.setInt(1, user_id);
-        
+        confPstmt.setInt(1, user_id);
 
-            int result = confPstmt.executeUpdate();
-            ResultSet rs = confPstmt.getGeneratedKeys();
-            rs.next();
-            int id = rs.getInt(1);
-            return id;
-        } 
+        int result = confPstmt.executeUpdate();
+        ResultSet rs = confPstmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+        return id;
+    }
 
     public int getLastInvoiceId(int invoiceid) throws SQLException {
 
         try {
-         
+
             String sql = "SELECT MAX(order_id) as order_id from orderlist";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
 
@@ -234,7 +233,6 @@ public class InfoToAdminMapper {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
         //Tester getODetail metoden
         try {
             System.out.println("GETODETAIL");

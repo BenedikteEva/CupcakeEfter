@@ -12,27 +12,28 @@ import java.util.logging.Logger;
 
 /**
  * The class UserMapper handels all the querries to the databse about the user.
+ *
  * @author Bo Henriksen
  */
 public class UserMapper {
-Connection conn;
+
+    Connection conn;
 
     public UserMapper() {
         this.conn = DBConnector.getConnection();
     }
+
     /**
      * This method gets all the data that is in the database for a user.
+     *
      * @param username the name of the user that is going to find data about.
      * @return a user object with information about the user.
      * @throws SQLException if an sql error occur.
      */
-   
-   
     public User getUserData(String username) throws SQLException {
 
         User user = null;
         try {
-   
             String sql = "SELECT * FROM userlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
@@ -55,15 +56,17 @@ Connection conn;
 
         return user;
     }
-    
+
     /**
-     * Her tilføjes en bruger i databasen, når vedkommende har intastet bruger oplysninger på registration.jsp siden og trykket submit.
+     * Her tilføjes en bruger i databasen, når vedkommende har intastet bruger
+     * oplysninger på registration.jsp siden og trykket submit.
+     *
      * @param u is the user that is going to be added to the database.
      * @return id
      * @throws Exception if an sql error occur.
      */
     public int addUser(User u) throws Exception {
-    
+
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
         PreparedStatement userPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
 
@@ -76,9 +79,11 @@ Connection conn;
         int id = rs.getInt(1);
         return id;
     }
-    
+
     /**
-     * Her godkendes en bruger, om vedkommende findes i databasen og om passwordet er korrekt.
+     * Her godkendes en bruger, om vedkommende findes i databasen og om
+     * passwordet er korrekt.
+     *
      * @param loginUser is the name of the user that is tring to login.
      * @return true if there is a next record and false if there is'nt.
      */
@@ -89,7 +94,6 @@ Connection conn;
         String password = loginUser.getPassword();
 
         try {
-
             String sql = "SELECT username, password FROM userlist WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userName);//Det som sættes ind sql stringen
@@ -110,8 +114,10 @@ Connection conn;
 
     /**
      * Tjekker om brugeren der logger ind, er Admin eller ej.
+     *
      * @param adminLogin the name of the admin that is tring to login.
-     * @return true if there is a next record in resultset and false if there is'nt.
+     * @return true if there is a next record in resultset and false if there
+     * is'nt.
      */
     public boolean godkendAdmin(Admin adminLogin) {
 
@@ -120,7 +126,6 @@ Connection conn;
         String adminPassword = adminLogin.getAdminPassword();
 
         try {
-
             String sql = "SELECT adminUser, adminPassword FROM adminList WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, adminUserName);//Det som sættes ind sql stringen
@@ -138,9 +143,10 @@ Connection conn;
         }
         return false;
     }
-    
+
     /**
      * Her fås det data om admin brugeren.
+     *
      * @param adminUsername is the admin data your looking for.
      * @return an object with admin userdata.
      * @throws SQLException if an sql error occur.
@@ -149,7 +155,6 @@ Connection conn;
 
         Admin admin = null;
         try {
-
             String sql = "SELECT * FROM adminlist WHERE username=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, adminUsername);
@@ -170,34 +175,32 @@ Connection conn;
 
         return admin;
     }
-    
+
     /**
      * Her ændres en brugers kontantbeholdning, her kaldet UserBalance.
+     *
      * @param username the username which balance is going to be changed.
      * @param b the amount that is going to be changed to.
      * @throws Exception if an sql error occur.
      */
-
     public void changeUserBalance(String username, double b) throws Exception {
-     
-        
+
         try {
-           
-                String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
-                PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
-                
-                balancePstmt.setDouble(1, b);
-                balancePstmt.setString(2, username);
-                
-                balancePstmt.executeUpdate();
-            
+            String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
+            PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
+
+            balancePstmt.setDouble(1, b);
+            balancePstmt.setString(2, username);
+
+            balancePstmt.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
 
             System.err.println("Got an exception! ");
         }
     }
-    
+
     //For test purpose.
     public static void main(String[] args) throws SQLException, Exception {
         UserMapper pm = new UserMapper();
@@ -205,7 +208,6 @@ Connection conn;
         //Test af getUserData
         //System.out.println(pm.getUserData("admin"));
         //System.out.println(pm.getAdminData("admin"));
-        
         //pm.changeUserBalance("tr", 25.0);
         //System.out.println(pm.getUserData("tr"));
     }

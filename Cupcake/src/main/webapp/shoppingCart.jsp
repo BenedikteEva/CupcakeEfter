@@ -128,7 +128,7 @@
 
 
                 <form id="formShoppingCart" action="ShoppingCartServlet" method="POST">
-                   
+
                     <input type="hidden" name="origin" value="buyMoreProducts">
 
 

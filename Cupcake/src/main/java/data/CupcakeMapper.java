@@ -1,6 +1,5 @@
 package data;
 
-
 import domain.Bottom;
 import domain.LineItem;
 import domain.Topping;
@@ -11,26 +10,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The class CupcakeMapper handels all the methods that makes querries to the database about the cupcakes.
- * 
+ * The class CupcakeMapper handels all the methods that makes querries to the
+ * database about the cupcakes.
+ *
  */
- public class CupcakeMapper {
-     Connection conn;
+public class CupcakeMapper {
+
+    Connection conn;
 
     public CupcakeMapper() {
         this.conn = DBConnector.getConnection();
     }
+
     /**
      * Her oprettes en liste af alle kage toppe fra databasen.
+     *
      * @return Return a list of cupcake toppings.
      * @throws SQLException if an sql error occur.
      */
-
     public List<Topping> getAllTopping() throws SQLException {
 
         List<Topping> cupcakeToppingList = new ArrayList();
         try {
-           
             String sql = "SELECT top_id, topname, top_price FROM toppinglist";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
             int lastId = -1;
@@ -52,19 +53,19 @@ import java.util.List;
         return cupcakeToppingList;
     }
 // Har været et problem med en nullpointer dereference grundet tOpping t= null og topprice= 0 er løst
-    
+
     /**
      * Her fås en top, dens navn og dens pris fra databasen.
-     * @param topname is the name of the topping that you want to find in the database.
+     *
+     * @param topname is the name of the topping that you want to find in the
+     * database.
      * @return the price of the topping
      * @throws SQLException if an sql error occur.
      */
-
     public double getToppingPricebyName(String topname) throws SQLException {
         Topping t = new Topping();
         double topprice;
         try {
-          
             String sql = "SELECT top_id, top_price, topname FROM toppinglist where topname =" + "'" + topname + "'";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
             if (rs.next()) {
@@ -80,19 +81,19 @@ import java.util.List;
         }
         return t.getTop_Price();
     }
-    
+
     /**
      * Her fås en Bund, dens navn og pris fra databasen.
-     * @param botname is the name of the bottom you want to find in the database.
+     *
+     * @param botname is the name of the bottom you want to find in the
+     * database.
      * @return the price of the botton based on the name.
      * @throws SQLException if an sql error occur.
      */
-
     public double getBottomPricebyName(String botname) throws SQLException {
-        double botprice ;
+        double botprice;
         Bottom b = new Bottom();
         try {
-       
             String sql = "SELECT bot_id, bot_price, bottomname FROM bottomlist WHERE bottomname =" + "'" + botname + "'";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
             if (rs.next()) {
@@ -106,9 +107,10 @@ import java.util.List;
         }
         return b.getBot_Price();
     }
-    
+
     /**
      * Her fås all Bunde fra databasen.
+     *
      * @return a list of all the bottoms
      * @throws SQLException if an sql error occur.
      */
@@ -133,14 +135,15 @@ import java.util.List;
         }
         return cupcakeBottomList;
     }
-    
+
     //This is for test purpose.
     public static void main(String[] args) throws SQLException {
-        List <LineItem> test = new ArrayList <>();
+        List<LineItem> test = new ArrayList<>();
 //         LineItem li = new LineItem("kage2", 11.00, 2,22.00);
 //         LineItem li2 = new LineItem("kage3", 10.00, 2,20.00);
 //         test.add(li);test.add(li2);
-                System.out.println(test.get(0));System.out.println(test.get(1));
+        System.out.println(test.get(0));
+        System.out.println(test.get(1));
         CupcakeMapper pm = new CupcakeMapper();
         //Recipe p = new Recipe("Kalle", "Karlsen");
         System.out.println("Bottom:");
