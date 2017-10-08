@@ -10,6 +10,7 @@ import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,23 +54,28 @@ public class NewProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-//Sessionen kaldes
+        
+        //Sessionen kaldes
         HttpSession session = request.getSession();
-// her får vi fat i de mapper og utility classer der skal bruges        
+        
+        // her får vi fat i de mapper og utility classer der skal bruges        
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
         LineItemsMapper lim = new LineItemsMapper();
         InfoToAdminMapper itam = new InfoToAdminMapper();
-// herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
-// adder to shopping cart og trykker på checkout
+        
+        // herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
+        // adder to shopping cart og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
-// får fat i hidden             
+            // får fat i hidden             
             String origin = request.getParameter("origin");
-// den user der er gemt i sessions ved login kaldes
+            
+            // den user der er gemt i sessions ved login kaldes
             User user = (User) session.getAttribute("user");
-// vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
-// længere nede når kunden får brug for det
+            
+            // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
+            // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
             int invoiceId = itam.getLastInvoiceId(0) + 1;
             session.setAttribute("invoiceId", invoiceId);
@@ -98,6 +104,8 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
 
+
+                        
                         if (cart == null) {
 
                             cart = new ArrayList<>();
@@ -115,12 +123,14 @@ public class NewProductControlServlet extends HttpServlet {
                         }
                         totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
                         tempBalance = computeTempBalance(um, user, totalPriceInvoice);
-
+                        
+                         
+                        
                         session.setAttribute("tempBalance", tempBalance);
                         session.setAttribute("totalPriceInvoice", totalPriceInvoice);
 
                         request.getRequestDispatcher("products.jsp").forward(request, response);
-
+                        
                     } else {
 
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
@@ -141,7 +151,9 @@ public class NewProductControlServlet extends HttpServlet {
     //hjælpemetoder til ar udregne nogle doubles
     private double computeTempBalance(UserMapper um, User user, double totalPriceInvoice) throws SQLException {
         double tempBalance;
+        
         tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
+               
         return tempBalance;
     }
 
@@ -152,6 +164,8 @@ public class NewProductControlServlet extends HttpServlet {
         }
         return totalPriceInvoice;
     }
+    
+    
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

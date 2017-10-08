@@ -193,14 +193,19 @@
                     <%
                         try {
                             if (request.getParameter("shoppingCart") != null) {
-
+                                
+                                double tempBalanceCheck = (Double) request.getSession().getAttribute("tempBalance");
+                                if( tempBalanceCheck < 0) {
+                                    out.print("You dont have that kind of money.");
+                                } else {
+                                
                                 out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
                                 out.println("<br> </br>");
                                 out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
                                 out.println("<br> </br>");
                                 out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
                                         + " if you buy what is currently in your shopping cart</a>");
-
+                                }
                             } else {
                             }
                         } catch (Exception ex) {
