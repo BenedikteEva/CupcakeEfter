@@ -94,19 +94,20 @@
                 %>
                 <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
 
+                
+                <!-- If the customer want a field to enter an invoice number insted of a button. TODO is not finish. -->
+                <!--<form name="FormInvoice" action="#" method="POST"> <!--action="/InvoiceDetailServlet"-->
 
-                <form name="FormInvoice" action="/InvoiceDetailServlet" method="POST">
-
-                    <div class="container">
+                   <!-- <div class="container">
                         <label><b>Enter the invoice number you want to inspect</b></label>
                         <input type="text" placeholder="Enter Invoicenumber" name="id" required>
 
                         <!--<button type="submit" onclick="location.href = 'invoice_detail.jsp';" required>Submit</button> -->
 
 
-                    </div>
+                   <!-- </div>
 
-                </form>
+                </form>-->
 
 
 
