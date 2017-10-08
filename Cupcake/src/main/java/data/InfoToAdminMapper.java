@@ -4,6 +4,7 @@ import static data.Connector.getConnection;
 import domain.LineItem;
 import domain.Order;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -167,18 +168,36 @@ public class InfoToAdminMapper {
      * @return the users id.
      * @throws SQLException if an sql error occur.
      */
-    public int addOrder(int user_id) throws SQLException {
-        Connection conn = Connector.getConnection();
-        String insertUser = "INSERT INTO orderlist (user_id) VALUES (?)";
-        PreparedStatement confPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+    /**
+     * Her tilføjes en kundes ordrer til databasen.
+     *
+     * @param o
+     * @return id
+     * @throws SQLException
+     */
+    public int addOrder(Order o) throws SQLException {
+        try {
+         
+            int user_id = 0;
+            Date datetime=null;
+            Connection conn = Connector.getConnection();
+            String insertOrder = "INSERT INTO orderlist ( user_id, received) VALUES (?, NOW());";
+            PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
+           
+            confPstmt.setInt(1, user_id);
+            confPstmt.setDate(user_id, datetime);
 
-        confPstmt.setInt(1, user_id);
-
-        int result = confPstmt.executeUpdate();
-        ResultSet rs = confPstmt.getGeneratedKeys();
-        rs.next();
-        int id = rs.getInt(1);
-        return id;
+            int result = confPstmt.executeUpdate();
+            ResultSet rs = confPstmt.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+        
     }
   public int getLastInvoiceId(int invoiceid) throws SQLException {
 
