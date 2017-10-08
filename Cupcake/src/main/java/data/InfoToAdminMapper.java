@@ -246,10 +246,8 @@ public class InfoToAdminMapper {
             Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+ 
 
-    public void addOrder(Order o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
