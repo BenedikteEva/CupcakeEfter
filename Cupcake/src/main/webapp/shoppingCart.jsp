@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="bg-faded p-4 my-4">
+            <!-- <div class="bg-faded p-4 my-4">
                 <hr class="divider">
                 <h2 class="text-center text-lg text-uppercase my-0">Our Cupcakes is
                     <strong>worth sharing</strong>
@@ -97,13 +97,13 @@
                 <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
                 <p>If you have accidently found this page, you should know that this is just a student project and we do not sell real cup cakes.</p>
 
-            </div>    
+            </div>    -->
 
 
             <div class="bg-faded p-4 my-4">
                 <hr class="divider">
-                <h2 class="text-center text-lg text-uppercase my-0">Order Our Cupcakes
-                    <strong>Here</strong>
+                <h2 class="text-center text-lg text-uppercase my-0">
+                    <strong>Shopping cart</strong>
                 </h2>
                 <hr class="divider">
 
@@ -111,10 +111,10 @@
                     User user = (User) session.getAttribute("user");
 
                     if (user != null) {
-                        out.println("<div class=column><h2><br>User account for   " + user.getUserName() + "</h2></div><br>");
+                        out.println("<div class=column><h2><br>This is the status for your order   " + user.getUserName() + "." + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
                         out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
-                                + " if you buy what is currently in your shopping cart</a>");
+                                + " if you buy what is currently in your shopping cart.</a>");
 
                     }
                 %>
@@ -122,7 +122,7 @@
 
                 <%
                     out.println("<br> </br>");
-                    out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
+                    out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart.</a> ");
                 %>
 
 
