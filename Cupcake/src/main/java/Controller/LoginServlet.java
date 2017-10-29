@@ -69,14 +69,17 @@ public class LoginServlet extends HttpServlet {
                 //Sætter et key value pair så det kan hentes senere med getAttribute("key")
                 //request.setAttribute("userName", userName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
             } else {
+                
+                request.setAttribute("wrongLogin","Wrong username or password!");
 
-                {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('User or password incorrect');");
-                    out.println("location='index.jsp';");
-                    out.println("</script>");
-                }
-                //request.getRequestDispatcher("/index.jsp").forward(request, response);
+                //Giver en alert
+//                {
+//                    out.println("<script type=\"text/javascript\">");
+//                    out.println("alert('User or password incorrect');"); 
+//                    out.println("location='index.jsp';");
+//                    out.println("</script>");
+//                }
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
 
         }
