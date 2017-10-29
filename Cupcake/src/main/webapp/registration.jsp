@@ -50,10 +50,11 @@
 
     <div class="flex-container">
         <div id="box">   
-            <form name="Form1" action="UserServlet" method="POST">
+            <form name="Form1" action="UserServlet" method="POST" onSubmit="return formValidation();">
                 <div class="container">
                     <label><b>User name     </b></label>
                     <input type="text" placeholder="Enter user name" name="username">
+                    <span id="error_name" class="text-danger"></span>
                     <br>
 
                     <label><b>Email</b></label>
@@ -84,8 +85,7 @@
         </div>                
     </div>
 
-
-    
+    <script src="script/javascript.js" type="text/javascript"></script>
 </body>
 </html>
 
