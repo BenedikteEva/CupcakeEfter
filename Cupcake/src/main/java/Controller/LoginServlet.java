@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,14 +35,13 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             //Henter brugens input
             String userName = request.getParameter("username");
             String password = request.getParameter("password");
             System.out.println("LoginServlet");
-            
+
 //            User user = new User();
-            
             //Laver user objekt
             User loginUser = new User();
             loginUser.setUserName(userName);
@@ -55,23 +55,28 @@ public class LoginServlet extends HttpServlet {
                     boolean userAdmin = userMapper.getUserData(userName).isAdminStatus();
                     HttpSession session = request.getSession();
                     session.setAttribute("user", loginUser); //Her sættes attributen user på session objektet
-                    
+
                     if (userAdmin == true) {
-                    request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("/products.jsp").forward(request, response);
-                }
-                    
+                        request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("/products.jsp").forward(request, response);
+                    }
+
                 } catch (SQLException ex) {
                     Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //Sætter et key value pair så det kan hentes senere med getAttribute("key")
                 //request.setAttribute("userName", userName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
-                
             } else {
-                
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+
+                {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('User or password incorrect');");
+                    out.println("location='index.jsp';");
+                    out.println("</script>");
+                }
+                //request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
 
         }
