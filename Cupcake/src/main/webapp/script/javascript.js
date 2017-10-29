@@ -20,12 +20,12 @@ function formValidation()
             {
                 if (ValidateEmail(uemail))
                 {
-                    if (check_database(uname,uemail))
-                    {
+                    /*if (check_database(uname,uemail))
+                    {*/
                         if (passid_same_as_reapeat(passid, passid_repeat))
                         {
                         }
-                    }
+                    //}
                 }
             }
         }
@@ -70,10 +70,10 @@ function ValidateEmail(uemail)
         return false;
     }
 }
-function check_database(uname,uemail)
+/*function check_database(uname,uemail)
 {
    
-}
+}*/
 function passid_same_as_reapeat(passid, passid_repeat)
 {
     if (passid.value !== passid_repeat.value)
