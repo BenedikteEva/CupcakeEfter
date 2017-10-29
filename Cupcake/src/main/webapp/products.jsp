@@ -145,35 +145,7 @@
 
                 </div>
 
-                <%-- her kan man trykke og se sin cupcake på et tidspunkt skal der også et billede med --%> 
 
-                <%--   <div class="flex-container">
-                    <div id="box">    
-                        <button type=submit value="action" name="cupcakeshow">See your CupCake </button>
-                    </div>
-                </div> --%>
-                <%--
-                    rucc = new RendUtilCupCake();
-                    try {
-                        if (request.getParameter("cupcakeshow") != null) {
-                            String top = (String) request.getParameter("topname");
-                            String bot = (String) request.getParameter("bottomname");
-                            request.getSession().setAttribute("top", top);
-                            request.getSession().setAttribute("bot", bot);
-                            cupcakename = rucc.createCakeName(bot, top);
-                            cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
-                            request.getSession().setAttribute("cupcakename", cupcakename);
-                            request.getSession().setAttribute("cupcakeprice", cupcakeprice);
-
-                                out.println("<a>" + cupcakename + "</a><td><td>");
-                                out.println("<a>" + cupcakeprice + "</a>");
-
-                            } else {
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                --%>
 
                 <form id="formProducts" action="NewProductControlServlet" method="POST">
                     <input type="hidden" name="origin" value="addProduct">
@@ -191,26 +163,26 @@
 
 
                     <%
-                        try {
-                            if (request.getParameter("shoppingCart") != null) {
-                                
-                                double tempBalanceCheck = (Double) request.getSession().getAttribute("tempBalance");
-                                if( tempBalanceCheck < 0) {
-                                    out.print("You dont have that kind of money.");
-                                } else {
-                                
+
+                        if (request.getParameter("shoppingCart") != null) {
+
+                            double tempBalanceCheck = (Double)session.getAttribute("tempBalance");
+                            if (tempBalanceCheck < 10) {
+                                out.print("You dont have that kind of money.");
+                            } else {
+
                                 out.println("<a> you have added: " + request.getAttribute("li") + "to your shoppingcart</a> ");
                                 out.println("<br> </br>");
-                                out.println("<a> you have : " + session.getAttribute("cart") + "  in your shoppingcart</a> ");
+                                out.println("<a> you have : " + (List) session.getAttribute("cart") + "  in your shoppingcart</a> ");
                                 out.println("<br> </br>");
-                                out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
+                                out.println("<a>Your new balance will be: " + (Double) session.getAttribute("tempBalance")
                                         + " if you buy what is currently in your shopping cart</a>");
-                                }
-                            } else {
+
                             }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                        } else {
+
                         }
+
                     %>
 
 

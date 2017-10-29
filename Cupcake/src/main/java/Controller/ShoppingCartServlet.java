@@ -31,16 +31,17 @@ public class ShoppingCartServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
-            User user = (User) session.getAttribute("user");
+            User user = (User)session.getAttribute("user");
             UserMapper um = new UserMapper();
             InfoToAdminMapper itam = new InfoToAdminMapper();
 
@@ -55,13 +56,13 @@ public class ShoppingCartServlet extends HttpServlet {
 
                         Order or = new Order(user.getUser_id());
                         itam.addOrder(or);
-
-                        um.changeUserBalance(user.getUserName(), (double) session.getAttribute("tempBalance"));
-
+                     
+                            um.changeUserBalance(user.getUserName(), (Double)session.getAttribute("tempBalance"));
+                   
 //                        itam.addConfirmation(user.getUser_id(), invoicetext);
-                        request.setAttribute("invoicetext", invoicetext);
+//                        request.setAttribute("invoicetext", invoicetext);
 
-                    } catch (Exception ex) {
+                    } catch (SQLException ex) {
                         Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     request.getRequestDispatcher("confirmation.jsp").forward(request, response);
@@ -90,7 +91,11 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -104,7 +109,11 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

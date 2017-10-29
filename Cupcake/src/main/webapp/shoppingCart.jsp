@@ -113,7 +113,7 @@
                     if (user != null) {
                         out.println("<div class=column><h2><br>This is the status for your order   " + user.getUserName() + "." + "</h2></div><br>");
                         out.println("<h3>Your current account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
-                        out.println("<a>Your new balance will be: " + session.getAttribute("tempBalance")
+                        out.println("<a>Your new balance will be: " + (Double) session.getAttribute("tempBalance")
                                 + " if you buy what is currently in your shopping cart.</a>");
 
                     }
@@ -127,15 +127,14 @@
 
 
 
-                <form id="formShoppingCart" action="ShoppingCartServlet" method="POST">
+                <form name="buyMoreProducts" action="ShoppingCartServlet" method="POST">
 
                     <input type="hidden" name="origin" value="buyMoreProducts">
 
 
-                    <button type="button" onclick="location.href = 'products.jsp';" >get more cakes </button>   
+                    <button type="button" onclick="location.href = 'products.jsp'" >get more cakes </button>   
 
-
-                    <button type="submit" value="action" name="pay">Payment</button>  
+                    <button type="submit" value="action" name="buyMoreProducts">Payment</button>  
                 </form>
 
                 <button type="button" style="background-color: red" id="cancel" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>

@@ -1,6 +1,7 @@
 package data;
 
 import domain.Admin;
+import domain.MakingAnException;
 import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class UserMapper {
     Connection conn;
 
     public UserMapper() {
-        this.conn = DBConnector.getConnection();
+        conn = DBConnector.getConnection();
     }
 
     /**
@@ -65,7 +66,7 @@ public class UserMapper {
      * @return id
      * @throws Exception if an sql error occur.
      */
-    public int addUser(User u) throws Exception {
+    public int addUser(User u) throws SQLException  {
 
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
         PreparedStatement userPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
@@ -119,7 +120,7 @@ public class UserMapper {
      * @return true if there is a next record in resultset and false if there
      * is'nt.
      */
-    public boolean godkendAdmin(Admin adminLogin) {
+    public boolean godkendAdmin(Admin adminLogin)  throws SQLException{
 
         //Holder brugens indtastet værdier her
         String adminUserName = adminLogin.getAdminUserName();
@@ -138,7 +139,7 @@ public class UserMapper {
             return rs.next();
 //           
         } catch (SQLException ex) {
-            ex.printStackTrace();
+          
 
         }
         return false;
@@ -181,10 +182,14 @@ public class UserMapper {
      *
      * @param username the username which balance is going to be changed.
      * @param b the amount that is going to be changed to.
+     * @throws java.sql.SQLException
+     * @catch sql.SQLException
      * @throws Exception if an sql error occur.
      */
-    public void changeUserBalance(String username, double b) throws Exception {
+    public void changeUserBalance(String username, double b)throws SQLException {
 
+
+     
         try {
             String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
             PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
@@ -193,23 +198,24 @@ public class UserMapper {
             balancePstmt.setString(2, username);
 
             balancePstmt.executeUpdate();
-
+        
         } catch (SQLException ex) {
-            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
-
-            System.err.println("Got an exception! ");
+        ex.getMessage();
+        
         }
     }
+
+    
 
     //For test purpose.
     public static void main(String[] args) throws SQLException, Exception {
         UserMapper pm = new UserMapper();
 
-        //Test af getUserData
-        //System.out.println(pm.getUserData("admin"));
-        //System.out.println(pm.getAdminData("admin"));
-        //pm.changeUserBalance("tr", 25.0);
-        //System.out.println(pm.getUserData("tr"));
+//        Test af getUserData
+//        System.out.println(pm.getUserData("admin"));
+//        System.out.println(pm.getAdminData("admin"));
+//        pm.changeUserBalance("test",250);
+//        System.out.println(pm.getUserData("test"));
     }
 }
 

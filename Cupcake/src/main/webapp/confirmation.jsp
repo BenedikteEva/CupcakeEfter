@@ -92,9 +92,9 @@
             out.println("<a> Total Price : " + session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
             out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
         
-               out.println("<a>Invoice Id:  "+session.getAttribute("invoiceId")+"</a>");
+            //   out.println("<a>Invoice Id:  "+session.getAttribute("invoiceId")+"</a>");
          
-          // out.println("<a>"+itam.getAllOrderId()+"</a>");
+       // out.println("<a>"+itam.getAllOrderId()+"</a>");
             session.invalidate();
         %>
                 

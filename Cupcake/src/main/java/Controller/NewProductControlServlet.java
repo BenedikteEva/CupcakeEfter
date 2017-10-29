@@ -54,26 +54,22 @@ public class NewProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //Sessionen kaldes
-        HttpSession session = request.getSession();
-        
-        // her får vi fat i de mapper og utility classer der skal bruges        
+        HttpSession session = request.getSession();   
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
         LineItemsMapper lim = new LineItemsMapper();
         InfoToAdminMapper itam = new InfoToAdminMapper();
-        
+
         // herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
         // adder to shopping cart og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
             // får fat i hidden             
             String origin = request.getParameter("origin");
-            
+
             // den user der er gemt i sessions ved login kaldes
             User user = (User) session.getAttribute("user");
-            
+
             // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
             // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
@@ -90,7 +86,6 @@ public class NewProductControlServlet extends HttpServlet {
                     double totalprice;
                     int qty;
                     double totalPriceInvoice = 0;
-                    double tempBalance = 0;
                     String cupcakename;
 
                     String checkout = request.getParameter("checkout");
@@ -104,8 +99,6 @@ public class NewProductControlServlet extends HttpServlet {
                         cupcakeprice = rucc.calculateCakePrice(cupcakeList.getBottomPricebyName(bot), cupcakeList.getToppingPricebyName(top));
                         totalprice = (qty * cupcakeprice);
 
-
-                        
                         if (cart == null) {
 
                             cart = new ArrayList<>();
@@ -117,22 +110,15 @@ public class NewProductControlServlet extends HttpServlet {
                         request.setAttribute("li", li);
                         cart.add(li);
                         try {
-                            int addLineItemToDb = lim.addLineItemToDb(li);
+                          lim.addLineItemToDb(li);
                         } catch (Exception ex) {
-                            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                           
                         }
-                        totalPriceInvoice = computeTotal(cart, totalPriceInvoice);
-                        tempBalance = computeTempBalance(um, user, totalPriceInvoice);
-                        
-                         
-                        
-                        session.setAttribute("tempBalance", tempBalance);
-                        session.setAttribute("totalPriceInvoice", totalPriceInvoice);
-
+                        SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("products.jsp").forward(request, response);
-                        
-                    } else {
 
+                    } else {
+                       SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }
@@ -143,30 +129,25 @@ public class NewProductControlServlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+         ex.getMessage();
         }
 
     }
+    
+    
 
-    //hjælpemetoder til ar udregne nogle doubles
-    private double computeTempBalance(UserMapper um, User user, double totalPriceInvoice) throws SQLException {
+    private void SetTempBalanceAndTotalinvoice(double totalPriceInvoice, List<LineItem> cart, UserMapper um, User user, HttpSession session,HttpServletRequest request, HttpServletResponse response) throws SQLException {
         double tempBalance;
-        
-        tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-               
-        return tempBalance;
-    }
-
-    private double computeTotal(List<LineItem> cart, double totalPriceInvoice) {
-
-        for (int i = 0; i < cart.size(); i++) {
+           for (int i = 0; i < cart.size(); i++) {
             totalPriceInvoice += cart.get(i).getTotalPrice();
         }
-        return totalPriceInvoice;
+        tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
+        request.setAttribute("tempBalance", tempBalance);
+       session.setAttribute("tempBalance", tempBalance);
+        session.setAttribute("totalPriceInvoice", totalPriceInvoice);
     }
-    
-    
 
+  
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
