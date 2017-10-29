@@ -72,7 +72,7 @@ function ValidateEmail(uemail)
 }
 function check_database(uname,uemail)
 {
-    
+   
 }
 function passid_same_as_reapeat(passid, passid_repeat)
 {
@@ -90,7 +90,6 @@ function passid_same_as_reapeat(passid, passid_repeat)
         return true;
     }
 }
-
 
 
 
