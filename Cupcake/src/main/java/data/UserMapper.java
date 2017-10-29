@@ -186,11 +186,11 @@ public class UserMapper {
      * @catch sql.SQLException
      * @throws Exception if an sql error occur.
      */
-    public void changeUserBalance(String username, double b)throws SQLException {
+    public void changeUserBalance(String username, double b) throws SQLException, NumberFormatException {
 
 
      
-        try {
+    
             String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
             PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
 
@@ -199,25 +199,22 @@ public class UserMapper {
 
             balancePstmt.executeUpdate();
         
-        } catch (SQLException ex) {
-        ex.getMessage();
-        
-        }
+        } 
     }
 
     
 
     //For test purpose.
-    public static void main(String[] args) throws SQLException, Exception {
-        UserMapper pm = new UserMapper();
+//    public static void main(String[] args) throws SQLException, Exception {
+//        UserMapper pm = new UserMapper();
 
 //        Test af getUserData
 //        System.out.println(pm.getUserData("admin"));
 //        System.out.println(pm.getAdminData("admin"));
 //        pm.changeUserBalance("test",250);
 //        System.out.println(pm.getUserData("test"));
-    }
-}
+//    }
+//}
 
 //Test af addUser
 //        try {

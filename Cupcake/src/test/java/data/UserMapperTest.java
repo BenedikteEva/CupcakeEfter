@@ -112,7 +112,7 @@ public class UserMapperTest {
      * Test of changeUserBalance method, of class UserMapper.
      */
     @Test
-    public void testChangeUserBalance() throws Exception {
+    public void testChangeUserBalance() throws SQLException, NumberFormatException {
         System.out.println("changeUserBalance");
         String username = "test";
         double b = 300;
@@ -124,17 +124,31 @@ public class UserMapperTest {
         assertEquals(expResult, result, 0);
 
     }
+    
+    @Test
+    public void testChangeUserBalanceBack() throws SQLException, NumberFormatException {
+        System.out.println("changeUserBalance");
+        String username = "test";
+        double b = 100;
+        UserMapper instance = new UserMapper();
+        instance.changeUserBalance(username, b);
+        double result = instance.getUserData(username).getBalance();
+        double expResult = 100;
+
+        assertEquals(expResult, result, 0);
+
+    }
 
     /**
      * Test of main method, of class UserMapper.
      */
-    @Test
-    public void testMain() throws Exception {
-        System.out.println("main");
-        String[] args = null;
-        UserMapper.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-
-    }
+//    @Test
+//    public void testMain() throws Exception {
+//        System.out.println("main");
+//        String[] args = null;
+//        UserMapper.main(args);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
 
 }

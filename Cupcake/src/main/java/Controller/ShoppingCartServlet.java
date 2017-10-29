@@ -57,13 +57,16 @@ public class ShoppingCartServlet extends HttpServlet {
                         Order or = new Order(user.getUser_id());
                         itam.addOrder(or);
                      
-                            um.changeUserBalance(user.getUserName(), (Double)session.getAttribute("tempBalance"));
-                   
+                           um.changeUserBalance(user.getUserName(), (Double)session.getAttribute("tempBalance"));
+                           
+                           
+                           double ubchangerd = um.getUserData(user.getUserName()).getBalance();
 //                        itam.addConfirmation(user.getUser_id(), invoicetext);
-//                        request.setAttribute("invoicetext", invoicetext);
+                        request.setAttribute("invoicetext", invoicetext);
+                         request.setAttribute("ubchangerd", ubchangerd);
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                          um.changeUserBalance(user.getUserName(), (Double)session.getAttribute("tempBalance"));
                     }
                     request.getRequestDispatcher("confirmation.jsp").forward(request, response);
                     break;
