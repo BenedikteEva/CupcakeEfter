@@ -73,7 +73,7 @@ public class NewProductControlServlet extends HttpServlet {
             // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
             // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-            int invoiceId = itam.getLastInvoiceId(0) + 1;
+            int invoiceId = um.getUserData(user.getUserName()).getUser_id();
             session.setAttribute("invoiceId", invoiceId);
             int userid = user.getUser_id();
             LineItem li = null;

@@ -1,6 +1,7 @@
 package data;
 
 import domain.LineItem;
+import domain.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,21 @@ public class LineItemsMapper {
     public LineItemsMapper() {
         this.conn = DBConnector.getConnection();
     }
+    
+    public int addOrderToOrderList(Order or) throws SQLException  {
+        
+        String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
+        PreparedStatement orderPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
+
+        orderPstmt.setInt(1, or.getUser_id());
+//        userPstmt.setString(2, or.getPassword());Skal bruges til timestamp
+        int result = orderPstmt.executeUpdate();
+        ResultSet rs = orderPstmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+        return id;
+    }
+    
     public int addLineItemToDb(LineItem li) throws Exception {
      
             String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
@@ -65,8 +81,13 @@ public class LineItemsMapper {
     }
 
     public static void main(String[] args) throws SQLException, Exception {
-//        LineItemsMapper lim = new LineItemsMapper();
-//
+        LineItemsMapper lim = new LineItemsMapper();
+        
+        //Test insert into orderlist
+        Order or = new Order(3);
+     
+        lim.addOrderToOrderList(or);
+
 //        LineItem li = new LineItem(2, 2, "ko", 2.00, 4.00);
 //     
 //        lim.addLineItemToDb(li);

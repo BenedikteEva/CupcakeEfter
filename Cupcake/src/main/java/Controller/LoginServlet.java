@@ -59,6 +59,8 @@ public class LoginServlet extends HttpServlet {
                     if (userAdmin == true) {
                         request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
                     } else {
+                        int userId = userMapper.getUserData(userName).getUser_id();
+                        session.setAttribute("userId", userId);
                         request.getRequestDispatcher("/products.jsp").forward(request, response);
                     }
 
@@ -71,14 +73,6 @@ public class LoginServlet extends HttpServlet {
             } else {
                 
                 request.setAttribute("wrongLogin","Wrong username or password!");
-
-                //Giver en alert
-//                {
-//                    out.println("<script type=\"text/javascript\">");
-//                    out.println("alert('User or password incorrect');"); 
-//                    out.println("location='index.jsp';");
-//                    out.println("</script>");
-//                }
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
 

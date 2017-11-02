@@ -7,41 +7,35 @@ import java.util.Date;
  * @author Ticondrus
  */
 public class Order {
-    
-    
 
     public Order() {
-        
+
     }
-    
+
     /**
-     * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en order.
+     * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en
+     * order.
+     *
      * @param order_id 1
      * @param user_id 2
      * @param reciveddate 3
      * @param confirmation 4
      */
-
-   
-
     private int order_id;
     private Date reciveddate;
     private int user_id;
     private String confirmation;
-    
-    
-     public Order(int order_id, int user_id, Date reciveddate, String confirmation) {
-       this.order_id = order_id;
+
+    public Order(int order_id, int user_id, Date reciveddate, String confirmation) {
+        this.order_id = order_id;
         this.reciveddate = reciveddate;
-        this.user_id=user_id;
+        this.user_id = user_id;
         this.confirmation = confirmation;
     }
 
-    public Order(int order_id) {
-   this.order_id = order_id;
+    public Order(int user_id) {
+        this.user_id = user_id;
     }
-
-  
 
     @Override
     public String toString() {
@@ -59,7 +53,6 @@ public class Order {
         this.order_id = order_id;
         this.reciveddate = reciveddate;
     }
-
 
     public int getUser_id() {
         return user_id;
@@ -81,8 +74,6 @@ public class Order {
         return order_id;
     }
 
-   
-
     public Date getReciveddate() {
         return reciveddate;
     }
@@ -94,7 +85,5 @@ public class Order {
     public void setOrder_id(int order_id) {
         this.order_id = order_id;
     }
-
- 
 
 }

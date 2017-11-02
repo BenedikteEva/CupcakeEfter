@@ -193,7 +193,7 @@ public class InfoToAdminMapper {
         String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
         PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
-        confPstmt.setInt(1, user_id);
+        confPstmt.setInt(1, user_id); 
 
         int result = confPstmt.executeUpdate();
         ResultSet rs = confPstmt.getGeneratedKeys();

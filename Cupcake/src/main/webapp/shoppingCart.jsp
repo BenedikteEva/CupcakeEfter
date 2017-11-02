@@ -134,7 +134,7 @@
 
                     <button type="button" onclick="location.href = 'products.jsp'" >get more cakes </button>   
 
-                    <button type="submit" value="action" name="buyMoreProducts">Payment</button>  
+                    <button type="submit" name="origin" value="buyMoreProducts" >Payment</button>  
                 </form>
 
                 <button type="button" style="background-color: red" id="cancel" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>

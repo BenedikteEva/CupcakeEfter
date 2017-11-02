@@ -108,10 +108,13 @@
                     </div>
 
                     <div class="container" style="background-color:#f1f1f1">
-                        <button type="button" style="background-color: red" onclick="location.href = 'index.jsp';" class="cancelbtn">Cancel</button>
+                        <button type="button" style="background-color: red" onclick="return loginValidation();" class="cancelbtn">Cancel</button> <!--"location.href = 'index.jsp';"-->
                         <span class="psw">Forgot <a href="#">password?</a></span>
                     </div>
                 </form>
+                
+                <div style="color: #FF0000;">${wrongLogin}</div>
+                
             </div>
 
         </div>
