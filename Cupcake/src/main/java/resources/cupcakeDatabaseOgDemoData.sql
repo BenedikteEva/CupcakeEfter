@@ -146,3 +146,5 @@ INSERT INTO lineitem values
 	(5, 4, 7, 1, 'Orange with Chocolate', 2, 13, 26);
     
 commit;
+select * from orderlist;
+select * from lineitem;
