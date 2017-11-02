@@ -134,8 +134,6 @@ public class NewProductControlServlet extends HttpServlet {
 
     }
     
-    
-
     private void SetTempBalanceAndTotalinvoice(double totalPriceInvoice, List<LineItem> cart, UserMapper um, User user, HttpSession session,HttpServletRequest request, HttpServletResponse response) throws SQLException {
         double tempBalance;
            for (int i = 0; i < cart.size(); i++) {
