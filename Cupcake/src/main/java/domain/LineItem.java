@@ -7,14 +7,13 @@ package domain;
 public class LineItem {
     
     private int invoiceId;
-    private int top_id;
-    private int bot_id;
-    private String cupcakeName;
-    private int quantity;
     private double pricePrCc;
     private double totalPrice;
-    
-    
+    private int quantity;
+    private String cupcakeName;
+    private int top_id;
+    private int bot_id;
+    private int lineitem_id;
     
     /**
      * Her oprettes et LineItem af en kundes bestilling.
@@ -22,6 +21,9 @@ public class LineItem {
      * @param pricePrCc 2
      * @param totalPrice 3
      * @param quantity  4
+     * @param cupcakeName
+     * @param top_id  5
+     * @param bot_id  6
      */
 
     public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity) {
@@ -29,6 +31,38 @@ public class LineItem {
         this.pricePrCc = pricePrCc;
         this.totalPrice = totalPrice;
         this.quantity = quantity;
+    }
+
+    public LineItem(int invoiceId, int quantity ,int top_id, int bot_id,  String cupcakeName,double pricePrCc, double totalPrice) {
+        this.invoiceId = invoiceId;
+        this.pricePrCc = pricePrCc;
+        this.totalPrice = totalPrice;
+        this.quantity = quantity;
+        this.cupcakeName = cupcakeName;
+        this.top_id = top_id;
+        this.bot_id = bot_id;
+    }
+
+    public LineItem(int id, int li_id, int qty, String ccname, double prisprcc, double totalprice) {
+      
+    }
+
+  
+
+    public int getTop_id() {
+        return top_id;
+    }
+
+    public void setTop_id(int top_id) {
+        this.top_id = top_id;
+    }
+
+    public int getBot_id() {
+        return bot_id;
+    }
+
+    public void setBot_id(int bot_id) {
+        this.bot_id = bot_id;
     }
 
     public LineItem(int invoiceId, double pricePrCc, double totalPrice, int quantity, String cupcakeName) {
@@ -46,32 +80,9 @@ public class LineItem {
         this.quantity = quantity;
         this.cupcakeName = cupcakeName;
     }
-
-    public LineItem(int invoiceId, int top_id, int bot_id, String cupcakeName, int quantity, double pricePrCc, double totalPrice) {
-        this.invoiceId = invoiceId;
-        this.top_id = top_id;
-        this.bot_id = bot_id;
-        this.cupcakeName = cupcakeName;
-        this.quantity = quantity;
-        this.pricePrCc = pricePrCc;
-        this.totalPrice = totalPrice;
-    }
-
-    public int getTop_id() {
-        return top_id;
-    }
-
-    public void setTop_id(int top_id) {
-        this.top_id = top_id;
-    }
-
-    public int getBot_id() {
-        return bot_id;
-    }
-
-    public void setBot_id(int bot_id) {
-        this.bot_id = bot_id;
-    }
+    
+    
+    
     
     public LineItem(int invoiceId) {
         this.invoiceId = invoiceId;
@@ -84,6 +95,14 @@ public class LineItem {
     public LineItem () {
         
     }
+ public LineItem( int quantity, String cupcakeName, double pricePrCc, double totalPrice ) {
+     
+        this.pricePrCc = pricePrCc;
+        this.totalPrice = totalPrice;
+        this.quantity = quantity;
+        this.cupcakeName = cupcakeName;
+    }
+  
 
     public double getPricePrCc() {
         return pricePrCc;
@@ -124,12 +143,7 @@ public class LineItem {
     public void setInvoiceId(int invoiceId) {
         this.invoiceId = invoiceId;
     }
-    
-    //Til de nye felter. Det er ikke sikkert vi behøver at bruge den.
-//    @Override
-//    public String toString() {
-//        return "LineItem{" + "invoiceId=" + invoiceId + ", top_id=" + top_id + ", bot_id=" + bot_id + ", cupcakeName=" + cupcakeName + ", quantity=" + quantity + ", pricePrCc=" + pricePrCc + ", totalPrice=" + totalPrice + '}';
-//    }
+
 
     @Override
     public String toString() {

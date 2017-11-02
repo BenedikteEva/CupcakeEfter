@@ -1,6 +1,7 @@
 package data;
 
 import domain.LineItem;
+import domain.MakingAnException;
 import domain.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,7 +97,7 @@ public class InfoToAdminMapper {
     public LineItem getODetail(int invoiceID) throws SQLException {
 
         LineItem oDetail = null;
-        try {
+     
 
             String sql = "SELECT order_id, priceprcc, total_price, quantity FROM lineitem WHERE order_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -112,9 +113,7 @@ public class InfoToAdminMapper {
 
                 oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+       
 
         return oDetail;
     }
@@ -193,7 +192,7 @@ public class InfoToAdminMapper {
         String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
         PreparedStatement confPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
-        confPstmt.setInt(1, user_id); 
+        confPstmt.setInt(1, user_id);
 
         int result = confPstmt.executeUpdate();
         ResultSet rs = confPstmt.getGeneratedKeys();
@@ -202,8 +201,10 @@ public class InfoToAdminMapper {
         return id;
     }
 
-    public int getLastInvoiceId(int invoiceid) throws SQLException {
+   
 
+    public int getLastInvoiceId() throws MakingAnException {
+        int invoiceid = 0;
         try {
 
             String sql = "SELECT MAX(order_id) as order_id from orderlist";
@@ -214,12 +215,13 @@ public class InfoToAdminMapper {
                 invoiceid = rs.getInt("order_id");
 
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException| NumberFormatException| NullPointerException| IndexOutOfBoundsException ex) {
+
         }
 
         return invoiceid;
     }
+
 
     //The main method is the test purpose
     public static void main(String[] args) {

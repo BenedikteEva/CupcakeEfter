@@ -54,7 +54,7 @@ public class NewProductControlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();   
+        HttpSession session = request.getSession();
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
@@ -106,19 +106,19 @@ public class NewProductControlServlet extends HttpServlet {
 
                         }
 
-                        li = new LineItem(invoiceId, qty, cupcakename, cupcakeprice, totalprice);
+                        li = new LineItem(invoiceId, qty, cupcakeList.getToppingIdbyName(top), cupcakeList.getBottomIdbyName(bot), cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
                         cart.add(li);
                         try {
-                          lim.addLineItemToDb(li);
+                            lim.addLineItemToDb(li);
                         } catch (Exception ex) {
-                           
+
                         }
                         SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
-                       SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
+                        SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
 
                     }
@@ -129,23 +129,22 @@ public class NewProductControlServlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-         ex.getMessage();
+            ex.getMessage();
         }
 
     }
-    
-    private void SetTempBalanceAndTotalinvoice(double totalPriceInvoice, List<LineItem> cart, UserMapper um, User user, HttpSession session,HttpServletRequest request, HttpServletResponse response) throws SQLException {
+
+    private void SetTempBalanceAndTotalinvoice(double totalPriceInvoice, List<LineItem> cart, UserMapper um, User user, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws SQLException {
         double tempBalance;
-           for (int i = 0; i < cart.size(); i++) {
+        for (int i = 0; i < cart.size(); i++) {
             totalPriceInvoice += cart.get(i).getTotalPrice();
         }
         tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
         request.setAttribute("tempBalance", tempBalance);
-       session.setAttribute("tempBalance", tempBalance);
+        session.setAttribute("tempBalance", tempBalance);
         session.setAttribute("totalPriceInvoice", totalPriceInvoice);
     }
 
-  
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -136,6 +136,46 @@ public class CupcakeMapper {
         return cupcakeBottomList;
     }
 
+        public int getToppingIdbyName(String topname) throws SQLException {
+        Topping t = new Topping();
+        int top_id;
+        try {
+            String sql = "SELECT top_id, topname, top_price FROM toppinglist where topname =" + "'" + topname + "'";
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
+            if (rs.next()) {
+
+                top_id = rs.getInt("top_id");
+                topname = rs.getString("topname");
+               double topprice = rs.getDouble("top_price");
+
+                t = new Topping(top_id, topname, topprice);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return t.getTop_id();
+    }
+
+           public int getBottomIdbyName(String botname) throws SQLException {
+        Bottom b = new Bottom();
+        int bot_id;
+        try {
+            String sql = "SELECT bot_id,bottomname, bot_price FROM bottomlist where bottomname =" + "'" + botname + "'";
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
+            if (rs.next()) {
+
+                bot_id = rs.getInt("bot_id");
+                botname = rs.getString("bottomname");
+               double botprice = rs.getDouble("bot_price");
+
+            b=new Bottom(bot_id, botname, botprice);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return b.getBot_id();
+    }
+
     //This is for test purpose.
     public static void main(String[] args) throws SQLException {
         List<LineItem> test = new ArrayList<>();

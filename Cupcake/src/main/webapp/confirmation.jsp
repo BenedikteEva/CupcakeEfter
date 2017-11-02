@@ -25,7 +25,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
@@ -35,17 +35,17 @@
 
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
-        
+
         <title>Confirmation Page</title>
     </head>
     <body>
-        
-    
+
+
         <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
         <div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
 
         <!-- Navigation -->
-       <nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
             <div class="container">
                 <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,31 +80,32 @@
                     <strong>Confirmation</strong>
                 </h2>
                 <hr class="divider">
-               <%
-              InfoToAdminMapper itam= new InfoToAdminMapper();
-            UserMapper um = new UserMapper();
-            User user = (User) session.getAttribute("user");
-            
-            out.println("<div class=column><h2><br>Dear  " + user.getUserName() + "</h2></div><br>");
-         
-           
-            out.println("<a> you have bought : " + (List)session.getAttribute("cart") + "  please enjoy:-)</a> ");
-            out.println("<a> Total Price : " + (Double)session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
-            out.println("<h3>Your account balance is: "+ um.getUserData(user.getUserName()).getBalance() + "</h3>");
-            
-            //test
-            //out.println("<h3>username is: "+ user.getUserName() + "</h3>");
-            //out.println("<h3>userid is: "+ um.getUserData(user.getUserName()).getUser_id() + "</h3>");
-        
-            //   out.println("<a>Invoice Id:  "+session.getAttribute("invoiceId")+"</a>");
-         
-       // out.println("<a>"+itam.getAllOrderId()+"</a>");
-            session.invalidate();
-        %>
-                
-                
+                <%
+                    InfoToAdminMapper itam = new InfoToAdminMapper();
+                    LineItemsMapper lim= new LineItemsMapper();
+                    UserMapper um = new UserMapper();
+                    User user = (User) session.getAttribute("user");
+                   
+                    out.println("<div class=column><h2><br>Dear  " + user.getUserName() + "</h2></div><br>");
+                   
+                    out.println("<a> you have bought : " + (List) session.getAttribute("cart") + "  please enjoy:-)</a> ");
+                    out.println("<a> Total Price : " + (Double) session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
+                    out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
+                    out.println("<h3>Order no: " + itam.getLastInvoiceId() + "</h3>");
+                    int i = itam.getLastInvoiceId();
+                  out.println("<h3>LineItems: " + lim.getLineItemDataByUserId(user.getUser_id(),i)+ "</h3>");
+                    //test
+                    //out.println("<h3>username is: "+ user.getUserName() + "</h3>");
+                    //out.println("<h3>userid is: "+ um.getUserData(user.getUserName()).getUser_id() + "</h3>");
+
+                    //   out.println("<a>Invoice Id:  "+session.getAttribute("invoiceId")+"</a>");
+                    // out.println("<a>"+itam.getAllOrderId()+"</a>");
+                    session.invalidate();
+                %>
+
+
                 <br>
-                
+
                 <p> Your cupcakes are ready for pick up</p>
                 <p>Thanks for doing business with us</p>
                 <br>
@@ -123,8 +124,7 @@
         <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
         <script src="script/popper/popper.min.js" type="text/javascript"></script>
         <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-    
+
     </body>
 </html>
-   
-        
+

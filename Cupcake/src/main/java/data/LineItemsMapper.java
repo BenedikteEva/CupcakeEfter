@@ -7,20 +7,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 /**
  *
  * @author BenedikteEva
  */
 public class LineItemsMapper {
- Connection conn;
+
+    Connection conn;
 
     public LineItemsMapper() {
         this.conn = DBConnector.getConnection();
     }
-    
-    public int addOrderToOrderList(Order or) throws SQLException  {
-        
+
+    public int addOrderToOrderList(Order or) throws SQLException {
+
         String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
         PreparedStatement orderPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
@@ -32,26 +34,28 @@ public class LineItemsMapper {
         int id = rs.getInt(1);
         return id;
     }
-    
-    public int addLineItemToDb(LineItem li) throws Exception {
-     
-            String insertLineItem = "INSERT INTO lineitem (order_id, quantity, ccname, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
 
-            confPstmt.setInt(1, li.getInvoiceId());
-            confPstmt.setInt(2, li.getQuantity());
-            confPstmt.setString(3, li.getCupcakeName());
-            confPstmt.setDouble(4, li.getPricePrCc());
-            confPstmt.setDouble(5, li.getTotalPrice());
+    public int addLineItemToDb(LineItem li) throws SQLException {
 
-            int result = confPstmt.executeUpdate();
-            ResultSet rs = confPstmt.getGeneratedKeys();
-            rs.next();
-            int id = rs.getInt(1);
+        String insertLineItem = "INSERT INTO lineitem (order_id,  top_id, bot_id, ccname, quantity, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
 
-            return id;
+        confPstmt.setInt(1, li.getInvoiceId());
+        confPstmt.setInt(2, li.getTop_id());
+        confPstmt.setInt(3, li.getBot_id());
+        confPstmt.setString(4, li.getCupcakeName());
+        confPstmt.setInt(5, li.getQuantity());
+        confPstmt.setDouble(6, li.getPricePrCc());
+        confPstmt.setDouble(7, li.getTotalPrice());
+
+        int result = confPstmt.executeUpdate();
+        ResultSet rs = confPstmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+
+        return id;
     }
-    
+
     public LineItem getLineItemData(int lineItemId) throws SQLException {
 
         LineItem li = null;
@@ -74,7 +78,29 @@ public class LineItemsMapper {
                 li = new LineItem(id, qty, ccname, prisprcc, totalprice);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            ex.getMessage();
+        }
+
+        return li;
+    }
+
+    public String getLineItemDataByUserId(int user_id, int order_id) throws SQLException {
+      String li = null ;
+        try {
+
+            String sql = " SELECT orderlist.order_id, lineitem_id, quantity, ccname, prisprcc, totalprice \n"
+                    + " FROM lineitem, orderlist, userlist WHERE orderlist.user_id=userlist.user_id and userlist.user_id=" + user_id + " \n"
+                    + " and orderlist.order_id=" + order_id + ")";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user_id);
+            pstmt.setInt(2, order_id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+              li = rs.toString();
+                
+            }
+        } catch (SQLException ex) {
+            ex.getMessage();
         }
 
         return li;
@@ -82,21 +108,18 @@ public class LineItemsMapper {
 
     public static void main(String[] args) throws SQLException, Exception {
         LineItemsMapper lim = new LineItemsMapper();
-        
+
         //Test insert into orderlist
         Order or = new Order(3);
-     
+
         lim.addOrderToOrderList(or);
 
-//        LineItem li = new LineItem(2, 2, "ko", 2.00, 4.00);
-//     
-//        lim.addLineItemToDb(li);
-//         System.out.println(lim.getLineItemData(2));
-        //Test af getUserData
-        //System.out.println(pm.getUserData("admin"));
-        //System.out.println(pm.getAdminData("admin"));
+        InfoToAdminMapper itam = new InfoToAdminMapper();
 
-        //pm.changeUserBalance("tr", 25.0);
-        //System.out.println(pm.getUserData("tr"));
+//        LineItem li = new LineItem(5, 1, 2, 1, "Orange with Chocolate", 10.00, 30.00);
+
+        //            lim.addLineItemToDb(li);
+        System.out.println(lim.getLineItemDataByUserId(3, 1));
+
     }
 }
