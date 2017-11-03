@@ -92,8 +92,8 @@
                     out.println("<a> Total Price : " + (Double) session.getAttribute("totalPriceInvoice") + "  Thank You:-)</a> ");
                     out.println("<h3>Your account balance is: " + um.getUserData(user.getUserName()).getBalance() + "</h3>");
                     out.println("<h3>Order no: " + itam.getLastInvoiceId() + "</h3>");
-                    int i = itam.getLastInvoiceId();
-                  out.println("<h3>LineItems: " + lim.getLineItemDataByUserId(user.getUser_id(),i)+ "</h3>");
+                   
+                 // out.println("<h3>LineItems: " + lim.getLineItemDataByUserId(user.getUser_id(),itam.getLastInvoiceId())+ "</h3>");
                     //test
                     //out.println("<h3>username is: "+ user.getUserName() + "</h3>");
                     //out.println("<h3>userid is: "+ um.getUserData(user.getUserName()).getUser_id() + "</h3>");

@@ -6,6 +6,7 @@
 
 <%@page import="Utilities.RendUtilAllId"%>
 <%@page import="domain.LineItem"%>
+<%@page import="domain.Order"%>
 <%@page import="data.InfoToAdminMapper"%>
 <%@page import="java.util.List"%>
 <%@page import="data.LineItemsMapper"%>
@@ -87,27 +88,37 @@
                     out.println("Hello " + adminName + ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    
-                  
-                    
-                    List<LineItem> idList = infoToAdmin.getAllOrderId();
-                %>
-                <%= RendUtilAllId.allInvoiceIdTabel(idList)%>
 
+                  RendUtilAllId ruai= new RendUtilAllId();
+                    //RendUtilAllId.allInvoiceIdTabel(idList);
+                   List <Order> allId= infoToAdmin.getAllOrderId();
+                    
+                %>
+                <div class="flex-container">
+                    <div id="box">
+                        <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
+
+
+                    </div>
+                  
+
+                </div>
                 
+            <button type="submit" name="invoice_detail" required>Submit</button> 
+
                 <!-- If the customer want a field to enter an invoice number insted of a button. TODO is not finish. -->
                 <!--<form name="FormInvoice" action="#" method="POST"> <!--action="/InvoiceDetailServlet"-->
 
-                   <!-- <div class="container">
-                        <label><b>Enter the invoice number you want to inspect</b></label>
-                        <input type="text" placeholder="Enter Invoicenumber" name="id" required>
+                <!-- <div class="container">
+                     <label><b>Enter the invoice number you want to inspect</b></label>
+                     <input type="text" placeholder="Enter Invoicenumber" name="id" required>
 
-                        <!--<button type="submit" onclick="location.href = 'invoice_detail.jsp';" required>Submit</button> -->
+               
 
 
-                   <!-- </div>
+                <!-- </div>
 
-                </form>-->
+             </form>-->
 
 
 

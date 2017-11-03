@@ -1,6 +1,7 @@
 package Controller;
 
 import data.InfoToAdminMapper;
+import data.LineItemsMapper;
 import domain.LineItem;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,45 +30,50 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String origin = request.getParameter("origin");
+            switch (origin) {
+                case "invoice_detail":
+                    //Parser den som int da den kommer som String
+                    int invId = Integer.parseInt(request.getParameter("id"));
 
-            
+                    LineItem invoiceInfo = new LineItem();
+                    InfoToAdminMapper infoMapper = new InfoToAdminMapper();
+                    LineItemsMapper lim = new LineItemsMapper();
+                    String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 
+                    try {
 
-            //Parser den som int da den kommer som String
-            int invId = Integer.parseInt(request.getParameter("id"));
-            
-            LineItem invoiceInfo = new LineItem();
-            InfoToAdminMapper infoMapper = new InfoToAdminMapper();
-            
-            try {
-                invoiceInfo = infoMapper.getODetail(invId);
-                HttpSession session = request.getSession();
-                request.setAttribute("invoiceId", invoiceInfo);
-                request.setAttribute("pricePrCc", invoiceInfo);
-                request.setAttribute("totalPrice", invoiceInfo);
-                request.setAttribute("quantity", invoiceInfo);
-                
-                LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
-                request.setAttribute("cupcakeName", cupcakeNameInvoice);
-                
-                if(invoiceInfo != null && cupcakeNameInvoice != null) {
-                    
-                    request.getRequestDispatcher("/invoice_detail.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("/error_page.jsp").forward(request, response);
-                }
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        invoiceInfo = infoMapper.getODetail(invId);
+                        HttpSession session = request.getSession();
+                        String somemessage = "msg";
+                        request.setAttribute("invoiceId", invId);
+                        request.setAttribute("pricePrCc", invoiceInfo.getPricePrCc());
+                        request.setAttribute("totalPrice", invoiceInfo.getTotalPrice());
+                        request.setAttribute("quantity", invoiceInfo.getQuantity());
+                        request.setAttribute("invoiceInfo", invoiceInfo);
+                        request.setAttribute("orderData", orderData);
+                        request.setAttribute("msg", somemessage);
+                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
+                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
+
+                        request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+
+                    } catch (SQLException ex) {
+                        request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+                    }
+
+                    break;
+                default:
+                    throw new AssertionError();
             }
-
-}
-}
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -79,9 +85,13 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -93,9 +103,13 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -104,7 +118,7 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

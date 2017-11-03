@@ -22,10 +22,11 @@
         
         <% //String adminName = (String)request.getAttribute("user");
 
-            //out.println("Hello " + adminName + ". What are your plans for today?");
+         // out.println("Hello " + adminName + ". What are your plans for today?");
             
-            int id =(Integer) session.getAttribute("totalPrice");
-            out.println(id);
+           // int id =(Integer) session.getAttribute("totalPrice");
+           // out.println(id);
+           out.println("<a>"+(String)request.getAttribute("orderData")+"</a>");
             //InfoToAdminMapper invoice = new InfoToAdminMapper();
 
             //List<InfoToAdmin> invoiceList = invoice.getODetail("intId");
@@ -35,7 +36,7 @@
             
             
         %>
-        <%//= RendUtilInvoice.invoiceTable(invoiceList)%>
+        <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
         
         
     </body>

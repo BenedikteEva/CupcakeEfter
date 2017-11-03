@@ -34,19 +34,19 @@ public class InfoToAdminMapper {
      * @return a list of order id's.
      * @throws SQLException if an sql error occur.
      */
-    public List<LineItem> getAllOrderId() throws SQLException {
-        List<LineItem> allOrderId = new ArrayList();
+    public List<Order> getAllOrderId() throws SQLException {
+        List<Order> allOrderId = new ArrayList();
 
         String sql = "SELECT order_id FROM orderlist;";
 
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
-        LineItem id = null;
+       Order id = null;
         while (rs.next()) {
             int order_id = rs.getInt("order_id");
             if (order_id != lastId) {
                 int invoiceid = rs.getInt("order_id");
-                id = new LineItem(invoiceid);
+                id = new Order(invoiceid);
                 allOrderId.add(id);
             }
 //            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
@@ -117,6 +117,21 @@ public class InfoToAdminMapper {
 
         return oDetail;
     }
+    
+    public int getUserIdByOrderId(int order_id) throws SQLException{
+        int user_id = 0;
+        
+        String sql = "SELECT user_id FROM orderlist WHERE order_id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, order_id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                user_id = rs.getInt("user_id");
+            }
+        return user_id;
+        
+    }
+    
 
     /**
      * TODO Get the cupcake name based on an id. The method does not work and is
@@ -220,6 +235,24 @@ public class InfoToAdminMapper {
         }
 
         return invoiceid;
+    }
+    
+    public int getOrderId(int order_id) throws SQLException {
+    
+      try {
+           
+            String sql = "SELECT order_id from orderlist";
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
+            if (rs.next()) {
+                
+                order_id = rs.getInt("order_id");
+                
+            }
+            return order_id;
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return order_id;
     }
 
 

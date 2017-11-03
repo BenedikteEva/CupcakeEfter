@@ -112,7 +112,7 @@ public class NewProductControlServlet extends HttpServlet {
                         try {
                             lim.addLineItemToDb(li);
                         } catch (Exception ex) {
-
+                            lim.addLineItemToDb(li);
                         }
                         SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("products.jsp").forward(request, response);
