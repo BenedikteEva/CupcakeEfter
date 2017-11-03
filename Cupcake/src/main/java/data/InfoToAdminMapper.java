@@ -237,30 +237,40 @@ public class InfoToAdminMapper {
         return invoiceid;
     }
     
-    public int getOrderId(int order_id) throws SQLException {
-    
+    public List<Order>  getOrders() throws MakingAnException {
+    List<Order> orderIds=new ArrayList<>();
+  Order o;
       try {
            
-            String sql = "SELECT order_id from orderlist";
+            String sql = "SELECT * FROM orderlist";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            if (rs.next()) {
-                
-                order_id = rs.getInt("order_id");
-                
-            }
-            return order_id;
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+            
+              while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                int user_id = rs.getInt("user_id");
+                String received_date=rs.getString("received");
+
+                    o = new Order(order_id, user_id, received_date);
+                    orderIds.add(o);
+                }
+
+         
+            return orderIds;
+        } catch (SQLException| NumberFormatException| NullPointerException ex) {
+            ex.getCause();
         }
-        return order_id;
+        return orderIds;
     }
 
 
     //The main method is the test purpose
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, MakingAnException {
 
         InfoToAdminMapper info = new InfoToAdminMapper();
-
+        
+         System.out.println("getOrderId");
+            System.out.println(info.getOrders());
+     
         //Tester getCupcakeName
 //        System.out.println("CUPCAKENAME");
 //        try {
