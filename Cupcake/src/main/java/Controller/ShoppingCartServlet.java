@@ -94,12 +94,12 @@ public class ShoppingCartServlet extends HttpServlet {
                 
                 //Lægger ordren over i li
                 li = (LineItem) session.getAttribute("li");
-
+                for (int i=0; i<cart.size(); i++){
                 try {
-                    lim.addLineItemToDb(li); //Skriver ordren til databasen
+                    lim.addLineItemToDb(cart.get(i)); //Skriver ordren til databasen
                 } catch (Exception ex) {
                     Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }}
 
                 //Det som stod før
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));

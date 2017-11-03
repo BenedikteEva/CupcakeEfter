@@ -6,12 +6,9 @@ import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
-import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +70,7 @@ public class NewProductControlServlet extends HttpServlet {
             // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
             // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-            int invoiceId = um.getUserData(user.getUserName()).getUser_id();
+            int invoiceId = itam.getLastInvoiceId();
             session.setAttribute("invoiceId", invoiceId);
             int userid = user.getUser_id();
             LineItem li = null;
@@ -106,14 +103,10 @@ public class NewProductControlServlet extends HttpServlet {
 
                         }
 
-                        li = new LineItem(invoiceId, qty, cupcakeList.getToppingIdbyName(top), cupcakeList.getBottomIdbyName(bot), cupcakename, cupcakeprice, totalprice);
+                        li = new LineItem(itam.getLastInvoiceId()+1, qty, cupcakeList.getToppingIdbyName(top), cupcakeList.getBottomIdbyName(bot), cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
                         cart.add(li);
-                        try {
-                            lim.addLineItemToDb(li);
-                        } catch (Exception ex) {
-                            lim.addLineItemToDb(li);
-                        }
+                      
                         SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
