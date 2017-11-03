@@ -47,61 +47,58 @@ public class ShoppingCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
-            
-            //Få ryddet op i alle de her kald
-            String origin = request.getParameter("origin");
+
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
-            InfoToAdminMapper itam = new InfoToAdminMapper();
 
             response.setContentType("text/html;charset=UTF-8");
-            
-            RendUtilCupCake rucc = new RendUtilCupCake();
-            CupcakeMapper cupcakeList = new CupcakeMapper();
+
             LineItemsMapper lim = new LineItemsMapper();
 
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
 
-            int userid = user.getUser_id();
             LineItem li = null;
-            
+
             String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
                     + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
 
             try {
                 //Hent userid
                 int userId = um.getUserData(user.getUserName()).getUser_id();
-                //Timestamp
                 
                 Order or = new Order();
+                
                 //Sætter user id på ordre objektet
                 or.setUser_id(userId);
                 session.setAttribute("userId", userId);
 
-                //Laver timestamp ad d.d.
-                LocalDate today = LocalDate.now(); 
-                
+                //Laver timestamp af d.d.
+                LocalDate today = LocalDate.now();
+
                 //Kalder dateTimeFormatter
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                
                 //Sætter Stringen til d.d.
                 String formatDateTime = today.format(formatter);
-                
-                //
+
+                //Sætter datoen på ordren
                 or.setReciveddate(formatDateTime);
-                
+
                 //Skriver ordren til orderlist. 
                 lim.addOrderToOrderList(or);
-                
+
                 //Lægger ordren over i li
                 li = (LineItem) session.getAttribute("li");
-                for (int i=0; i<cart.size(); i++){
-                try {
-                    lim.addLineItemToDb(cart.get(i)); //Skriver ordren til databasen
-                } catch (Exception ex) {
-                    Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }}
+                
+                //Lægger hver enkelt kage ned, hvis der er flere
+                for (int i = 0; i < cart.size(); i++) {
+                    try {
+                        lim.addLineItemToDb(cart.get(i)); //Skriver ordren til databasen
+                    } catch (Exception ex) {
+                        Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 
-                //Det som stod før
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));
 
                 double ubchangerd = um.getUserData(user.getUserName()).getBalance();
@@ -116,17 +113,6 @@ public class ShoppingCartServlet extends HttpServlet {
 
         }
 
-    }
-
-    private void SetTempBalanceAndTotalinvoice(double totalPriceInvoice, List<LineItem> cart, UserMapper um, User user, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        double tempBalance;
-        for (int i = 0; i < cart.size(); i++) {
-            totalPriceInvoice += cart.get(i).getTotalPrice();
-        }
-        tempBalance = um.getUserData(user.getUserName()).getBalance() - totalPriceInvoice;
-        request.setAttribute("tempBalance", tempBalance);
-        session.setAttribute("tempBalance", tempBalance);
-        session.setAttribute("totalPriceInvoice", totalPriceInvoice);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

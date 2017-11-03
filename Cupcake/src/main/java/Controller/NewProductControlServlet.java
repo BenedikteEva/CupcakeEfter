@@ -55,7 +55,6 @@ public class NewProductControlServlet extends HttpServlet {
         UserMapper um = new UserMapper();
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
-        LineItemsMapper lim = new LineItemsMapper();
         InfoToAdminMapper itam = new InfoToAdminMapper();
 
         // herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
@@ -70,9 +69,7 @@ public class NewProductControlServlet extends HttpServlet {
             // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
             // længere nede når kunden får brug for det
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-            int invoiceId = itam.getLastInvoiceId();
-            session.setAttribute("invoiceId", invoiceId);
-            int userid = user.getUser_id();
+
             LineItem li = null;
             switch (origin) {
 
@@ -102,7 +99,7 @@ public class NewProductControlServlet extends HttpServlet {
                             session.setAttribute("cart", cart);
 
                         }
-
+                        
                         li = new LineItem(itam.getLastInvoiceId()+1, qty, cupcakeList.getToppingIdbyName(top), cupcakeList.getBottomIdbyName(bot), cupcakename, cupcakeprice, totalprice);
                         request.setAttribute("li", li);
                         cart.add(li);

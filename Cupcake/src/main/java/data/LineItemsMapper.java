@@ -1,6 +1,7 @@
 package data;
 
 import domain.LineItem;
+import domain.MakingAnException;
 import domain.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class LineItemsMapper {
         int id = rs.getInt(1);
         return id;
     }
-
+    
     public int addLineItemToDb(LineItem li) throws SQLException {
 
         String insertLineItem = "INSERT INTO lineitem (order_id,  top_id, bot_id, ccname, quantity, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
