@@ -37,6 +37,14 @@ public class Order {
         this.user_id = user_id;
     }
 
+
+
+    public Order(int order_id, int user_id, String received_date) {
+       this.order_id = order_id;
+        this.reciveddate = reciveddate;
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
         return "Order{" + "order_id=" + order_id + ", reciveddate=" + reciveddate + ", user_id=" + user_id + ", confirmation=" + confirmation + '}';
