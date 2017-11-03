@@ -23,11 +23,11 @@ public class LineItemsMapper {
 
     public int addOrderToOrderList(Order or) throws SQLException {
 
-        String insertOrder = "INSERT INTO orderlist (user_id) VALUES (?)";
+        String insertOrder = "INSERT INTO orderlist (user_id, received) VALUES (?, ?)";
         PreparedStatement orderPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
 
         orderPstmt.setInt(1, or.getUser_id());
-//        userPstmt.setString(2, or.getPassword());Skal bruges til timestamp
+        orderPstmt.setString(2, or.getReciveddate());
         int result = orderPstmt.executeUpdate();
         ResultSet rs = orderPstmt.getGeneratedKeys();
         rs.next();

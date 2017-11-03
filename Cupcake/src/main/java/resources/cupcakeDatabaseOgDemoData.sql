@@ -43,7 +43,7 @@ drop table if exists `orderlist`;
 create table `orderlist`(
 	`order_id`int (11) not null auto_increment,
     `user_id`int (11), 
-    `received`datetime,   
+    `received` VARCHAR(50),   
 primary key (order_id), foreign key (user_id) references `userlist`(user_id));
 
 -- Create tabel lineitem

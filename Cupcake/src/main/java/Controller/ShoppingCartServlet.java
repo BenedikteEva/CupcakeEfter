@@ -11,6 +11,8 @@ import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,7 +47,8 @@ public class ShoppingCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
-
+            
+            //Få ryddet op i alle de her kald
             String origin = request.getParameter("origin");
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
@@ -68,13 +71,25 @@ public class ShoppingCartServlet extends HttpServlet {
             try {
                 //Hent userid
                 int userId = um.getUserData(user.getUserName()).getUser_id();
-
+                //Timestamp
+                
                 Order or = new Order();
                 //Sætter user id på ordre objektet
                 or.setUser_id(userId);
                 session.setAttribute("userId", userId);
 
-                //Skriver ordren til orderlist. Mangler timestamp
+                //Laver timestamp ad d.d.
+                LocalDate today = LocalDate.now(); 
+                
+                //Kalder dateTimeFormatter
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                //Sætter Stringen til d.d.
+                String formatDateTime = today.format(formatter);
+                
+                //
+                or.setReciveddate(formatDateTime);
+                
+                //Skriver ordren til orderlist. 
                 lim.addOrderToOrderList(or);
                 
                 //Lægger ordren over i li
