@@ -2,12 +2,15 @@ package data;
 
 import domain.Admin;
 import domain.MakingAnException;
+import domain.Order;
 import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +69,7 @@ public class UserMapper {
      * @return id
      * @throws Exception if an sql error occur.
      */
-    public int addUser(User u) throws SQLException  {
+    public int addUser(User u) throws SQLException {
 
         String insertUser = "INSERT INTO userlist (email, password, username) VALUES (?, ?, ?)";
         PreparedStatement userPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
@@ -120,7 +123,7 @@ public class UserMapper {
      * @return true if there is a next record in resultset and false if there
      * is'nt.
      */
-    public boolean godkendAdmin(Admin adminLogin)  throws SQLException{
+    public boolean godkendAdmin(Admin adminLogin) throws SQLException {
 
         //Holder brugens indtastet værdier her
         String adminUserName = adminLogin.getAdminUserName();
@@ -139,7 +142,6 @@ public class UserMapper {
             return rs.next();
 //           
         } catch (SQLException ex) {
-          
 
         }
         return false;
@@ -188,26 +190,44 @@ public class UserMapper {
      */
     public void changeUserBalance(String username, double b) throws SQLException, NumberFormatException {
 
+        String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
+        PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
 
-     
-    
-            String changeBalance = "UPDATE userlist set balance= ? WHERE username =?";
-            PreparedStatement balancePstmt = conn.prepareStatement(changeBalance, Statement.RETURN_GENERATED_KEYS);
+        balancePstmt.setDouble(1, b);
+        balancePstmt.setString(2, username);
 
-            balancePstmt.setDouble(1, b);
-            balancePstmt.setString(2, username);
+        balancePstmt.executeUpdate();
 
-            balancePstmt.executeUpdate();
-        
-        } 
     }
 
-    
+    public List<User> getUsers() throws MakingAnException {
+        List<User> userIds = new ArrayList<>();
+        User u;
+        try {
 
-    //For test purpose.
+            String sql = "SELECT * FROM userlist";
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
+
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String email = rs.getString("email");
+
+                u = new User(user_id, username, email);
+                userIds.add(u);
+            }
+
+            return userIds;
+        } catch (SQLException | NumberFormatException | NullPointerException ex) {
+            ex.getCause();
+        }
+        return userIds;
+    }
+}
+
+//For test purpose.
 //    public static void main(String[] args) throws SQLException, Exception {
 //        UserMapper pm = new UserMapper();
-
 //        Test af getUserData
 //        System.out.println(pm.getUserData("admin"));
 //        System.out.println(pm.getAdminData("admin"));
@@ -215,7 +235,6 @@ public class UserMapper {
 //        System.out.println(pm.getUserData("test"));
 //    }
 //}
-
 //Test af addUser
 //        try {
 //            User u = null;

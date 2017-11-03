@@ -4,6 +4,8 @@
     Author     : Bo Henriksen 
 --%>
 
+<%@page import="Utilities.UserRendUtil"%>
+<%@page import="data.UserMapper"%>
 <%@page import="Utilities.RendUtilAllId"%>
 <%@page import="domain.LineItem"%>
 <%@page import="domain.Order"%>
@@ -88,11 +90,12 @@
                     out.println("Hello " + adminName + ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-
-                  RendUtilAllId ruai= new RendUtilAllId();
+                    UserMapper um = new UserMapper();
+                    RendUtilAllId ruai = new RendUtilAllId();
                     //RendUtilAllId.allInvoiceIdTabel(idList);
-                   List <Order> allId= infoToAdmin.getAllOrderId();
-                    
+                    List<Order> allId = infoToAdmin.getOrders();
+                    List<User> allUsers=um.getUsers();
+                          
                 %>
                 <div class="flex-container">
                     <div id="box">
@@ -100,11 +103,16 @@
 
 
                     </div>
-                  
+                        
+                    <div id="box">
+                        <%= UserRendUtil.userList(allUsers)%>
+
+
+                    </div>
 
                 </div>
-                
-            <button type="submit" name="invoice_detail" required>Submit</button> 
+
+                <button type="submit" name="invoice_detail" required>Submit</button> 
 
                 <!-- If the customer want a field to enter an invoice number insted of a button. TODO is not finish. -->
                 <!--<form name="FormInvoice" action="#" method="POST"> <!--action="/InvoiceDetailServlet"-->

@@ -1,6 +1,10 @@
 package Utilities;
 
+import data.InfoToAdminMapper;
+import data.UserMapper;
+import domain.MakingAnException;
 import domain.User;
+import java.util.List;
 
 /**
  *
@@ -19,7 +23,6 @@ public class UserRendUtil {
         
         sb.append("<table>\n"
                 + "<tr><th>CupCake</th><th>Pris</th><th></th><th></th></tr>\n");
-    
             sb.append("<tr><form action=\"ProductControlServlet\">");
             sb.append("<td>").append(u.getUserName()).append("</td>");
             sb.append("<td> \n <input type=\"checkbox\" name=\"cupcakename\" value=\"Welcome " + u.getUserName() + "\"><br>\n\n</td>");
@@ -28,6 +31,27 @@ public class UserRendUtil {
         return sb.toString();
 
     }
+    
+      public static String userList(List<User> userlist) throws MakingAnException {
+        StringBuilder sb = new StringBuilder();
+       UserMapper map = new UserMapper();
+   
+        
+        sb.append("<table>\n"
+                +"<tr><th>All Users</th><th></th></tr>\n"
+                + "<tr><th>UserId  </th><th>Name  </th><th>Email  </th><th></th></tr>\n");
+   for (User u : userlist) {
+            sb.append("<tr><form action=\"InvoiceDetailServlet\">");
+            sb.append("<td>").append(u.getUser_id()).append("</td>");
+            sb.append("<td>").append(u.getUserName()).append("</td>");
+            sb.append("<td>").append(u.getEmail()).append("</td>");
+            sb.append("<td> \n <input type=\"radio\" name=\"Users\" value=\"Welcome " + u.getUser_id() + "\"><br>\n\n</td>");
+   }
+        sb.append("</table>\n");
+        return sb.toString();
+
+    }
+    
     
     public double calculateBalance (double a, double b){
         double c = a-b;

@@ -133,59 +133,8 @@ public class InfoToAdminMapper {
     }
     
 
-    /**
-     * TODO Get the cupcake name based on an id. The method does not work and is
-     * not implemented.
-     *
-     * @param invoiceID gets the invoice id from the admin_page
-     * @return a cupcake name.
-     * @throws SQLException if an sql error occur.
-     */
-//    public LineItem getCupcakeName(int invoiceID) throws SQLException {
-//
-//        LineItem name = null;
-//        try {
-//
-//            String sql = "SELECT cupcakename from cupcakelist INNER JOIN odetail ON cupcakelist.cupcake_id  WHERE order_id = ?";//Forkert sql statement
-//            PreparedStatement pstmt = conn.prepareStatement(sql);
-//            pstmt.setInt(1, invoiceID);
-//
-//            ResultSet rs = pstmt.executeQuery();
-//            if (rs.next()) {
-//
-//                String cupcakeName = rs.getString("cupcakename");
-//
-//                name = new LineItem(cupcakeName);
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        return name;
-//    }
-    /**
-     * Her tilføjes en kundes ordrer til databasen. Metoden blev brugt da vi
-     * indsatte ordren som en blop string.
-     *
-     * @param user_id insert the users id in the method
-     * @param conf insert the string confirmation in the method.
-     * @return an id.
-     * @throws SQLException if an sql error occur.
-     */
-//    public int addConfirmation(int user_id, String conf) throws SQLException {
-//
-//        String insertUser = "INSERT INTO orderlist (user_id, confirmation) VALUES (?, ?)";
-//        PreparedStatement confPstmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
-//
-//        confPstmt.setInt(1, user_id);
-//        confPstmt.setString(2, conf);
-//
-//        int result = confPstmt.executeUpdate();
-//        ResultSet rs = confPstmt.getGeneratedKeys();
-//        rs.next();
-//        int id = rs.getInt(1);
-//        return id;
-//    }
+
+
     /**
      * Adds the users id into the orderlist.
      *
