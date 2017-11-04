@@ -4,6 +4,8 @@
     Author     : Bo
 --%>
 
+<%@page import="domain.Odetail"%>
+<%@page import="data.LineItemsMapper"%>
 <%@page import="Utilities.RendUtilAllIdForCustomer"%>
 <%@page import="domain.Order"%>
 <%@page import="java.util.List"%>
@@ -93,9 +95,13 @@
 
                     //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
 
-                    InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                    //InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                    LineItemsMapper lim = new LineItemsMapper();
                     UserMapper um = new UserMapper();
-                    List<Order> allId = infoToAdmin.getOrders();
+                    
+                    //Hent userid
+                    int userId = um.getUserData(user.getUserName()).getUser_id();
+                    List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
                     
 
                 %>
