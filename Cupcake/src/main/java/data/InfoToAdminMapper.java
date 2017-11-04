@@ -64,10 +64,10 @@ public class InfoToAdminMapper {
      * @return a list of all the order id's.
      * @throws SQLException if an sql error occur.
      */
-    public List<Order> getAllOrderId2(int user_id) throws SQLException {
+    public List<Order> getAllOrderDetails(int user_id) throws SQLException {
         List<Order> allOrderId = new ArrayList();
         user_id = 0;
-        String sql = "SELECT order_id FROM orderlist where user_id=" + user_id;
+        String sql = "SELECT * FROM orderlist INNER JOIN lineitem WHERE user_id=" + user_id;
 
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
