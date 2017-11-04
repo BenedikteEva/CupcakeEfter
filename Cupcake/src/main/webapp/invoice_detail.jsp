@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Invoice Detail</title>
     </head>
@@ -52,6 +53,10 @@
                 <td><%=session.getAttribute("cupcakeName")%></td>
                 <td><%=session.getAttribute("cart")%></td>
             </tr>
+        </table>
+            
 
-                </body>
-                </html>
+    </body>
+    
+    <button type="button" style="background-color: gold" onclick="location.href = 'admin_page.jsp';" class="cancelbtn">Vælg en anden brugers ordre</button>
+</html>
