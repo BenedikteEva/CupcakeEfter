@@ -1,8 +1,5 @@
 package Controller;
 
-import Utilities.RendUtilCupCake;
-import data.CupcakeMapper;
-import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
@@ -13,7 +10,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,14 +51,10 @@ public class ShoppingCartServlet extends HttpServlet {
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
             LineItem li = null;
 
-            String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "
-                    + session.getAttribute("totalPriceInvoice") + "\n\n Thank you for buying our CupCakes");
-
             try {
+                Order or = new Order();
                 //Hent userid
                 int userId = um.getUserData(user.getUserName()).getUser_id();
-                
-                Order or = new Order();
                 
                 //Sætter user id på ordre objektet
                 or.setUser_id(userId);
@@ -70,10 +62,8 @@ public class ShoppingCartServlet extends HttpServlet {
 
                 //Laver timestamp af d.d.
                 LocalDate today = LocalDate.now();
-
                 //Kalder dateTimeFormatter
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                
                 //Sætter Stringen til d.d.
                 String formatDateTime = today.format(formatter);
 
@@ -83,7 +73,7 @@ public class ShoppingCartServlet extends HttpServlet {
                 //Skriver ordren til orderlist. 
                 lim.addOrderToOrderList(or);
 
-                //Lægger ordren over i li
+                //Henter ordren fra session, og lægger ordren over i li
                 li = (LineItem) session.getAttribute("li");
                 
                 //Lægger hver enkelt kage ned, hvis der er flere
@@ -94,14 +84,11 @@ public class ShoppingCartServlet extends HttpServlet {
                         Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
+                
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));
 
                 double ubchangerd = um.getUserData(user.getUserName()).getBalance();
-//                        itam.addConfirmation(user.getUser_id(), invoicetext);
-                request.setAttribute("invoicetext", invoicetext);
-                request.setAttribute("ubchangerd", ubchangerd);
-
+            
             } catch (SQLException ex) {
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));
             }

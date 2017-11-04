@@ -3,7 +3,6 @@ package Controller;
 import Utilities.RendUtilCupCake;
 import data.CupcakeMapper;
 import data.InfoToAdminMapper;
-import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
 import domain.User;
@@ -108,6 +107,7 @@ public class NewProductControlServlet extends HttpServlet {
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
+                        //Hvis du trykker checkout uden at have tilføjet et produkt bliver du nu sendt til products.jsp
                         if(cart !=null) {
                         SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
