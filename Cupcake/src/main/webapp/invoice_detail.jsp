@@ -37,14 +37,12 @@
             <tr>
                 <th>Orders</th>
                 <th>Bruger</th>
-                <th>Info 3</th>
-                <th>Info 4</th>
+                <th>User ID</th>
             </tr>
 
             <tr>
-                <td><%=request.getAttribute("userOrders")%></td>
                 <td><%=request.getAttribute("user")%></td>
-                <td><%=request.getAttribute("userId")%></td>
+                <td><%=request.getAttribute("userOrders")%></td>
                 <td><%=request.getAttribute("userId")%></td>
             </tr>
         </table>
