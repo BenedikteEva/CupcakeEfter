@@ -33,6 +33,7 @@
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
        
         <table border=2>
+            
             <tr>
                 <th>Orders</th>
                 <th>Bruger</th>
@@ -42,7 +43,7 @@
 
             <tr>
                 <td><%=request.getAttribute("userOrders")%></td>
-                <td><%=session.getAttribute("user")%></td>
+                <td><%=request.getAttribute("user")%></td>
                 <td><%=request.getAttribute("userId")%></td>
                 <td><%=request.getAttribute("userId")%></td>
             </tr>

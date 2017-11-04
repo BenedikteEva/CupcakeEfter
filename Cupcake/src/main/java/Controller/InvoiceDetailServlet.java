@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import domain.Order;
 import Controller.ShoppingCartServlet;
+import data.UserMapper;
 import domain.MakingAnException;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class InvoiceDetailServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         InfoToAdminMapper infoMapper = new InfoToAdminMapper();
-
+        UserMapper um = new UserMapper();
         try (PrintWriter out = response.getWriter()) {
             String origin = request.getParameter("origin");
             switch (origin) {
@@ -82,6 +83,7 @@ public class InvoiceDetailServlet extends HttpServlet {
                 case "invoice_user":
                     int userId = Integer.parseInt(request.getParameter("uid"));
                     List <Order> userOrders= infoMapper.getOrdersByUserId(userId);
+                    request.setAttribute("user", um.getUsers().get(userId));
                     request.setAttribute("userOrders", userOrders);
                     request.setAttribute("userId", userId);
                     request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
