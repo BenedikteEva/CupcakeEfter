@@ -38,7 +38,9 @@ public class InvoiceDetailServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        
         response.setContentType("text/html;charset=UTF-8");
+        InfoToAdminMapper infoMapper = new InfoToAdminMapper();
         try (PrintWriter out = response.getWriter()) {
             String origin = request.getParameter("origin");
             switch (origin) {
@@ -48,7 +50,7 @@ public class InvoiceDetailServlet extends HttpServlet {
 
                     
                     LineItem invoiceInfo = new LineItem();
-                    InfoToAdminMapper infoMapper = new InfoToAdminMapper();
+                    
                     LineItemsMapper lim = new LineItemsMapper();
                     String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 
