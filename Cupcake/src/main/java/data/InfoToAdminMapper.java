@@ -210,6 +210,31 @@ public class InfoToAdminMapper {
         }
         return orderIds;
     }
+      public List<Order>  getOrdersByUserId(int user_id) throws MakingAnException {
+    List<Order> orders=new ArrayList<>();
+  Order o;
+      try {
+           
+            String sql = "SELECT * FROM orderlist WHERE user_id="+user_id;
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
+            
+              while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                String received_date=rs.getString("received");
+
+                    o = new Order(order_id, user_id, received_date);
+                    orders.add(o);
+                }
+
+         
+            return orders;
+        } catch (SQLException| NumberFormatException| NullPointerException ex) {
+            ex.getCause();
+        }
+        return orders;
+    }
+
+    
 
 
     //The main method is the test purpose
