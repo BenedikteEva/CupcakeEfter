@@ -34,7 +34,6 @@ public class UserRendUtil {
     
      public static String userList(List<User> userlist) throws MakingAnException {
         StringBuilder sb = new StringBuilder();
-        UserMapper map = new UserMapper();
 
         sb.append("<table>\n"
                 + "<tr><th>All Users</th><th></th></tr>\n"
@@ -49,7 +48,7 @@ public class UserRendUtil {
            
         }
         sb.append("</table>\n");
-         sb.append("<button type=\"submit\" name=\"invoice_user\">Submit</button> ");
+         sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_user\">Submit</button> ");
          sb.append("</form>\n");
         return sb.toString();
 

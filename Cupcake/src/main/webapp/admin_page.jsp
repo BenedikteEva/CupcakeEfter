@@ -85,34 +85,30 @@
                 </h2>
                 <hr class="divider">
 
-                <% String adminName = request.getParameter("username");
+                <% String adminName = (String)session.getAttribute("username");
 
                     out.println("Hello " + adminName + ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     UserMapper um = new UserMapper();
-                    RendUtilAllId ruai = new RendUtilAllId();
-                    //RendUtilAllId.allInvoiceIdTabel(idList);
                     List<Order> allId = infoToAdmin.getOrders();
-                    List<User> allUsers=um.getUsers();
-                          
+                    List<User> allUsers = um.getUsers();
+
                 %>
                 <div class="flex-container">
                     <div id="box">
                         <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
 
-
                     </div>
-                        
+
                     <div id="box">
                         <%= UserRendUtil.userList(allUsers)%>
-
 
                     </div>
 
                 </div>
 
-          
+
 
                 <!-- If the customer want a field to enter an invoice number insted of a button. TODO is not finish. -->
                 <!--<form name="FormInvoice" action="#" method="POST"> <!--action="/InvoiceDetailServlet"-->

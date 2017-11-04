@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import domain.Order;
 import Controller.ShoppingCartServlet;
-
+import domain.MakingAnException;
+import java.util.List;
 
 /**
  *
@@ -37,38 +38,38 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-        
+            throws ServletException, IOException, SQLException, MakingAnException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession();
         InfoToAdminMapper infoMapper = new InfoToAdminMapper();
+
         try (PrintWriter out = response.getWriter()) {
             String origin = request.getParameter("origin");
             switch (origin) {
+
                 case "invoice_detail":
                     //Parser den som int da den kommer som String
-                    int invId = Integer.parseInt(request.getParameter("id"));
-
-                    
-                    LineItem invoiceInfo = new LineItem();
-                    
-                    LineItemsMapper lim = new LineItemsMapper();
-                    String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 
                     try {
+                        int invId = Integer.parseInt(request.getParameter("orderid"));
+
+                        LineItem invoiceInfo = new LineItem();
+
+                        LineItemsMapper lim = new LineItemsMapper();
+                        String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 
                         invoiceInfo = infoMapper.getODetail(invId);
-                        HttpSession session = request.getSession();
+
                         User user = (User) session.getAttribute("user");
-                        String somemessage = "msg";
-                        request.setAttribute("invoiceId", invId);
+                        request.setAttribute("invId", invId);
                         request.setAttribute("pricePrCc", invoiceInfo.getPricePrCc());
                         request.setAttribute("totalPrice", invoiceInfo.getTotalPrice());
                         request.setAttribute("quantity", invoiceInfo.getQuantity());
                         request.setAttribute("invoiceInfo", invoiceInfo);
                         request.setAttribute("orderData", orderData);
-                        request.setAttribute("msg", somemessage);
-                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
-                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
+//                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
+//                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
 
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
 
@@ -77,6 +78,14 @@ public class InvoiceDetailServlet extends HttpServlet {
                     }
 
                     break;
+
+                case "invoice_user":
+                    int userId = Integer.parseInt(request.getParameter("uid"));
+                    List <Order> userOrders= infoMapper.getOrdersByUserId(userId);
+                    request.setAttribute("userOrders", userOrders);
+                    request.setAttribute("userId", userId);
+                    request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+
                 default:
                     throw new AssertionError();
             }
@@ -97,7 +106,7 @@ public class InvoiceDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -115,7 +124,7 @@ public class InvoiceDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

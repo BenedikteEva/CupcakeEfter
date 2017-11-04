@@ -4,6 +4,7 @@
     Author     : Bo Henriksen 
 --%>
 
+<%@page import="domain.LineItem"%>
 <%@page import="Controller.InvoiceDetailServlet"%>
 <%@page import="Utilities.RendUtilInvoice"%>
 
@@ -22,23 +23,15 @@
 
         <h1>Invoice Detail</h1>
 
-        <% //String adminName = (String)request.getAttribute("user");
-
-            // out.println("Hello " + adminName + ". What are your plans for today?");
-            // int id =(Integer) session.getAttribute("totalPrice");
-            // out.println(id);
-            out.println("<a>" + (String) request.getAttribute("orderData") + "</a>");
-            // Virker ikke!
+        <%
+            //out.println("<a>" + (LineItem) request.getAttribute("invoiceInfo") + "</a>");
+        //   out.println("<a>" + (Integer) request.getAttribute("invId") + "</a>");
 
             InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-            //InfoToAdminMapper invoice = new InfoToAdminMapper();
-            //List<InfoToAdmin> invoiceList = invoice.getODetail("intId");
-            //InvoiceDetailServlet inv = new InvoiceDetailServlet();
-            //InfoToAdmin invo = new InfoToAdmin();
-
+          
         %>
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
-
+       
         <table border=2>
             <tr>
                 <th>Orders</th>
@@ -48,10 +41,10 @@
             </tr>
 
             <tr>
-                <td><%=infoToAdmin.getOrders()%></td>
+                <td><%=request.getAttribute("userOrders")%></td>
                 <td><%=session.getAttribute("user")%></td>
-                <td><%=session.getAttribute("cupcakeName")%></td>
-                <td><%=session.getAttribute("cart")%></td>
+                <td><%=request.getAttribute("userId")%></td>
+                <td><%=request.getAttribute("userId")%></td>
             </tr>
         </table>
             

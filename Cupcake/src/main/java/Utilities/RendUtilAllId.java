@@ -28,15 +28,11 @@ public class RendUtilAllId {
             sb.append("<td>").append("" + o.getOrder_id()).append("</td>");
             sb.append("<td>").append("" + o.getUser_id()).append("</td>");
             sb.append("<td>").append("" + o.getReciveddate()).append("</td>");
-            sb.append("<td>\n <input type=\"radio\" name=\"id\" value=\""+o.getOrder_id()+"\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
-            
-           
-           
+            sb.append("<td>\n <input type=\"radio\" name=\" orderid\" value=\""+o.getOrder_id()+"\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
             sb.append("</tr>\n");
         }
-        
         sb.append("</table>\n"); 
-        sb.append("<button type=\"submit\" name=invoice_detail\">Submit</button> " );
+        sb.append("<button type=\"submit\" value=\"action\" name=invoice_detail\">See order</button> " );
         sb.append("</form>\n");
         return sb.toString();
 
