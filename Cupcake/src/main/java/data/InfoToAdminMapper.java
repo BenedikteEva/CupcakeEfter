@@ -243,7 +243,7 @@ public class InfoToAdminMapper {
         InfoToAdminMapper info = new InfoToAdminMapper();
         
          System.out.println("getOrderId");
-            System.out.println(info.getOrders());
+            System.out.println(info.getOrdersByUserId(1));
      
         //Tester getCupcakeName
 //        System.out.println("CUPCAKENAME");

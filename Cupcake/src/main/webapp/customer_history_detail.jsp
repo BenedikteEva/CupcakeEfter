@@ -4,6 +4,13 @@
     Author     : Bo
 --%>
 
+<%@page import="Utilities.UserRendUtil"%>
+<%@page import="Utilities.RendUtilAllId"%>
+<%@page import="domain.User"%>
+<%@page import="domain.Order"%>
+<%@page import="java.util.List"%>
+<%@page import="data.UserMapper"%>
+<%@page import="data.InfoToAdminMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

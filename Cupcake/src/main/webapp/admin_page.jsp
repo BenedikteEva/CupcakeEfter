@@ -85,9 +85,9 @@
                 </h2>
                 <hr class="divider">
 
-                <% String adminName = (String)session.getAttribute("username");
+                <% 
 
-                    out.println("Hello " + adminName + ". What are your plans for today?");
+                    out.println("Hello " + (String)session.getAttribute("username")+ ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     UserMapper um = new UserMapper();

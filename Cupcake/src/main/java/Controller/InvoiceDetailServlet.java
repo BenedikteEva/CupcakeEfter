@@ -50,43 +50,38 @@ public class InvoiceDetailServlet extends HttpServlet {
             switch (origin) {
 
                 case "invoice_detail":
-                    //Parser den som int da den kommer som String
-
                     try {
-                        int invId = Integer.parseInt(request.getParameter("orderid"));
-
-                        LineItem invoiceInfo = new LineItem();
-
+                        //Parser den som int da den kommer som String
+                        int invId = Integer.parseInt(request.getParameter("id"));
+                        request.setAttribute("invId", invId);
+//                        LineItem invoiceInfo = new LineItem();
                         LineItemsMapper lim = new LineItemsMapper();
                         String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
-
-                        invoiceInfo = infoMapper.getODetail(invId);
-
-                        User user = (User) session.getAttribute("user");
-                        request.setAttribute("invId", invId);
-                        request.setAttribute("pricePrCc", invoiceInfo.getPricePrCc());
-                        request.setAttribute("totalPrice", invoiceInfo.getTotalPrice());
-                        request.setAttribute("quantity", invoiceInfo.getQuantity());
-                        request.setAttribute("invoiceInfo", invoiceInfo);
+//                        invoiceInfo = infoMapper.getODetail(invId);
+                       
+   
                         request.setAttribute("orderData", orderData);
+
 //                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
 //                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
-
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
-
-                    } catch (SQLException ex) {
-                        request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+                    } catch (SQLException | NumberFormatException | NullPointerException ex) {
+                        ex.getMessage();
                     }
 
                     break;
 
                 case "invoice_user":
-                    int userId = Integer.parseInt(request.getParameter("uid"));
-                    List <Order> userOrders= infoMapper.getOrdersByUserId(userId);
-                    request.setAttribute("user", um.getUsers().get(userId));
-                    request.setAttribute("userOrders", userOrders);
-                    request.setAttribute("userId", userId);
-                    request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+                    try {
+                        int userId = Integer.parseInt(request.getParameter("uid"));
+                        List<Order> userOrders = infoMapper.getOrdersByUserId(userId);
+                        request.setAttribute("user", um.getUsers().get(userId - 1));
+                        request.setAttribute("userOrders", userOrders);
+                        request.setAttribute("userId", userId);
+                        request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+                    } catch (MakingAnException ex) {
+                        ex.getMessage();
+                    }
 
                 default:
                     throw new AssertionError();
