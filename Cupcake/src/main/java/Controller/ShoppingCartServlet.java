@@ -87,8 +87,6 @@ public class ShoppingCartServlet extends HttpServlet {
                 
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));
 
-                double ubchangerd = um.getUserData(user.getUserName()).getBalance();
-            
             } catch (SQLException ex) {
                 um.changeUserBalance(user.getUserName(), (Double) session.getAttribute("tempBalance"));
             }
