@@ -58,9 +58,12 @@ public class InvoiceDetailServlet extends HttpServlet {
                         LineItemsMapper lim = new LineItemsMapper();
                         String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 //                        invoiceInfo = infoMapper.getODetail(invId);
-                       
+
+                       User user = (User) session.getAttribute("user");
    
                         request.setAttribute("orderData", orderData);
+                        request.setAttribute("user", user);
+                        
 
 //                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
 //                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
