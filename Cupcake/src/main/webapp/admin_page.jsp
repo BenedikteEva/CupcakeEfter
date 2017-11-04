@@ -112,7 +112,7 @@
 
                 </div>
 
-                <button type="submit" name="invoice_detail" required>Submit</button> 
+          
 
                 <!-- If the customer want a field to enter an invoice number insted of a button. TODO is not finish. -->
                 <!--<form name="FormInvoice" action="#" method="POST"> <!--action="/InvoiceDetailServlet"-->
