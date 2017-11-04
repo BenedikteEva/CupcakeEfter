@@ -3,6 +3,7 @@ package Controller;
 import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import domain.LineItem;
+import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import domain.Order;
+import Controller.ShoppingCartServlet;
+
 
 /**
  *
@@ -42,6 +46,7 @@ public class InvoiceDetailServlet extends HttpServlet {
                     //Parser den som int da den kommer som String
                     int invId = Integer.parseInt(request.getParameter("id"));
 
+                    
                     LineItem invoiceInfo = new LineItem();
                     InfoToAdminMapper infoMapper = new InfoToAdminMapper();
                     LineItemsMapper lim = new LineItemsMapper();
@@ -51,6 +56,7 @@ public class InvoiceDetailServlet extends HttpServlet {
 
                         invoiceInfo = infoMapper.getODetail(invId);
                         HttpSession session = request.getSession();
+                        User user = (User) session.getAttribute("user");
                         String somemessage = "msg";
                         request.setAttribute("invoiceId", invId);
                         request.setAttribute("pricePrCc", invoiceInfo.getPricePrCc());
