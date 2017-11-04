@@ -47,16 +47,12 @@ public class ShoppingCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
-
+            response.setContentType("text/html;charset=UTF-8");
+            
             User user = (User) session.getAttribute("user");
             UserMapper um = new UserMapper();
-
-            response.setContentType("text/html;charset=UTF-8");
-
             LineItemsMapper lim = new LineItemsMapper();
-
             List<LineItem> cart = (List<LineItem>) session.getAttribute("cart");
-
             LineItem li = null;
 
             String invoicetext = ("Dear  " + user.getUserName() + "  " + session.getAttribute("cart") + " Total Price : "

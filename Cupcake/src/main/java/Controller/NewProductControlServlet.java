@@ -97,7 +97,7 @@ public class NewProductControlServlet extends HttpServlet {
 
                             cart = new ArrayList<>();
                             session.setAttribute("cart", cart);
-
+                            
                         }
                         
                         li = new LineItem(itam.getLastInvoiceId()+1, qty, cupcakeList.getToppingIdbyName(top), cupcakeList.getBottomIdbyName(bot), cupcakename, cupcakeprice, totalprice);
@@ -108,8 +108,12 @@ public class NewProductControlServlet extends HttpServlet {
                         request.getRequestDispatcher("products.jsp").forward(request, response);
 
                     } else {
+                        if(cart !=null) {
                         SetTempBalanceAndTotalinvoice(totalPriceInvoice, cart, um, user, session, request, response);
                         request.getRequestDispatcher("shoppingCart.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("products.jsp").forward(request, response);
+                        }
 
                     }
                     break;
