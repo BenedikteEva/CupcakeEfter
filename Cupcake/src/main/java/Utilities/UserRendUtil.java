@@ -32,22 +32,25 @@ public class UserRendUtil {
 
     }
     
-      public static String userList(List<User> userlist) throws MakingAnException {
+     public static String userList(List<User> userlist) throws MakingAnException {
         StringBuilder sb = new StringBuilder();
-       UserMapper map = new UserMapper();
-   
-        
+        UserMapper map = new UserMapper();
+
         sb.append("<table>\n"
-                +"<tr><th>All Users</th><th></th></tr>\n"
+                + "<tr><th>All Users</th><th></th></tr>\n"
                 + "<tr><th>UserId  </th><th>Name  </th><th>Email  </th><th></th></tr>\n");
-   for (User u : userlist) {
-            sb.append("<tr><form action=\"InvoiceDetailServlet\">");
+        for (User u : userlist) {
+            sb.append("<tr><form name=\"invoice_user\" action=\"InvoiceDetailServlet\" method=\"POST\">");
+            sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoice_user\">");
             sb.append("<td>").append(u.getUser_id()).append("</td>");
             sb.append("<td>").append(u.getUserName()).append("</td>");
             sb.append("<td>").append(u.getEmail()).append("</td>");
-            sb.append("<td> \n <input type=\"radio\" name=\"Users\" value=\"Welcome " + u.getUser_id() + "\"><br>\n\n</td>");
-   }
+            sb.append("<td> \n <input type=\"radio\" name=\"uid\" value=\"" + u.getUser_id() + "\"><br>\n\n</td>");
+           
+        }
         sb.append("</table>\n");
+         sb.append("<button type=\"submit\" name=\"invoice_user\">Submit</button> ");
+         sb.append("</form>\n");
         return sb.toString();
 
     }
