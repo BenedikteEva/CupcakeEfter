@@ -1,13 +1,16 @@
 package data;
 
+import domain.Bottom;
 import domain.LineItem;
 import domain.MakingAnException;
+import domain.Odetail;
 import domain.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,21 +109,62 @@ public class LineItemsMapper {
 
         return li;
     }
+    
+    public List<Odetail> getInvoiceDetailForUser(int userId) throws SQLException {
+
+        List<Odetail> orderDetailList = new ArrayList();
+        try {
+
+            String sql = "SELECT lineitem.lineitem_id, orderlist.order_id, orderlist.received, lineitem.ccname, "
+                    + "lineitem.quantity, lineitem.prisprcc, lineitem.totalprice "
+                    + "From orderlist "
+                    + "INNER JOIN lineitem ON orderlist.order_id = lineitem.order_id "
+                    + "WHERE user_id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            ResultSet rs = pstmt.executeQuery();
+            int lastId = -1;
+            Odetail odetail = null;
+            while (rs.next()) {
+
+                int lineitem_id = rs.getInt("lineitem_id");
+                if (lineitem_id != lastId) {
+                int order_id = rs.getInt("order_id");
+                String received = rs.getString("received");
+                String ccname = rs.getString("ccname");
+                int quantity = rs.getInt("quantity");
+                double prisprcc = rs.getDouble("prisprcc");
+                double totalprice = rs.getDouble("totalprice");
+
+                odetail = new Odetail(lineitem_id, order_id, received, ccname, quantity, prisprcc, totalprice);
+                orderDetailList.add(odetail);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+
+        return orderDetailList;
+    }
 
     public static void main(String[] args) throws SQLException, Exception {
         LineItemsMapper lim = new LineItemsMapper();
 
+        //Test getInvoiceDetailForUser
+        Odetail odetail = new Odetail();
+        System.out.println(lim.getInvoiceDetailForUser(1));
+        
+
         //Test insert into orderlist
-        Order or = new Order(3);
+//        Order or = new Order(3);
+//        lim.addOrderToOrderList(or);
+//        InfoToAdminMapper itam = new InfoToAdminMapper();
 
-        lim.addOrderToOrderList(or);
+//        LineItem orderDetail = new LineItem(5, 1, 2, 1, "Orange with Chocolate", 10.00, 30.00);
 
-        InfoToAdminMapper itam = new InfoToAdminMapper();
-
-//        LineItem li = new LineItem(5, 1, 2, 1, "Orange with Chocolate", 10.00, 30.00);
-
-        //            lim.addLineItemToDb(li);
-        System.out.println(lim.getLineItemDataByUserId(3, 1));
+        //            lim.addLineItemToDb(orderDetail);
+//        System.out.println(lim.getLineItemDataByUserId(3, 1));
 
     }
 }

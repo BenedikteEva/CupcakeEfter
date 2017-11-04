@@ -6,31 +6,66 @@ package domain;
  */
 public class Odetail {
     
-    
-    private int qty;
+    private int lineitem_id;
+    private int order_id;
+    private String received;
+    private String ccname;
+    private int quantity;
     private double priceprcc;
+    private double totalprice;
     
-    /**
-     * Her oprettes nogle af attributterne for en ordrer: antal i form qty og pris for en enkelt cupcake i form af priceprcc.
-     * @param qty 1
-     * @param priceprcc 2
-     */
-    
-    public Odetail(int qty, double priceprcc) {
-        this.qty = qty;
+    public Odetail(int lineitem_id, int order_id, String received, String ccname, int quantity, double priceprcc, double totalprice) {
+        this.lineitem_id = lineitem_id;
+        this.order_id = order_id;
+        this.received = received;
+        this.ccname = ccname;
+        this.quantity = quantity;
         this.priceprcc = priceprcc;
-    }
-    
-    public Odetail() {
+        this.totalprice = totalprice;
         
     }
 
-    public int getQty() {
-        return qty;
+    public Odetail() {
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public int getLineitem_id() {
+        return lineitem_id;
+    }
+
+    public void setLineitem_id(int lineitem_id) {
+        this.lineitem_id = lineitem_id;
+    }
+
+    public int getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
+    }
+
+    public String getReceived() {
+        return received;
+    }
+
+    public void setReceived(String received) {
+        this.received = received;
+    }
+
+    public String getCcname() {
+        return ccname;
+    }
+
+    public void setCcname(String ccname) {
+        this.ccname = ccname;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPriceprcc() {
@@ -41,10 +76,22 @@ public class Odetail {
         this.priceprcc = priceprcc;
     }
 
+    public double getTotalprice() {
+        return totalprice;
+    }
+
+    public void setTotalprice(double totalprice) {
+        this.totalprice = totalprice;
+    }
+
     @Override
     public String toString() {
-        return "Odetail{" + "qty=" + qty + ", priceprcc=" + priceprcc + '}';
+        return "Odetail{" + "lineitem_id=" + lineitem_id + ", order_id=" + order_id + ", received=" + received + ", ccname=" + ccname + ", quantity=" + quantity + ", priceprcc=" + priceprcc + ", totalprice=" + totalprice + '}';
     }
+
+    
+
+    
     
     
     
