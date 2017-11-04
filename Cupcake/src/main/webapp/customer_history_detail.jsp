@@ -1,22 +1,15 @@
 <%-- 
-    Document   : customer_history
-    Created on : 03-11-2017, 15:59:26
+    Document   : customer_history_detail
+    Created on : 04-11-2017, 13:47:12
     Author     : Bo
 --%>
 
-<%@page import="Utilities.RendUtilAllIdForCustomer"%>
-<%@page import="domain.Order"%>
-<%@page import="java.util.List"%>
-<%@page import="data.InfoToAdminMapper"%>
-<%@page import="domain.User"%>
-<%@page import="data.UserMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
@@ -26,12 +19,12 @@
 
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
-
-        <title>Customer History</title>
+        
+        <title>Invoice Detail</title>
     </head>
     <body>
-
-        <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
+        
+     <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
         <div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
 
         <!-- Navigation -->
@@ -61,7 +54,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <div class="container">
 
             <div class="bg-faded p-4 my-4">
@@ -69,9 +62,9 @@
                 <!-- Welcome Message -->
                 <div class="text-center mt-4">
                     <div class="text-heading text-muted text-lg">Welcome To</div>
-                    <!--<h1 class="my-2">Your Order History</h1>-->
+                    <h1 class="my-2">The Administration Page</h1>
                     <div class="text-heading text-muted text-lg">By
-                       <!-- <strong>The Data Builders</strong>-->
+                        <strong>The Data Builders</strong>
                     </div>
                 </div>
             </div>
@@ -83,30 +76,24 @@
                 </h2>
                 <hr class="divider">
 
-                <% User user = (User) session.getAttribute("user");
+                <% String adminName = (String) session.getAttribute("username");
 
-                    if (user != null) {
-                        out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
-                        
-
-                    }
-
-                    //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                    out.println("Hello " + adminName + ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     UserMapper um = new UserMapper();
                     List<Order> allId = infoToAdmin.getOrders();
-                    
+                    List<User> allUsers = um.getUsers();
 
                 %>
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllIdForCustomer.allInvoiceIdTabelCustomer(allId)%>
+                        <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
 
                     </div>
 
                     <div id="box">
-                        
+                        <%= UserRendUtil.userList(allUsers)%>
 
                     </div>
 
@@ -147,5 +134,5 @@
     <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="script/popper/popper.min.js" type="text/javascript"></script>
     <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-</body>
+    </body>
 </html>
