@@ -89,9 +89,10 @@
 
                     out.println("Hello " + (String)session.getAttribute("userAdminName")+ ". What are your plans for today?");
 
-                    InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                 //   InfoToAdminMapper infoToAdmin = new InfoToAdminMapper(); 
+                  //  List<Order> allId = infoToAdmin.getOrders();
                     UserMapper um = new UserMapper();
-                    List<Order> allId = infoToAdmin.getOrders();
+                   
                     List<User> allUsers = um.getUsers();
 
                 %>

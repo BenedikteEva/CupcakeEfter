@@ -41,6 +41,8 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
             throws ServletException, IOException, SQLException, MakingAnException {
         response.setContentType("text/html;charset=UTF-8");
         LineItemsMapper lim = new LineItemsMapper();
+        InfoToAdminMapper itam = new InfoToAdminMapper();
+        UserMapper um = new UserMapper();
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
@@ -63,18 +65,28 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
                     break;
 
                 case "invoice_detailUser":
-                    InfoToAdminMapper itam = new InfoToAdminMapper();
-                    UserMapper um = new UserMapper();
-                    String username = request.getParameter("username");
-                    User u = um.getUserData(username);
-                    int userId = u.getUser_id();
-                    request.setAttribute("userId",userId);
-                    List<Order> allId = itam.getOrdersByUserId(userId);
-                    request.setAttribute("allId", allId);
-                    
-                   request.getRequestDispatcher("/customer_history.jsp").forward(request, response);
-                   break;
+                    try {
+
+                        String userName = request.getParameter("username");
+                        request.setAttribute("userName", userName);
+                        User u = um.getUserData(userName);
+                        int userId = u.getUser_id();
+                        request.setAttribute("userId", userId);
+                        List<Order> allId = itam.getOrdersByUserId(userId);
+                        request.setAttribute("allId", allId);
+
+                        request.getRequestDispatcher("/customer_history.jsp").forward(request, response);
+
+                    } catch (NumberFormatException | NullPointerException ex) {
+                        ex.getMessage();
+                    }
+                    break;
+
+                default:
+                    throw new AssertionError();
+
             }
+
         }
     }
 
