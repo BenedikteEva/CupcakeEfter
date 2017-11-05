@@ -77,11 +77,13 @@ public class InvoiceDetailServlet extends HttpServlet {
 
                         int userId = Integer.parseInt(request.getParameter("uid"));
                         List<Order> userOrders = infoMapper.getOrdersByUserId(userId);
+                        List<LineItem> cupcakeName = infoMapper.getODetail(userId);
 
                         request.setAttribute("user", um.getUsers().get(userId - 1));
 
                         request.setAttribute("userOrders", userOrders);
                         request.setAttribute("userId", userId);
+                        request.setAttribute("userOrdredDetails", cupcakeName);
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
 
                         List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
