@@ -31,7 +31,7 @@
           
         %>
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
-         <strong>Order Details Løsning 1</strong>
+       
         <table border=2>
             
             <tr>
