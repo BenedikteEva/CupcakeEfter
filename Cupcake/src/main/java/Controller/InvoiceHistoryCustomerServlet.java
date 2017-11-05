@@ -45,11 +45,12 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
                     try {
                         LineItemsMapper lim = new LineItemsMapper();
 
-                        int orderid = Integer.parseInt(request.getParameter("orderid"));
-                        request.setAttribute("orderid", orderid);
+//                        int orderid = Integer.parseInt(request.getParameter("orderid"));
+//                        request.setAttribute("orderid", orderid);
+                        int orderid = 5;
 
                         try {
-                          List<Odetail> allId = lim.getInvoiceDetailForUser(orderid);
+                          List<Odetail> allId = lim.getInvoiceDetailByOrderId(orderid);
                             request.setAttribute("allId", allId);
                         } catch (SQLException ex) {
                             Logger.getLogger(InvoiceHistoryCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);

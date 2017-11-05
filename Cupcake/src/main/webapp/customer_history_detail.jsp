@@ -114,6 +114,8 @@
                 <div class="flex-container">
                     <div id="box">
                         <%= RendUtilInvoiceDetailsCustomer.invoiceTabelCustomer(allId)%>
+                        
+                       <!-- <button type="button" onclick="location.href = 'customer_history.jsp';">Back</button>-->
 
                     </div>
 

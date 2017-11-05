@@ -38,7 +38,7 @@ public class LineItemsMapper {
         int id = rs.getInt(1);
         return id;
     }
-    
+
     public int addLineItemToDb(LineItem li) throws SQLException {
 
         String insertLineItem = "INSERT INTO lineitem (order_id,  top_id, bot_id, ccname, quantity, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -89,7 +89,7 @@ public class LineItemsMapper {
     }
 
     public String getLineItemDataByUserId(int user_id, int order_id) throws SQLException {
-      String li = null ;
+        String li = null;
         try {
 
             String sql = " SELECT orderlist.order_id, lineitem_id, quantity, ccname, prisprcc, totalprice \n"
@@ -100,8 +100,8 @@ public class LineItemsMapper {
             pstmt.setInt(2, order_id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-              li = rs.toString();
-                
+                li = rs.toString();
+
             }
         } catch (SQLException ex) {
             ex.getMessage();
@@ -109,7 +109,44 @@ public class LineItemsMapper {
 
         return li;
     }
-    
+
+    public List<Odetail> getInvoiceDetailByOrderId(int orderId) throws SQLException {
+
+        List<Odetail> orderDetailList = new ArrayList();
+        try {
+
+            String sql = "SELECT lineitem.lineitem_id, orderlist.order_id, orderlist.received, lineitem.ccname, "
+                    + "lineitem.quantity, lineitem.prisprcc, lineitem.totalprice \n"
+                    + "From orderlist INNER JOIN lineitem ON orderlist.order_id = lineitem.order_id "
+                    + "where orderlist.order_id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, orderId);
+
+            ResultSet rs = pstmt.executeQuery();
+            int lastId = -1;
+            Odetail odetail = null;
+            while (rs.next()) {
+
+                int lineitem_id = rs.getInt("lineitem_id");
+                if (lineitem_id != lastId) {
+                    int order_id = rs.getInt("order_id");
+                    String received = rs.getString("received");
+                    String ccname = rs.getString("ccname");
+                    int quantity = rs.getInt("quantity");
+                    double prisprcc = rs.getDouble("prisprcc");
+                    double totalprice = rs.getDouble("totalprice");
+
+                    odetail = new Odetail(lineitem_id, order_id, received, ccname, quantity, prisprcc, totalprice);
+                    orderDetailList.add(odetail);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+
+        return orderDetailList;
+    }
+
     public List<Odetail> getInvoiceDetailForUser(int userId) throws SQLException {
 
         List<Odetail> orderDetailList = new ArrayList();
@@ -130,15 +167,15 @@ public class LineItemsMapper {
 
                 int lineitem_id = rs.getInt("lineitem_id");
                 if (lineitem_id != lastId) {
-                int order_id = rs.getInt("order_id");
-                String received = rs.getString("received");
-                String ccname = rs.getString("ccname");
-                int quantity = rs.getInt("quantity");
-                double prisprcc = rs.getDouble("prisprcc");
-                double totalprice = rs.getDouble("totalprice");
+                    int order_id = rs.getInt("order_id");
+                    String received = rs.getString("received");
+                    String ccname = rs.getString("ccname");
+                    int quantity = rs.getInt("quantity");
+                    double prisprcc = rs.getDouble("prisprcc");
+                    double totalprice = rs.getDouble("totalprice");
 
-                odetail = new Odetail(lineitem_id, order_id, received, ccname, quantity, prisprcc, totalprice);
-                orderDetailList.add(odetail);
+                    odetail = new Odetail(lineitem_id, order_id, received, ccname, quantity, prisprcc, totalprice);
+                    orderDetailList.add(odetail);
                 }
             }
         } catch (SQLException ex) {
@@ -153,18 +190,14 @@ public class LineItemsMapper {
 
         //Test getInvoiceDetailForUser
         Odetail odetail = new Odetail();
-        System.out.println(lim.getInvoiceDetailForUser(1));
-        
+        System.out.println(lim.getInvoiceDetailByOrderId(5));
 
         //Test insert into orderlist
 //        Order or = new Order(3);
 //        lim.addOrderToOrderList(or);
 //        InfoToAdminMapper itam = new InfoToAdminMapper();
-
 //        LineItem orderDetail = new LineItem(5, 1, 2, 1, "Orange with Chocolate", 10.00, 30.00);
-
         //            lim.addLineItemToDb(orderDetail);
 //        System.out.println(lim.getLineItemDataByUserId(3, 1));
-
     }
 }
