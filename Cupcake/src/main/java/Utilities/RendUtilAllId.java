@@ -37,5 +37,19 @@ public class RendUtilAllId {
         return sb.toString();
 
     }
+    
+      public static String allInvoiceIdSearch()  {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<tr><th>enter InvoiceId to see invoicedetail</th></tr>\n");
+    
+            sb.append("<tr><form name=\"invoice_detail\" action=\"InvoiceDetailServlet\" method=\"POST\">"); //Method kan være skrevet forkert! action=\"InvoiceDetailServlet\" method=POST>
+            sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoice_detail\">");
+            sb.append("<td>\n <input type=\"number\" name=\"id\" value=\"orderid\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
+        sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_detail\">See order</button> " );
+        sb.append("</form>\n");
+        return sb.toString();
+
+    }
+
 
 }

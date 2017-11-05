@@ -97,7 +97,7 @@
                 %>
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
+                        <%= RendUtilAllId.allInvoiceIdSearch()%>
 
                     </div>
 
