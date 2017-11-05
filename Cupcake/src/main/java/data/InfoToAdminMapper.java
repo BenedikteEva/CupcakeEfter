@@ -94,26 +94,30 @@ public class InfoToAdminMapper {
      * @return a list all the order details
      * @throws SQLException if an sql error occur.
      */
-    public LineItem getODetail(int invoiceID) throws SQLException {
+    public List<LineItem> getODetail(int invoiceID) throws MakingAnException {
+        List<LineItem> odetails = new ArrayList<>();
+        try {
+            LineItem oDetail = null;
 
-        LineItem oDetail = null;
+            String sql = "SELECT * FROM lineitem WHERE order_id =" + invoiceID;
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
 
-        String sql = "SELECT order_id, priceprcc, total_price, quantity FROM lineitem WHERE order_id = ?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, invoiceID);
+            while (rs.next()) {
 
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
+                double pricePrCc = rs.getDouble("prisprcc");
+                String ccname = rs.getString("ccname");
+                double totalPrice = rs.getDouble("totalprice");
+                int quantity = rs.getInt("quantity");
 
-            int invoiceId = rs.getInt("order_id");
-            int pricePrCc = rs.getInt("priceprcc");
-            int totalPrice = rs.getInt("total_price");
-            int quantity = rs.getInt("quantity");
+                oDetail = new LineItem(invoiceID, quantity, ccname, pricePrCc, totalPrice);
+                odetails.add(oDetail);
+            }
 
-            oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
+            return odetails;
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return oDetail;
+        return odetails;
     }
 
     public int getUserIdByOrderId(int order_id) throws SQLException {
@@ -245,7 +249,7 @@ public class InfoToAdminMapper {
         try {
             System.out.println("GETODETAIL");
             System.out.println(info.getODetail(1));
-        } catch (SQLException ex) {
+        } catch (MakingAnException ex) {
             Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
 

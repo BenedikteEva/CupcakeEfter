@@ -35,15 +35,17 @@
         <table border=2>
             
             <tr>
-                <th>Orders</th>
                 <th>Bruger</th>
+                <th>Order</th>
                 <th>User ID</th>
+                <th>Order DetaljerD</th>
             </tr>
 
             <tr>
                 <td><%=request.getAttribute("user")%></td>
                 <td><%=request.getAttribute("userOrders")%></td>
                 <td><%=request.getAttribute("userId")%></td>
+                <td><%=request.getAttribute("userOrdered Details")%></td>
             </tr>
         </table>
             

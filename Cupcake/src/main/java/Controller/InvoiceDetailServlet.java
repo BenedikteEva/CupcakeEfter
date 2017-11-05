@@ -59,11 +59,10 @@ public class InvoiceDetailServlet extends HttpServlet {
                         String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 //                        invoiceInfo = infoMapper.getODetail(invId);
 
-                       User user = (User) session.getAttribute("user");
-   
+                        User user = (User) session.getAttribute("user");
+
                         request.setAttribute("orderData", orderData);
                         request.setAttribute("user", user);
-                        
 
 //                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
 //                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
@@ -78,9 +77,12 @@ public class InvoiceDetailServlet extends HttpServlet {
                     try {
                         int userId = Integer.parseInt(request.getParameter("uid"));
                         List<Order> userOrders = infoMapper.getOrdersByUserId(userId);
+                        List<LineItem> cupcakeName = infoMapper.getODetail(userId);
                         request.setAttribute("user", um.getUsers().get(userId - 1));
                         request.setAttribute("userOrders", userOrders);
                         request.setAttribute("userId", userId);
+                        request.setAttribute("userOrdered Details", cupcakeName);
+
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
                     } catch (MakingAnException ex) {
                         ex.getMessage();
