@@ -4,14 +4,11 @@
     Author     : Bo
 --%>
 
-<%@page import="domain.Odetail"%>
-<%@page import="data.LineItemsMapper"%>
 <%@page import="Utilities.RendUtilAllIdForCustomer"%>
 <%@page import="domain.Order"%>
 <%@page import="java.util.List"%>
 <%@page import="data.InfoToAdminMapper"%>
 <%@page import="domain.User"%>
-<%@page import="data.UserMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -71,10 +68,10 @@
                 <!-- Welcome Message -->
                 <div class="text-center mt-4">
                     <div class="text-heading text-muted text-lg">Welcome To</div>
-                    <!--<h1 class="my-2">Your Order History</h1>-->
-                    <div class="text-heading text-muted text-lg">By
-                       <!-- <strong>The Data Builders</strong>-->
-                    </div>
+                    <h1 class="my-2">Your Order History</h1>
+                     <!-- <div class="text-heading text-muted text-lg">By
+                      <strong>The Data Builders</strong>
+                    </div>-->
                 </div>
             </div>
 
@@ -89,21 +86,12 @@
 
                     if (user != null) {
                         out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
-                        
-
                     }
 
-                    //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
-
-                    //InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    LineItemsMapper lim = new LineItemsMapper();
-                    UserMapper um = new UserMapper();
+                    InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                                      
+                    List<Order> allId = infoToAdmin.getOrders();
                     
-                    //Hent userid
-                    int userId = um.getUserData(user.getUserName()).getUser_id();
-                    List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
-                    
-
                 %>
                 <div class="flex-container">
                     <div id="box">

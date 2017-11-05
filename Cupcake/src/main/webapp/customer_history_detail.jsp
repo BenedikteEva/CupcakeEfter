@@ -4,6 +4,8 @@
     Author     : Bo
 --%>
 
+<%@page import="domain.Odetail"%>
+<%@page import="data.LineItemsMapper"%>
 <%@page import="Utilities.UserRendUtil"%>
 <%@page import="Utilities.RendUtilAllId"%>
 <%@page import="domain.User"%>
@@ -83,14 +85,23 @@
                 </h2>
                 <hr class="divider">
 
-                <% String adminName = (String) session.getAttribute("username");
+                <% User user = (User) session.getAttribute("user");
 
-                    out.println("Hello " + adminName + ". What are your plans for today?");
+                    if (user != null) {
+                        out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                        
 
-                    InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                    }
+
+                    //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+
+                    //InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                    LineItemsMapper lim = new LineItemsMapper();
                     UserMapper um = new UserMapper();
-                    List<Order> allId = infoToAdmin.getOrders();
-                    List<User> allUsers = um.getUsers();
+                    
+                    //Hent userid
+                    int userId = um.getUserData(user.getUserName()).getUser_id();
+                    List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
 
                 %>
                 <div class="flex-container">
