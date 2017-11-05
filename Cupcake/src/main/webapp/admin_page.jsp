@@ -107,6 +107,11 @@
                         <%= UserRendUtil.userList(allUsers)%>
 
                     </div>
+                        
+                         <div id="box">
+                        <%= UserRendUtil.allUserNameSearch()%>
+
+                    </div>
 
                 </div>
 

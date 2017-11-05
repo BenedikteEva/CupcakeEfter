@@ -64,18 +64,15 @@ public class InvoiceDetailServlet extends HttpServlet {
                         String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 //                        invoiceInfo = infoMapper.getODetail(invId);
 
-
-
                         User user = (User) session.getAttribute("user");
                         request.setAttribute("orderDetails", infoMapper.getAllOrderDetails(invId));
                         //  request.setAttribute("user", user);
                         request.setAttribute("userbelonger", infoMapper.getUserIdByOrderId(invId));
-                       
+
 //                      har lige tilføjet det samme som på customersiden og det optræder som to løsninger
                         List<Odetail> allId = lim.getInvoiceDetailByOrderId(invId);
                         request.setAttribute("allId", allId);
-                        
-                        
+
                         if (1 > infoMapper.getUserIdByOrderId(invId)) {
                             request.getRequestDispatcher("invoice_detail_orderselect.jsp").forward(request, response);
                             throw new MakingAnException("Den søgte ordre er endnu ikke bestilt.");
@@ -105,65 +102,66 @@ public class InvoiceDetailServlet extends HttpServlet {
                     } catch (MakingAnException ex) {
                         ex.getMessage();
                     }
+                    break;
 
-             
-
-                        default:
-                            throw new AssertionError();
-                    }
+                case "invoiceCustView":
+                    int userId = Integer.parseInt(request.getParameter("uid"));
+                    List<Order> allId = infoMapper.getOrdersByUserId(userId);
+                    request.setAttribute("userId", userId);
+                    request.setAttribute("allId", allId);
+                       request.getRequestDispatcher("customer_history.jsp").forward(request, response);
+                    break;
+                default:
+                    throw new AssertionError();
             }
         }
-
-        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-        /**
-         * Handles the HTTP <code>GET</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doGet
-        (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            try {
-                processRequest(request, response);
-            } catch (SQLException | MakingAnException ex) {
-                Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        /**
-         * Handles the HTTP <code>POST</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doPost
-        (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            try {
-                processRequest(request, response);
-            } catch (SQLException | MakingAnException ex) {
-                Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-        
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
     }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException | MakingAnException ex) {
+            Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException | MakingAnException ex) {
+            Logger.getLogger(InvoiceDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

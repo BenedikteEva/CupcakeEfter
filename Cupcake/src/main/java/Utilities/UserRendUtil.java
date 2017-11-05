@@ -47,19 +47,28 @@ public class UserRendUtil {
             sb.append("<td>").append(u.getUserName()).append("</td>");
             sb.append("<td>").append(u.getEmail()).append("</td>");
             sb.append("<td> \n <input type=\"radio\" name=\"uid\" value=\"" + u.getUser_id() + "\"><br>\n\n</td>");
-
         }
         sb.append("</table>\n");
         sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_user\">Submit</button> ");
-        sb.append("</form>\n");
-        sb.append("<tr><form name=\"invoiceCustView\" action=\"InvoiceDetailServlet\" method=\"POST\">");
-           sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoiceCustView\">");
-        sb.append("<button type=\"submit\" value=\"action\" name=\"invoiceCustView\">View as Customer</button> ");
+        
         sb.append("</form>\n");
         return sb.toString();
 
     }
-    
+     public static String allUserNameSearch() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<tr><th>enter username to see users orders</th></tr>\n");
+
+        sb.append("<tr><form name=\"invoice_detailUser\" action=\"InvoiceHistoryCustomerServlet\" method=\"POST\">"); //Method kan være skrevet forkert! action=\"InvoiceDetailServlet\" method=POST>
+        sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoice_detailUser\">");
+        sb.append("<td>\n <input type=\"text\" name=\"username\" value=\"username\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
+        sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_detailUser\">See order</button> ");
+        sb.append("</form>\n");
+     
+        return sb.toString();
+
+    }
+
     
 
     public double calculateBalance(double a, double b) {

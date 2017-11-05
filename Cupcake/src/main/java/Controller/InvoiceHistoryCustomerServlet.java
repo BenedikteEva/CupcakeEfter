@@ -1,9 +1,13 @@
 package Controller;
 
 import static Utilities.UserRendUtil.user;
+import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import data.UserMapper;
+import domain.MakingAnException;
 import domain.Odetail;
+import domain.Order;
+import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -34,8 +38,9 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, MakingAnException {
         response.setContentType("text/html;charset=UTF-8");
+        LineItemsMapper lim = new LineItemsMapper();
         try (PrintWriter out = response.getWriter()) {
 
             String origin = request.getParameter("origin");
@@ -43,7 +48,6 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
 
                 case "invoice_detail":
                     try {
-                        LineItemsMapper lim = new LineItemsMapper();
 
                         int orderid = Integer.parseInt(request.getParameter("id"));
                         request.setAttribute("orderid", orderid);
@@ -58,6 +62,18 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
 
                     break;
 
+                case "invoice_detailUser":
+                    InfoToAdminMapper itam = new InfoToAdminMapper();
+                    UserMapper um = new UserMapper();
+                    String username = request.getParameter("username");
+                    User u = um.getUserData(username);
+                    int userId = u.getUser_id();
+                    request.setAttribute("userId",userId);
+                    List<Order> allId = itam.getOrdersByUserId(userId);
+                    request.setAttribute("allId", allId);
+                    
+                   request.getRequestDispatcher("/customer_history.jsp").forward(request, response);
+                   break;
             }
         }
     }
@@ -76,7 +92,7 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(InvoiceHistoryCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -94,7 +110,7 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(InvoiceHistoryCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
