@@ -40,10 +40,10 @@
         <table border=2>
 
             <tr>
-                <th>Orders</th>
                 <th>Bruger</th>
-                <th>Info 3</th>
-                <th>Info 4</th>
+                <th>Order</th>
+                <th>Bruger ID</th>
+                <th>Ordre Detaljer</th>
                 <th>Info 5</th>
             </tr>
 
@@ -51,7 +51,7 @@
                 <td><%=request.getAttribute("allId")%></td>
                 <td><%=request.getAttribute("user")%></td>
                 <td><%=request.getAttribute("userId")%></td>
-                <td><%=request.getAttribute("invInfo")%></td>
+                <td><%=request.getAttribute("userOrdredDetails")%></td>
                 <td><%=request.getAttribute("details")%></td>
             </tr>
         </table>
