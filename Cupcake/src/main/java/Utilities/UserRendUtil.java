@@ -69,7 +69,7 @@ public class UserRendUtil {
 
     }
 
-    
+                    
 
     public double calculateBalance(double a, double b) {
         double c = a - b;

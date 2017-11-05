@@ -1,6 +1,9 @@
 package Utilities;
 
+import data.InfoToAdminMapper;
+import domain.MakingAnException;
 import domain.Order;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -29,5 +32,12 @@ public class RendUtilAllIdForCustomer {
         sb.append("</form>\n");
         return sb.toString();
 
+    }
+    
+    public static List<Order> setAllId (String userName) throws SQLException, MakingAnException{
+          InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
+                   int user_id = infoToAdmin.getUserIdByUserName(userName);                  
+                   List<Order> allId = infoToAdmin.getOrdersByUserId(user_id);
+        return allId;
     }
 }

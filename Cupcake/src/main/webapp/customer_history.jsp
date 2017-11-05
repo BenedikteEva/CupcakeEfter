@@ -91,15 +91,15 @@
                     else{
                           out.println("Hello  You have to log in again to see history. Which order do you want to see?");
                     }
-                   // InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    //String userName = user.getUserName();
-                  //  int user_id = infoToAdmin.getUserIdByUserName(userName);                  
-                   // List<Order> allId = infoToAdmin.getOrdersByUserId(user_id);
+                  
+                  String userName = user.getUserName();
+                  
+             List<Order>  allId = RendUtilAllIdForCustomer.setAllId(userName);
                     
                 %>
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllIdForCustomer.allInvoiceIdTabelCustomer((List<Order>)request.getAttribute("allId"))%>
+                        <%= RendUtilAllIdForCustomer.allInvoiceIdTabelCustomer((allId))%>
                     </div>
 
                   

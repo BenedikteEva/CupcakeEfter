@@ -5,6 +5,7 @@ import data.CupcakeMapper;
 import data.InfoToAdminMapper;
 import data.UserMapper;
 import domain.LineItem;
+import domain.Order;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,15 +56,14 @@ public class NewProductControlServlet extends HttpServlet {
         RendUtilCupCake rucc = new RendUtilCupCake();
         CupcakeMapper cupcakeList = new CupcakeMapper();
         InfoToAdminMapper itam = new InfoToAdminMapper();
-
+ // den user der er gemt i sessions ved login kaldes
+            User user = (User) session.getAttribute("user");
+            request.setAttribute("userName", user.getUserName());
         // herunder er der koden til hvad der sker når user vælger kager, vælger antal, 
         // adder to shopping cart og trykker på checkout
         try (PrintWriter out = response.getWriter()) {
             // får fat i hidden             
             String origin = request.getParameter("origin");
-
-            // den user der er gemt i sessions ved login kaldes
-            User user = (User) session.getAttribute("user");
 
             // vi har ikke sat et cart i sessionen endnu så dette cart er null det bliver initieret 
             // længere nede når kunden får brug for det
