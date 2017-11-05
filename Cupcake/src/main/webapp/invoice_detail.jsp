@@ -4,6 +4,8 @@
     Author     : Bo Henriksen 
 --%>
 
+<%@page import="domain.Odetail"%>
+<%@page import="Utilities.RendUtilInvoiceDetailsCustomer"%>
 <%@page import="domain.LineItem"%>
 <%@page import="Controller.InvoiceDetailServlet"%>
 <%@page import="Utilities.RendUtilInvoice"%>
@@ -29,7 +31,7 @@
           
         %>
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
-       
+         <strong>Order Details Løsning 1</strong>
         <table border=2>
             
             <tr>
@@ -47,7 +49,9 @@
             </tr>
         </table>
             
-
+            
+            
+            
     </body>
     
     <button type="button" style="background-color: gold" onclick="location.href = 'admin_page.jsp';" class="cancelbtn">Vælg en anden brugers ordre</button>

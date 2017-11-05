@@ -47,12 +47,10 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
 
                         int orderid = Integer.parseInt(request.getParameter("id"));
                         request.setAttribute("orderid", orderid);
-                      
 
-                   
-                          List<Odetail> allId = lim.getInvoiceDetailByOrderId(orderid);
-                            request.setAttribute("allId", allId);
-                     
+                        List<Odetail> allId = lim.getInvoiceDetailByOrderId(orderid);
+                        request.setAttribute("allId", allId);
+
                         request.getRequestDispatcher("/customer_history_detail.jsp").forward(request, response);
                     } catch (NumberFormatException | NullPointerException ex) {
                         ex.getMessage();

@@ -4,6 +4,10 @@
     Author     : Ticondrus
 --%>
 
+<%@page import="Utilities.RendUtilInvoiceDetailsCustomer"%>
+<%@page import="domain.Odetail"%>
+<%@page import="domain.Odetail"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,6 +42,25 @@
             </tr>
         </table>
             
+            
+            
+            <br><br><br><br>
+              <strong>Order Details Løsning 2</strong>
+              
+              
+                <div class="flex-container">
+                    <div id="box">
+                        <%=RendUtilInvoiceDetailsCustomer.invoiceTabelCustomer((List<Odetail>)request.getAttribute("allId"))%>
+                        
+                       <!-- <button type="button" onclick="location.href = 'customer_history.jsp';">Back</button>-->
+
+                    </div>
+
+                    <div id="box">
+                        
+
+                    </div>
+
 
     </body>
     
