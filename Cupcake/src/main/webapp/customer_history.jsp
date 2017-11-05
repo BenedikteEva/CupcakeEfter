@@ -47,11 +47,12 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
+                       
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="customer_history.jsp">Order History</a>
+                            <a class="nav-link text-uppercase text-expanded"  href="products.jsp">Products</a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
+                            <a class="nav-link text-uppercase text-expanded"  href="#">Shopping Cart</a>
                         </li>
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="index.jsp">Logout</a>
