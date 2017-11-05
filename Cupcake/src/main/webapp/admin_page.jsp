@@ -87,7 +87,7 @@
 
                 <% 
 
-                    out.println("Hello " + (String)session.getAttribute("username")+ ". What are your plans for today?");
+                    out.println("Hello " + (String)session.getAttribute("userAdminName")+ ". What are your plans for today?");
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     UserMapper um = new UserMapper();
