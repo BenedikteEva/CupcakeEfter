@@ -41,7 +41,7 @@ public class InfoToAdminMapper {
 
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
-       Order id = null;
+        Order id = null;
         while (rs.next()) {
             int order_id = rs.getInt("order_id");
             if (order_id != lastId) {
@@ -97,43 +97,38 @@ public class InfoToAdminMapper {
     public LineItem getODetail(int invoiceID) throws SQLException {
 
         LineItem oDetail = null;
-     
 
-            String sql = "SELECT order_id, priceprcc, total_price, quantity FROM lineitem WHERE order_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, invoiceID);
+        String sql = "SELECT order_id, priceprcc, total_price, quantity FROM lineitem WHERE order_id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, invoiceID);
 
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
 
-                int invoiceId = rs.getInt("order_id");
-                int pricePrCc = rs.getInt("priceprcc");
-                int totalPrice = rs.getInt("total_price");
-                int quantity = rs.getInt("quantity");
+            int invoiceId = rs.getInt("order_id");
+            int pricePrCc = rs.getInt("priceprcc");
+            int totalPrice = rs.getInt("total_price");
+            int quantity = rs.getInt("quantity");
 
-                oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
-            }
-       
+            oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
+        }
 
         return oDetail;
     }
-    
-    public int getUserIdByOrderId(int order_id) throws SQLException{
+
+    public int getUserIdByOrderId(int order_id) throws SQLException {
         int user_id = 0;
-        
+
         String sql = "SELECT user_id FROM orderlist WHERE order_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, order_id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                user_id = rs.getInt("user_id");
-            }
+        pstmt.setInt(1, order_id);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            user_id = rs.getInt("user_id");
+        }
         return user_id;
-        
+
     }
-    
-
-
 
     /**
      * Adds the users id into the orderlist.
@@ -165,8 +160,6 @@ public class InfoToAdminMapper {
         return id;
     }
 
-   
-
     public int getLastInvoiceId() throws MakingAnException {
         int invoiceid = 0;
         try {
@@ -179,72 +172,68 @@ public class InfoToAdminMapper {
                 invoiceid = rs.getInt("order_id");
 
             }
-        } catch (SQLException| NumberFormatException| NullPointerException| IndexOutOfBoundsException ex) {
+        } catch (SQLException | NumberFormatException | NullPointerException | IndexOutOfBoundsException ex) {
 
         }
 
         return invoiceid;
     }
-    
-    public List<Order>  getOrders() throws MakingAnException {
-    List<Order> orderIds=new ArrayList<>();
-  Order o;
-      try {
-           
+
+    public List<Order> getOrders() throws MakingAnException {
+        List<Order> orderIds = new ArrayList<>();
+        Order o;
+        try {
+
             String sql = "SELECT * FROM orderlist";
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            
-              while (rs.next()) {
+
+            while (rs.next()) {
                 int order_id = rs.getInt("order_id");
                 int user_id = rs.getInt("user_id");
-                String received_date=rs.getString("received");
+                String reciveddate = rs.getString("received");
 
-                    o = new Order(order_id, user_id, received_date);
-                    orderIds.add(o);
-                }
+                o = new Order(order_id, user_id, reciveddate);
+                orderIds.add(o);
+            }
 
-         
             return orderIds;
-        } catch (SQLException| NumberFormatException| NullPointerException ex) {
+        } catch (SQLException | NumberFormatException | NullPointerException ex) {
             ex.getCause();
         }
         return orderIds;
     }
-      public List<Order>  getOrdersByUserId(int user_id) throws MakingAnException {
-    List<Order> orders=new ArrayList<>();
-  Order o;
-      try {
-           
-            String sql = "SELECT * FROM orderlist WHERE user_id="+user_id;
+
+    public List<Order> getOrdersByUserId(int user_id) throws MakingAnException {
+        List<Order> orders = new ArrayList<>();
+        Order o;
+        try {
+
+            String sql = "SELECT * FROM orderlist WHERE user_id=" + user_id;
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            
-              while (rs.next()) {
+
+            while (rs.next()) {
                 int order_id = rs.getInt("order_id");
-                String received_date=rs.getString("received");
+                String received_date = rs.getString("received");
 
-                    o = new Order(order_id, user_id, received_date);
-                    orders.add(o);
-                }
+                o = new Order(order_id, user_id, received_date);
+                orders.add(o);
+            }
 
-         
             return orders;
-        } catch (SQLException| NumberFormatException| NullPointerException ex) {
+        } catch (SQLException | NumberFormatException | NullPointerException ex) {
             ex.getCause();
         }
         return orders;
     }
 
-    
-
-
     //The main method is the test purpose
     public static void main(String[] args) throws SQLException, MakingAnException {
 
         InfoToAdminMapper info = new InfoToAdminMapper();
-        
-         System.out.println("getOrderId");
-            System.out.println(info.getOrdersByUserId(1));
-     
+
+        System.out.println("getOrderId");
+        System.out.println(info.getOrdersByUserId(1));
+
         //Tester getCupcakeName
 //        System.out.println("CUPCAKENAME");
 //        try {

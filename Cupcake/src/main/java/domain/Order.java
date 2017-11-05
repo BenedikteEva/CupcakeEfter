@@ -8,9 +8,7 @@ import java.util.Date;
  */
 public class Order {
 
-    public Order() {
-
-    }
+    
 
     /**
      * Her oprettes nogle af attributterne (eller resten f attirbutterne) for en
@@ -29,12 +27,14 @@ public class Order {
         this.user_id = user_id;
     }
 
-
-
-    public Order(int order_id, int user_id, String received_date) {
+    public Order(int order_id, int user_id, String reciveddate) {
        this.order_id = order_id;
         this.reciveddate = reciveddate;
         this.user_id = user_id;
+    }
+    
+    public Order() {
+
     }
 
     @Override
