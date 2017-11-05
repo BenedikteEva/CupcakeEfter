@@ -60,6 +60,34 @@ public class UserMapper {
 
         return user;
     }
+    
+     public User getUserDatabyId(int userId) throws SQLException {
+
+        User user = null;
+        try {
+            String sql = "SELECT * FROM userlist WHERE user_id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                int id = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                boolean adminStatus = rs.getBoolean("admin_status");
+                String username = rs.getString("username");
+                double balance = rs.getInt("balance");
+
+                user = new User(id, username, password, email, adminStatus, balance);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return user;
+    }
+
 
     /**
      * Her tilføjes en bruger i databasen, når vedkommende har intastet bruger

@@ -66,15 +66,11 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
 
                 case "invoice_detailUser":
                     try {
-
-                        String userName = request.getParameter("username");
-                        request.setAttribute("userName", userName);
-                        User u = um.getUserData(userName);
-                        int userId = u.getUser_id();
-                        request.setAttribute("userId", userId);
-                        List<Order> allId = itam.getOrdersByUserId(userId);
-                        request.setAttribute("allId", allId);
-
+  
+                        String username = (String) request.getAttribute("username");
+                        
+                        request.setAttribute("username", username);
+    
                         request.getRequestDispatcher("/customer_history.jsp").forward(request, response);
 
                     } catch (NumberFormatException | NullPointerException ex) {

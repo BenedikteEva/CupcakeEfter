@@ -61,7 +61,7 @@ public class UserRendUtil {
 
         sb.append("<tr><form name=\"invoice_detailUser\" action=\"InvoiceHistoryCustomerServlet\" method=\"POST\">"); //Method kan være skrevet forkert! action=\"InvoiceDetailServlet\" method=POST>
         sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoice_detailUser\">");
-        sb.append("<td>\n <input type=\"text\" name=\"username\" value=\"username\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
+        sb.append("<td>\n <input type=\"text\" name=\"username\" value=\"?\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
         sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_detailUser\">See order</button> ");
         sb.append("</form>\n");
      
