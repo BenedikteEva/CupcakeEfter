@@ -92,7 +92,7 @@
                 <% User user = (User) session.getAttribute("user");
 
                     if (user != null) {
-                        out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                        out.println("You are logged in as: " + user.getUserName() +"");
                         
 
                     }
