@@ -62,13 +62,19 @@ public class InvoiceDetailServlet extends HttpServlet {
 
                         User user = (User) session.getAttribute("user");
 
-                        request.setAttribute("orderData", orderData);
+                        request.setAttribute("orderDetails", infoMapper.getAllOrderDetails(invId));
                       //  request.setAttribute("user", user);
                         request.setAttribute("userbelonger", infoMapper.getUserIdByOrderId(invId));
+                        if (1 > infoMapper.getUserIdByOrderId(invId)){
+                            request.getRequestDispatcher("invoice_detail_orderselect.jsp").forward(request, response);
+                            throw new MakingAnException("Den søgte ordre er endnu ikke bestilt.");
+                        } else {
+                
 
 //                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
 //                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
                         request.getRequestDispatcher("invoice_detail_orderselect.jsp").forward(request, response);
+                        }
                     } catch (SQLException | NumberFormatException | NullPointerException ex) {
                         ex.getMessage();
                     }

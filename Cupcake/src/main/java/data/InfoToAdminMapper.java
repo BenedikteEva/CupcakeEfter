@@ -133,6 +133,7 @@ public class InfoToAdminMapper {
         return user_id;
     }
     
+    
     public int getUserIdByUserName(String userName) throws SQLException {
         int user_id = 0;
 
