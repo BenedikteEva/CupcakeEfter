@@ -94,20 +94,6 @@
 
                     }
 
-                    //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
-
-                    //InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    //LineItemsMapper lim = new LineItemsMapper();
-                    //UserMapper um = new UserMapper();
-                    
-                    //int orderid = Integer.parseInt(request.getParameter("orderid"));
-                       // request.setAttribute("orderid", orderid);
-                    
-                    //Hent userid
-                    //int userId = um.getUserData(user.getUserName()).getUser_id();
-                    //int orderId = (Integer) session.getAttribute("orderid");
-                    //List<Odetail> allId = lim.getInvoiceDetailForUser(orderId);
-                    
                     List allId = (List) request.getAttribute("allId");
 
                 %>
