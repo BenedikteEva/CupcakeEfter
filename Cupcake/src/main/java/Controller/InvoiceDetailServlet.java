@@ -53,6 +53,7 @@ public class InvoiceDetailServlet extends HttpServlet {
                     try {
                         //Parser den som int da den kommer som String
                         int invId = Integer.parseInt(request.getParameter("id"));
+                 //       String userNamed = infoMapper.getUserNameByOrderId(invId);
                         request.setAttribute("invId", invId);
 //                        LineItem invoiceInfo = new LineItem();
                         LineItemsMapper lim = new LineItemsMapper();
@@ -62,11 +63,12 @@ public class InvoiceDetailServlet extends HttpServlet {
                         User user = (User) session.getAttribute("user");
 
                         request.setAttribute("orderData", orderData);
-                        request.setAttribute("user", user);
+                      //  request.setAttribute("user", user);
+                        request.setAttribute("userbelonger", infoMapper.getUserIdByOrderId(invId));
 
 //                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
 //                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
-                        request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+                        request.getRequestDispatcher("invoice_detail_orderselect.jsp").forward(request, response);
                     } catch (SQLException | NumberFormatException | NullPointerException ex) {
                         ex.getMessage();
                     }

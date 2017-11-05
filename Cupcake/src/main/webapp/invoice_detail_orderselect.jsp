@@ -1,16 +1,9 @@
 <%-- 
-    Document   : invoice_detail
-    Created on : 28-09-2017, 11:52:08
-    Author     : Bo Henriksen 
+    Document   : invoice_detail_orderselect
+    Created on : 05-11-2017, 14:09:18
+    Author     : Ticondrus
 --%>
 
-<%@page import="domain.LineItem"%>
-<%@page import="Controller.InvoiceDetailServlet"%>
-<%@page import="Utilities.RendUtilInvoice"%>
-
-
-<%@page import="java.util.List"%>
-<%@page import="data.InfoToAdminMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,16 +27,14 @@
             
             <tr>
                 <th>Bruger</th>
-                <th>Order</th>
+                <th>Order Detaljer</th>
                 <th>User ID</th>
-                <th>Order DetaljerD</th>
             </tr>
 
             <tr>
-                <td><%=request.getAttribute("user")%></td>
-                <td><%=request.getAttribute("userOrders")%></td>
+                <td><%=request.getAttribute("userbelonger")%></td>
+                <td><%=request.getAttribute("orderData")%></td>
                 <td><%=request.getAttribute("userId")%></td>
-                <td><%=request.getAttribute("userOrdered Details")%></td>
             </tr>
         </table>
             

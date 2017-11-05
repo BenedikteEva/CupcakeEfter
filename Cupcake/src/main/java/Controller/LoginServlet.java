@@ -68,6 +68,7 @@ public class LoginServlet extends HttpServlet {
 
                 } catch (SQLException ex) {
                     Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    // throw new  ServletException("Noget gik galt." );
                 }
 
                 //Sætter et key value pair så det kan hentes senere med getAttribute("key")
