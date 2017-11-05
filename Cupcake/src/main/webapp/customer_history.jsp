@@ -47,7 +47,7 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded"  href="products.jsp">Products</a>
                         </li>
@@ -70,9 +70,9 @@
                 <div class="text-center mt-4">
                     <div class="text-heading text-muted text-lg">Welcome To</div>
                     <h1 class="my-2">Your Order History</h1>
-                     <!-- <div class="text-heading text-muted text-lg">By
-                      <strong>The Data Builders</strong>
-                    </div>-->
+                    <!-- <div class="text-heading text-muted text-lg">By
+                     <strong>The Data Builders</strong>
+                   </div>-->
                 </div>
             </div>
 
@@ -84,25 +84,30 @@
                 <hr class="divider">
 
                 <% User user = (User) session.getAttribute("user");
-
+                    String username;
+                   
                     if (user != null) {
                         out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                    } else {
+                        out.println("Hello  You have to log in again to see history. Which order do you want to see?");
                     }
-                    else{
-                          out.println("Hello  You have to log in again to see history. Which order do you want to see?");
+
+                    if (user.isAdminStatus() != true) {
+                        username = user.getUserName();
+                    } else {
+                        
+                        username = (String) request.getAttribute("username");
                     }
-                  
-                  String userName = user.getUserName();
-                  
-             List<Order>  allId = RendUtilAllIdForCustomer.setAllId(userName);
-                    
+
+                    List<Order> allId = RendUtilAllIdForCustomer.setAllId(username);
+
                 %>
                 <div class="flex-container">
                     <div id="box">
                         <%= RendUtilAllIdForCustomer.allInvoiceIdTabelCustomer((allId))%>
                     </div>
 
-                  
+
                 </div>
 
 

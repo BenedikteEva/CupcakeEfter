@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             //Henter brugens input
-            String userName = request.getParameter("username");
+            String userName = request.getParameter("userName");
             String password = request.getParameter("password");
             System.out.println("LoginServlet");
 

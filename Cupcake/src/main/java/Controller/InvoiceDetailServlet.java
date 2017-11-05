@@ -64,7 +64,6 @@ public class InvoiceDetailServlet extends HttpServlet {
                         String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
 //                        invoiceInfo = infoMapper.getODetail(invId);
 
-                        User user = (User) session.getAttribute("user");
                         request.setAttribute("orderDetails", infoMapper.getAllOrderDetails(invId));
                         //  request.setAttribute("user", user);
                         request.setAttribute("userbelonger", infoMapper.getUserIdByOrderId(invId));
@@ -106,10 +105,13 @@ public class InvoiceDetailServlet extends HttpServlet {
 
                 case "invoiceCustView":
                     int userId = Integer.parseInt(request.getParameter("uid"));
-                    List<Order> allId = infoMapper.getOrdersByUserId(userId);
+
                     request.setAttribute("userId", userId);
-                    request.setAttribute("allId", allId);
-                       request.getRequestDispatcher("customer_history.jsp").forward(request, response);
+                    User username = um.getUserDatabyId(userId);
+                    request.setAttribute("username", username);
+
+//                    request.setAttribute("allId", allId);
+                    request.getRequestDispatcher("customer_history.jsp").forward(request, response);
                     break;
                 default:
                     throw new AssertionError();
