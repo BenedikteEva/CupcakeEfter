@@ -1,12 +1,21 @@
 package Controller;
 
+import static Utilities.UserRendUtil.user;
+import data.LineItemsMapper;
+import data.UserMapper;
+import domain.Odetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,11 +37,32 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            int orderid = Integer.parseInt(request.getParameter("orderid"));
-            request.setAttribute("orderid", orderid);
-            request.getRequestDispatcher("customer_history_detail.jsp").forward(request, response);
-            
+
+            String origin = request.getParameter("origin");
+            switch (origin) {
+
+                case "invoice_detail":
+                    try {
+                        LineItemsMapper lim = new LineItemsMapper();
+
+                        int orderid = Integer.parseInt(request.getParameter("orderid"));
+                        request.setAttribute("orderid", orderid);
+
+                        try {
+                          List<Odetail> allId = lim.getInvoiceDetailForUser(orderid);
+                            request.setAttribute("allId", allId);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(InvoiceHistoryCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        request.getRequestDispatcher("/customer_history_detail.jsp").forward(request, response);
+                    } catch (NumberFormatException | NullPointerException ex) {
+                        ex.getMessage();
+                    }
+
+                    break;
+
+            }
         }
     }
 

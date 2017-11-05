@@ -89,8 +89,9 @@
                     }
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                                      
-                    List<Order> allId = infoToAdmin.getOrders();
+                    String userName = user.getUserName();
+                    int user_id = infoToAdmin.getUserIdByUserName(userName);                  
+                    List<Order> allId = infoToAdmin.getOrdersByUserId(user_id);
                     
                 %>
                 <div class="flex-container">

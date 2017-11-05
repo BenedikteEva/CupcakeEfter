@@ -131,7 +131,19 @@ public class InfoToAdminMapper {
             user_id = rs.getInt("user_id");
         }
         return user_id;
+    }
+    
+    public int getUserIdByUserName(String userName) throws SQLException {
+        int user_id = 0;
 
+        String sql = "SELECT user_id FROM userlist WHERE username=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, userName);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            user_id = rs.getInt("user_id");
+        }
+        return user_id;
     }
 
     /**
@@ -217,9 +229,9 @@ public class InfoToAdminMapper {
 
             while (rs.next()) {
                 int order_id = rs.getInt("order_id");
-                String received_date = rs.getString("received");
+                String reciveddate = rs.getString("received");
 
-                o = new Order(order_id, user_id, received_date);
+                o = new Order(order_id, user_id, reciveddate);
                 orders.add(o);
             }
 

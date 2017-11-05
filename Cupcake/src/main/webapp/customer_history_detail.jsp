@@ -4,6 +4,7 @@
     Author     : Bo
 --%>
 
+<%@page import="Utilities.RendUtilInvoiceDetailsCustomer"%>
 <%@page import="domain.Odetail"%>
 <%@page import="data.LineItemsMapper"%>
 <%@page import="Utilities.UserRendUtil"%>
@@ -96,22 +97,28 @@
                     //out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
 
                     //InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    LineItemsMapper lim = new LineItemsMapper();
-                    UserMapper um = new UserMapper();
+                    //LineItemsMapper lim = new LineItemsMapper();
+                    //UserMapper um = new UserMapper();
+                    
+                    //int orderid = Integer.parseInt(request.getParameter("orderid"));
+                       // request.setAttribute("orderid", orderid);
                     
                     //Hent userid
-                    int userId = um.getUserData(user.getUserName()).getUser_id();
-                    List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
+                    //int userId = um.getUserData(user.getUserName()).getUser_id();
+                    //int orderId = (Integer) session.getAttribute("orderid");
+                    //List<Odetail> allId = lim.getInvoiceDetailForUser(orderId);
+                    
+                    List allId = (List) request.getAttribute("allId");
 
                 %>
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
+                        <%= RendUtilInvoiceDetailsCustomer.invoiceTabelCustomer(allId)%>
 
                     </div>
 
                     <div id="box">
-                        <%= UserRendUtil.userList(allUsers)%>
+                        
 
                     </div>
 
