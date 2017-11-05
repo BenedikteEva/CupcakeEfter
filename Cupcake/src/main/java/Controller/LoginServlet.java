@@ -61,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 
                     if (userAdmin == true) {
                         
+                         session.setAttribute("userAdminName", userMapper.getUserData(userName).getEmail()); //Den her manglede. Der stod bare Hello null inde på adminpage.jsp!
                  
                         request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
                     } else {
