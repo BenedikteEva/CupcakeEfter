@@ -57,6 +57,8 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("user", loginUser); //Her sættes attributen user på session objektet
 
                     if (userAdmin == true) {
+
+                        session.setAttribute("userAdminName", userMapper.getUserData(userName).getUserName()); //Den her manglede. Der stod bare Hello null inde på adminpage.jsp!
                         request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
                     } else {
                         int userId = userMapper.getUserData(userName).getUser_id();
@@ -71,8 +73,8 @@ public class LoginServlet extends HttpServlet {
                 //Sætter et key value pair så det kan hentes senere med getAttribute("key")
                 //request.setAttribute("userName", userName);//session i stedet for. Hvis setAttribute brug hidden field til at følge
             } else {
-                
-                request.setAttribute("wrongLogin","Wrong username or password!");
+
+                request.setAttribute("wrongLogin", "Wrong username or password!");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
 
