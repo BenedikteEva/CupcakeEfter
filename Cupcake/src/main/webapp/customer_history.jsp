@@ -100,11 +100,7 @@
 
                     </div>
 
-                    <div id="box">
-                        
-
-                    </div>
-
+                  
                 </div>
 
 

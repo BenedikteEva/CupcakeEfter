@@ -21,7 +21,7 @@ public class RendUtilAllIdForCustomer {
             sb.append("<td>").append("" + o.getOrder_id()).append("</td>");
             sb.append("<td>").append("" + o.getReciveddate()).append("</td>");
 //            sb.append("<td>\n <input type=\"hidden\" name=\" orderid\" value=\""+o.getOrder_id()+"\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
-            sb.append("<td>\n <input type=\"radio\" name=\" id\" value=\""+o.getOrder_id()+"\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
+            sb.append("<td>\n <input type=\"radio\" name=\"id\" value=\""+o.getOrder_id()+"\"><br>\n\n</td>"); //location.href='invoice_detail.jsp';\
             sb.append("</tr>\n");
         }
         sb.append("</table>\n"); 
