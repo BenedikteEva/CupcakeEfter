@@ -1,10 +1,13 @@
 package Controller;
 
+import data.LineItemsMapper;
 import data.UserMapper;
+import domain.Odetail;
 import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             //Henter brugens input
             String userName = request.getParameter("username");
             String password = request.getParameter("password");
-            System.out.println("LoginServlet");
+           // System.out.println("LoginServlet");
 
 //            User user = new User();
             //Laver user objekt
@@ -57,6 +60,8 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("user", loginUser); //Her sættes attributen user på session objektet
 
                     if (userAdmin == true) {
+                        
+                 
                         request.getRequestDispatcher("/admin_page.jsp").forward(request, response);
                     } else {
                         int userId = userMapper.getUserData(userName).getUser_id();

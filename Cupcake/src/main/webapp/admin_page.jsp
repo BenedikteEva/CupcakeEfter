@@ -4,6 +4,7 @@
     Author     : Bo Henriksen 
 --%>
 
+<%@page import="domain.Odetail"%>
 <%@page import="Utilities.UserRendUtil"%>
 <%@page import="data.UserMapper"%>
 <%@page import="Utilities.RendUtilAllId"%>
@@ -91,7 +92,9 @@
 
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     UserMapper um = new UserMapper();
-                    List<Order> allId = infoToAdmin.getOrders();
+                           LineItemsMapper lim = new LineItemsMapper();
+                         
+                    List<Order> allId = infoToAdmin.getAllOrderId();
                     List<User> allUsers = um.getUsers();
 
                 %>

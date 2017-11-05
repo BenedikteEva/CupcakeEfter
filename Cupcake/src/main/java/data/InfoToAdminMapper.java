@@ -37,16 +37,17 @@ public class InfoToAdminMapper {
     public List<Order> getAllOrderId() throws SQLException {
         List<Order> allOrderId = new ArrayList();
 
-        String sql = "SELECT order_id FROM orderlist;";
+        String sql = "SELECT order_id, received FROM orderlist;";
 
         ResultSet rs = conn.prepareStatement(sql).executeQuery();
         int lastId = -1;
-       Order id = null;
+        Order id = null;
         while (rs.next()) {
             int order_id = rs.getInt("order_id");
+            String received= rs.getString("received");
             if (order_id != lastId) {
                 int invoiceid = rs.getInt("order_id");
-                id = new Order(invoiceid);
+                id = new Order(invoiceid, received);
                 allOrderId.add(id);
             }
 //            person.addPhone(new Phone(rs.getString("phoneNo"), rs.getString("description")));
@@ -94,46 +95,45 @@ public class InfoToAdminMapper {
      * @return a list all the order details
      * @throws SQLException if an sql error occur.
      */
-    public LineItem getODetail(int invoiceID) throws SQLException {
+    public List<LineItem> getODetail(int invoiceID) throws MakingAnException {
+        List<LineItem> odetails = new ArrayList<>();
+        try {
+            LineItem oDetail = null;
 
-        LineItem oDetail = null;
-     
+            String sql = "SELECT * FROM lineitem WHERE order_id =" + invoiceID;
+            ResultSet rs = conn.prepareStatement(sql).executeQuery();
 
-            String sql = "SELECT order_id, priceprcc, total_price, quantity FROM lineitem WHERE order_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, invoiceID);
+            while (rs.next()) {
 
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-
-                int invoiceId = rs.getInt("order_id");
-                int pricePrCc = rs.getInt("priceprcc");
-                int totalPrice = rs.getInt("total_price");
+                double pricePrCc = rs.getDouble("prisprcc");
+                String ccname = rs.getString("ccname");
+                double totalPrice = rs.getDouble("totalprice");
                 int quantity = rs.getInt("quantity");
 
-                oDetail = new LineItem(invoiceId, pricePrCc, totalPrice, quantity);
+                oDetail = new LineItem(invoiceID, quantity, ccname, pricePrCc, totalPrice);
+                odetails.add(oDetail);
             }
-       
 
-        return oDetail;
+            return odetails;
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return odetails;
     }
-    
-    public int getUserIdByOrderId(int order_id) throws SQLException{
+
+    public int getUserIdByOrderId(int order_id) throws SQLException {
         int user_id = 0;
-        
+
         String sql = "SELECT user_id FROM orderlist WHERE order_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, order_id);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                user_id = rs.getInt("user_id");
-            }
+        pstmt.setInt(1, order_id);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            user_id = rs.getInt("user_id");
+        }
         return user_id;
-        
+
     }
-    
-
-
 
     /**
      * Adds the users id into the orderlist.
@@ -165,8 +165,6 @@ public class InfoToAdminMapper {
         return id;
     }
 
-   
-
     public int getLastInvoiceId() throws MakingAnException {
         int invoiceid = 0;
         try {
@@ -179,72 +177,64 @@ public class InfoToAdminMapper {
                 invoiceid = rs.getInt("order_id");
 
             }
-        } catch (SQLException| NumberFormatException| NullPointerException| IndexOutOfBoundsException ex) {
+        } catch (SQLException | NumberFormatException | NullPointerException | IndexOutOfBoundsException ex) {
 
         }
 
         return invoiceid;
     }
-    
-    public List<Order>  getOrders() throws MakingAnException {
-    List<Order> orderIds=new ArrayList<>();
-  Order o;
-      try {
-           
-            String sql = "SELECT * FROM orderlist";
-            ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            
-              while (rs.next()) {
-                int order_id = rs.getInt("order_id");
-                int user_id = rs.getInt("user_id");
-                String received_date=rs.getString("received");
 
-                    o = new Order(order_id, user_id, received_date);
-                    orderIds.add(o);
-                }
+    public List<Order> getOrders() throws SQLException {
+        List<Order> orderIds = new ArrayList<>();
+        Order o;
 
-         
-            return orderIds;
-        } catch (SQLException| NumberFormatException| NullPointerException ex) {
-            ex.getCause();
+        String sql = "SELECT * FROM orderlist";
+        ResultSet rs = conn.prepareStatement(sql).executeQuery();
+
+        while (rs.next()) {
+            int order_id = rs.getInt("order_id");
+            int user_id = rs.getInt("user_id");
+            String received_date = rs.getString("received");
+
+            o = new Order(order_id, user_id, received_date);
+            orderIds.add(o);
         }
+
         return orderIds;
+
     }
-      public List<Order>  getOrdersByUserId(int user_id) throws MakingAnException {
-    List<Order> orders=new ArrayList<>();
-  Order o;
-      try {
-           
-            String sql = "SELECT * FROM orderlist WHERE user_id="+user_id;
+
+    public List<Order> getOrdersByUserId(int user_id) throws MakingAnException {
+        List<Order> orders = new ArrayList<>();
+        Order o;
+        try {
+
+            String sql = "SELECT * FROM orderlist WHERE user_id=" + user_id;
             ResultSet rs = conn.prepareStatement(sql).executeQuery();
-            
-              while (rs.next()) {
+
+            while (rs.next()) {
                 int order_id = rs.getInt("order_id");
-                String received_date=rs.getString("received");
+                String received_date = rs.getString("received");
 
-                    o = new Order(order_id, user_id, received_date);
-                    orders.add(o);
-                }
+                o = new Order(order_id, user_id, received_date);
+                orders.add(o);
+            }
 
-         
             return orders;
-        } catch (SQLException| NumberFormatException| NullPointerException ex) {
+        } catch (SQLException | NumberFormatException | NullPointerException ex) {
             ex.getCause();
         }
         return orders;
     }
 
-    
-
-
     //The main method is the test purpose
     public static void main(String[] args) throws SQLException, MakingAnException {
 
         InfoToAdminMapper info = new InfoToAdminMapper();
-        
-         System.out.println("getOrderId");
-            System.out.println(info.getOrdersByUserId(1));
-     
+
+        System.out.println("getOrderId");
+        System.out.println(info.getAllOrderId());
+
         //Tester getCupcakeName
 //        System.out.println("CUPCAKENAME");
 //        try {
@@ -255,8 +245,8 @@ public class InfoToAdminMapper {
         //Tester getODetail metoden
         try {
             System.out.println("GETODETAIL");
-            System.out.println(info.getODetail(1));
-        } catch (SQLException ex) {
+            System.out.println(info.getODetail(17));
+        } catch (MakingAnException ex) {
             Logger.getLogger(InfoToAdminMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -16,8 +16,8 @@ public class RendUtilInvoiceDetailsCustomer {
          + "<tr><th>InvoiceId</th><th>Date</th><th></th></tr>\n");
         for (Odetail o : allId) {
    
-            sb.append("<tr><form name=\"invoice_detail\" action=\"InvoiceHistoryCustomerServlet\" method=\"POST\">"); //Method kan være skrevet forkert! action=\"InvoiceDetailServlet\" method=POST>
-//            sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"invoice_detail\">");
+            sb.append("<tr><form name=\"orderdetails\" action=\"InvoiceDetailServlet\" method=\"POST\">"); //Method kan være skrevet forkert! action=\"InvoiceDetailServlet\" method=POST>
+           sb.append("<tr> <input type=\"hidden\" name=\"origin\" value=\"orderdetails\">");
             sb.append("<td>").append("" + o.getOrder_id()).append("</td>");
             sb.append("<td>").append("" + o.getReceived()).append("</td>");
             sb.append("<td>").append("" + o.getCcname()).append("</td>");
@@ -28,7 +28,7 @@ public class RendUtilInvoiceDetailsCustomer {
             sb.append("</tr>\n");
         }
         sb.append("</table>\n"); 
-        sb.append("<button type=\"submit\" value=\"action\" name=invoice_detail\">See order</button> " );
+        sb.append("<button type=\"submit\" value=\"action\" name=orderdetails\">See order</button> " );
         sb.append("</form>\n");
         return sb.toString();
 

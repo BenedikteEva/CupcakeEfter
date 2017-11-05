@@ -5,12 +5,12 @@
 --%>
 
 <%@page import="domain.LineItem"%>
+<%@page import="domain.Odetail"%>
 <%@page import="Controller.InvoiceDetailServlet"%>
 <%@page import="Utilities.RendUtilInvoice"%>
-
-
 <%@page import="java.util.List"%>
 <%@page import="data.InfoToAdminMapper"%>
+<%@page import="data.LineItemsMapper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,32 +25,47 @@
 
         <%
             //out.println("<a>" + (LineItem) request.getAttribute("invoiceInfo") + "</a>");
-        //   out.println("<a>" + (Integer) request.getAttribute("invId") + "</a>");
-
+            //   out.println("<a>" + (Integer) request.getAttribute("invId") + "</a>");
+            int invId = (Integer) request.getAttribute("invId");
+            List<LineItem> lili = (List<LineItem>) request.getAttribute("cupcakeName");
             InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-          
+            LineItemsMapper lim = new LineItemsMapper();
+            List<Odetail> details = (List<Odetail>)request.getAttribute("details");
+
         %>
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
-       
+
+
         <table border=2>
-            
+
             <tr>
                 <th>Orders</th>
                 <th>Bruger</th>
                 <th>Info 3</th>
                 <th>Info 4</th>
+                <th>Info 5</th>
             </tr>
 
             <tr>
                 <td><%=request.getAttribute("userOrders")%></td>
                 <td><%=request.getAttribute("user")%></td>
                 <td><%=request.getAttribute("userId")%></td>
-                <td><%=request.getAttribute("userId")%></td>
+                <td><%=request.getAttribute("invId")%></td>
+                <td><%=request.getAttribute("orderid")%></td>
             </tr>
         </table>
-            
+
+
+
+        <%
+
+            out.println("<a>" + lili + "</a>");  out.println("<a>" + details + "</a>");
+
+        %>
+        <br>
+     
 
     </body>
-    
+
     <button type="button" style="background-color: gold" onclick="location.href = 'admin_page.jsp';" class="cancelbtn">Vælg en anden brugers ordre</button>
 </html>

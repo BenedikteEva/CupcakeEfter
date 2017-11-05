@@ -147,14 +147,52 @@ public class LineItemsMapper {
 
         return orderDetailList;
     }
+    
+       public List<Odetail> getInvoiceList() throws SQLException {
+
+        List<Odetail> orderList = new ArrayList();
+        try {
+
+            String sql = "SELECT user_id, lineitem.lineitem_id, orderlist.order_id, orderlist.received, lineitem.ccname, "
+                    + "lineitem.quantity, lineitem.prisprcc, lineitem.totalprice "
+                    + "From orderlist "
+                    + "INNER JOIN lineitem ON orderlist.order_id = lineitem.order_id ";
+               
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+          
+
+            ResultSet rs = pstmt.executeQuery();
+            int lastId = -1;
+            Odetail odetail = null;
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                int lineitem_id = rs.getInt("lineitem_id");
+                if (lineitem_id != lastId) {
+                int order_id = rs.getInt("order_id");
+                String received = rs.getString("received");
+                String ccname = rs.getString("ccname");
+                int quantity = rs.getInt("quantity");
+                double prisprcc = rs.getDouble("prisprcc");
+                double totalprice = rs.getDouble("totalprice");
+
+                odetail = new Odetail(lineitem_id, order_id, received, ccname, quantity, prisprcc, totalprice, user_id);
+                orderList.add(odetail);
+                }
+            }
+        } catch (SQLException| NumberFormatException ex) {
+            ex.getMessage();
+        }
+
+        return orderList;
+    }
 
     public static void main(String[] args) throws SQLException, Exception {
         LineItemsMapper lim = new LineItemsMapper();
 
         //Test getInvoiceDetailForUser
         Odetail odetail = new Odetail();
-        System.out.println(lim.getInvoiceDetailForUser(1));
-        
+//        System.out.println(lim.getInvoiceDetailForUser(3));
+        System.out.println(lim.getInvoiceList());
 
         //Test insert into orderlist
 //        Order or = new Order(3);

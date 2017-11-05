@@ -4,10 +4,12 @@
     Author     : Bo
 --%>
 
+<%@page import="Utilities.RendUtilAllIdForCustomer"%>
+<%@page import="data.LineItemsMapper"%>
+<%@page import="domain.Odetail"%>
 <%@page import="Utilities.UserRendUtil"%>
 <%@page import="Utilities.RendUtilAllId"%>
 <%@page import="domain.User"%>
-<%@page import="domain.Order"%>
 <%@page import="java.util.List"%>
 <%@page import="data.UserMapper"%>
 <%@page import="data.InfoToAdminMapper"%>
@@ -16,7 +18,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
@@ -26,12 +28,12 @@
 
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
-        
+
         <title>Invoice Detail</title>
     </head>
     <body>
-        
-     <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
+
+        <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
         <div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
 
         <!-- Navigation -->
@@ -61,7 +63,7 @@
                 </div>
             </div>
         </nav>
-        
+
         <div class="container">
 
             <div class="bg-faded p-4 my-4">
@@ -85,22 +87,22 @@
 
                 <% String adminName = (String) session.getAttribute("username");
 
-                    out.println("Hello " + adminName + ". What are your plans for today?");
+                    out.println("Hello " + adminName + ". What are your plans for today?"); 
 
-                    InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
-                    UserMapper um = new UserMapper();
-                    List<Order> allId = infoToAdmin.getOrders();
-                    List<User> allUsers = um.getUsers();
-
+                     out.println("<a>"+(List<Odetail>) request.getAttribute("detail")+"</a>");
                 %>
+              
+
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllId.allInvoiceIdTabel(allId)%>
+                     
 
                     </div>
 
                     <div id="box">
-                        <%= UserRendUtil.userList(allUsers)%>
+                        <%--= UserRendUtil.userList(allUsers)--%>
+
+
 
                     </div>
 
@@ -141,5 +143,5 @@
     <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="script/popper/popper.min.js" type="text/javascript"></script>
     <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-    </body>
+</body>
 </html>

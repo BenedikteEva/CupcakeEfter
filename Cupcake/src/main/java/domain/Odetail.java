@@ -13,6 +13,26 @@ public class Odetail {
     private int quantity;
     private double priceprcc;
     private double totalprice;
+    private int user_id;
+
+    public Odetail(int lineitem_id, int order_id, String received, String ccname, int quantity, double priceprcc, double totalprice, int user_id) {
+        this.lineitem_id = lineitem_id;
+        this.order_id = order_id;
+        this.received = received;
+        this.ccname = ccname;
+        this.quantity = quantity;
+        this.priceprcc = priceprcc;
+        this.totalprice = totalprice;
+        this.user_id = user_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
     
     public Odetail(int lineitem_id, int order_id, String received, String ccname, int quantity, double priceprcc, double totalprice) {
         this.lineitem_id = lineitem_id;

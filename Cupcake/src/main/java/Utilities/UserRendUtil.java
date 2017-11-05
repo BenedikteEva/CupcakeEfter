@@ -44,8 +44,7 @@ public class UserRendUtil {
             sb.append("<td>").append(u.getUser_id()).append("</td>");
             sb.append("<td>").append(u.getUserName()).append("</td>");
             sb.append("<td>").append(u.getEmail()).append("</td>");
-            sb.append("<td> \n <input type=\"radio\" name=\"uid\" value=\"" + u.getUser_id() + "\"><br>\n\n</td>");
-           
+            sb.append("<td> \n <input type=\"radio\" name=\"uid\" value=\"").append(u.getUser_id()).append("\"><br>\n\n</td>");
         }
         sb.append("</table>\n");
          sb.append("<button type=\"submit\" value=\"action\" name=\"invoice_user\">Submit</button> ");

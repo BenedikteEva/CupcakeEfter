@@ -3,7 +3,6 @@ package Controller;
 import data.InfoToAdminMapper;
 import data.LineItemsMapper;
 import domain.LineItem;
-import domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import domain.Order;
-import Controller.ShoppingCartServlet;
 import data.UserMapper;
 import domain.MakingAnException;
+import domain.Odetail;
 import java.util.List;
 
 /**
@@ -37,6 +36,7 @@ public class InvoiceDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      * @throws java.sql.SQLException
+     * @throws domain.MakingAnException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, MakingAnException {
@@ -44,6 +44,7 @@ public class InvoiceDetailServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         InfoToAdminMapper infoMapper = new InfoToAdminMapper();
+        LineItemsMapper lim = new LineItemsMapper();
         UserMapper um = new UserMapper();
         try (PrintWriter out = response.getWriter()) {
             String origin = request.getParameter("origin");
@@ -52,20 +53,16 @@ public class InvoiceDetailServlet extends HttpServlet {
                 case "invoice_detail":
                     try {
                         //Parser den som int da den kommer som String
-                        int invId = Integer.parseInt(request.getParameter("id"));
+                        int invId = Integer.parseInt(request.getParameter("oid"));
                         request.setAttribute("invId", invId);
-//                        LineItem invoiceInfo = new LineItem();
-                        LineItemsMapper lim = new LineItemsMapper();
-                        String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
-//                        invoiceInfo = infoMapper.getODetail(invId);
-                       
-   
-                        request.setAttribute("orderData", orderData);
 
-//                        LineItem cupcakeNameInvoice = infoMapper.getODetail(invId);
-//                        request.setAttribute("cupcakeName", cupcakeNameInvoice);
+//                        String orderData = lim.getLineItemDataByUserId(invId, infoMapper.getUserIdByOrderId(invId));
+//                        request.setAttribute("orderData", orderData);
+                        List<LineItem> cupcakeName = infoMapper.getODetail(invId);
+                        request.setAttribute("cupcakeName", cupcakeName);
+
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
-                    } catch (SQLException | NumberFormatException | NullPointerException ex) {
+                    } catch (MakingAnException | NumberFormatException | NullPointerException ex) {
                         ex.getMessage();
                     }
 
@@ -79,13 +76,19 @@ public class InvoiceDetailServlet extends HttpServlet {
                         request.setAttribute("userOrders", userOrders);
                         request.setAttribute("userId", userId);
                         request.getRequestDispatcher("invoice_detail.jsp").forward(request, response);
+
+                        List<Odetail> allId = lim.getInvoiceDetailForUser(userId);
+                        request.setAttribute("allId", allId);
+
                     } catch (MakingAnException ex) {
                         ex.getMessage();
                     }
+                    break;
 
                 default:
                     throw new AssertionError();
             }
+      
         }
     }
 
