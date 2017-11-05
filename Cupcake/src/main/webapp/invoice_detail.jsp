@@ -4,6 +4,7 @@
     Author     : Bo Henriksen 
 --%>
 
+<%@page import="Utilities.RendUtilAllIdForCustomer"%>
 <%@page import="domain.LineItem"%>
 <%@page import="domain.Odetail"%>
 <%@page import="Controller.InvoiceDetailServlet"%>
@@ -23,7 +24,7 @@
 
         <h1>Invoice Detail</h1>
 
-        <%
+        <%--
             //out.println("<a>" + (LineItem) request.getAttribute("invoiceInfo") + "</a>");
             //   out.println("<a>" + (Integer) request.getAttribute("invId") + "</a>");
             int invId = (Integer) request.getAttribute("invId");
@@ -32,10 +33,10 @@
             LineItemsMapper lim = new LineItemsMapper();
             List<Odetail> details = (List<Odetail>)request.getAttribute("details");
 
-        %>
+        --%>
         <%--= RendUtilInvoice.invoiceTable(invoiceList)--%>
 
-
+      
         <table border=2>
 
             <tr>
@@ -47,21 +48,16 @@
             </tr>
 
             <tr>
-                <td><%=request.getAttribute("userOrders")%></td>
+                <td><%=request.getAttribute("allId")%></td>
                 <td><%=request.getAttribute("user")%></td>
                 <td><%=request.getAttribute("userId")%></td>
-                <td><%=request.getAttribute("invId")%></td>
-                <td><%=request.getAttribute("orderid")%></td>
+                <td><%=request.getAttribute("invInfo")%></td>
+                <td><%=request.getAttribute("details")%></td>
             </tr>
         </table>
 
 
-
-        <%
-
-            out.println("<a>" + lili + "</a>");  out.println("<a>" + details + "</a>");
-
-        %>
+     
         <br>
      
 

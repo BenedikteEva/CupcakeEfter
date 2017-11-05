@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,42 +27,53 @@ public class LineItemsMapper {
         this.conn = DBConnector.getConnection();
     }
 
-    public int addOrderToOrderList(Order or) throws SQLException {
+    public int addOrderToOrderList(Order or) throws MakingAnException {
+int id=0;
+        try {
+            String insertOrder = "INSERT INTO orderlist (user_id, received) VALUES (?, ?)";
+            PreparedStatement orderPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
+            
+            orderPstmt.setInt(1, or.getUser_id());
+            orderPstmt.setString(2, or.getReciveddate());
+            int result = orderPstmt.executeUpdate();
+            ResultSet rs = orderPstmt.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+            return id;
+        } catch (SQLException ex) {
+           throw new MakingAnException(ex.getMessage());
+        }
 
-        String insertOrder = "INSERT INTO orderlist (user_id, received) VALUES (?, ?)";
-        PreparedStatement orderPstmt = conn.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS);
-
-        orderPstmt.setInt(1, or.getUser_id());
-        orderPstmt.setString(2, or.getReciveddate());
-        int result = orderPstmt.executeUpdate();
-        ResultSet rs = orderPstmt.getGeneratedKeys();
-        rs.next();
-        int id = rs.getInt(1);
-        return id;
+      
     }
     
-    public int addLineItemToDb(LineItem li) throws SQLException {
+    public int addLineItemToDb(LineItem li) throws MakingAnException {
+ int id=0;
+        try {
+            String insertLineItem = "INSERT INTO lineitem (order_id,  top_id, bot_id, ccname, quantity, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
+            
+            confPstmt.setInt(1, li.getInvoiceId());
+            confPstmt.setInt(2, li.getTop_id());
+            confPstmt.setInt(3, li.getBot_id());
+            confPstmt.setString(4, li.getCupcakeName());
+            confPstmt.setInt(5, li.getQuantity());
+            confPstmt.setDouble(6, li.getPricePrCc());
+            confPstmt.setDouble(7, li.getTotalPrice());
+            
+            int result = confPstmt.executeUpdate();
+            ResultSet rs = confPstmt.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+            
+            return id;
+         } catch (SQLException ex) {
+           throw new MakingAnException(ex.getMessage());
+        }
 
-        String insertLineItem = "INSERT INTO lineitem (order_id,  top_id, bot_id, ccname, quantity, prisprcc, totalprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement confPstmt = conn.prepareStatement(insertLineItem, Statement.RETURN_GENERATED_KEYS);
-
-        confPstmt.setInt(1, li.getInvoiceId());
-        confPstmt.setInt(2, li.getTop_id());
-        confPstmt.setInt(3, li.getBot_id());
-        confPstmt.setString(4, li.getCupcakeName());
-        confPstmt.setInt(5, li.getQuantity());
-        confPstmt.setDouble(6, li.getPricePrCc());
-        confPstmt.setDouble(7, li.getTotalPrice());
-
-        int result = confPstmt.executeUpdate();
-        ResultSet rs = confPstmt.getGeneratedKeys();
-        rs.next();
-        int id = rs.getInt(1);
-
-        return id;
     }
 
-    public LineItem getLineItemData(int lineItemId) throws SQLException {
+    public LineItem getLineItemData(int lineItemId) throws MakingAnException {
 
         LineItem li = null;
         try {
@@ -81,14 +94,15 @@ public class LineItemsMapper {
 
                 li = new LineItem(id, qty, ccname, prisprcc, totalprice);
             }
-        } catch (SQLException ex) {
-            ex.getMessage();
+          } catch (SQLException ex) {
+           throw new MakingAnException(ex.getMessage());
         }
+
 
         return li;
     }
 
-    public String getLineItemDataByUserId(int user_id, int order_id) throws SQLException {
+    public String getLineItemDataByUserId(int user_id, int order_id) throws MakingAnException{
       String li = null ;
         try {
 
@@ -103,14 +117,14 @@ public class LineItemsMapper {
               li = rs.toString();
                 
             }
-        } catch (SQLException ex) {
-            ex.getMessage();
+          } catch (SQLException ex) {
+           throw new MakingAnException(ex.getMessage());
         }
 
         return li;
     }
     
-    public List<Odetail> getInvoiceDetailForUser(int userId) throws SQLException {
+    public List<Odetail> getInvoiceDetailForUser(int userId) throws MakingAnException {
 
         List<Odetail> orderDetailList = new ArrayList();
         try {
@@ -142,13 +156,13 @@ public class LineItemsMapper {
                 }
             }
         } catch (SQLException ex) {
-            ex.getMessage();
+           throw new MakingAnException(ex.getMessage());
         }
 
         return orderDetailList;
     }
     
-       public List<Odetail> getInvoiceList() throws SQLException {
+       public List<Odetail> getInvoiceList() throws MakingAnException {
 
         List<Odetail> orderList = new ArrayList();
         try {
@@ -179,9 +193,10 @@ public class LineItemsMapper {
                 orderList.add(odetail);
                 }
             }
-        } catch (SQLException| NumberFormatException ex) {
-            ex.getMessage();
+       } catch (SQLException ex) {
+           throw new MakingAnException(ex.getMessage());
         }
+
 
         return orderList;
     }
@@ -192,7 +207,7 @@ public class LineItemsMapper {
         //Test getInvoiceDetailForUser
         Odetail odetail = new Odetail();
 //        System.out.println(lim.getInvoiceDetailForUser(3));
-        System.out.println(lim.getInvoiceList());
+        System.out.println(lim.getInvoiceDetailForUser(1));
 
         //Test insert into orderlist
 //        Order or = new Order(3);

@@ -3,6 +3,7 @@ package Controller;
 import data.LineItemsMapper;
 import data.UserMapper;
 import domain.LineItem;
+import domain.MakingAnException;
 import domain.Order;
 import domain.User;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class ShoppingCartServlet extends HttpServlet {
      * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, MakingAnException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
 
@@ -110,7 +111,7 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -128,7 +129,7 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | MakingAnException ex) {
             Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
