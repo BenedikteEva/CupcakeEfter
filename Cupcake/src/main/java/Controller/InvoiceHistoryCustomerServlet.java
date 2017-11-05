@@ -64,18 +64,36 @@ public class InvoiceHistoryCustomerServlet extends HttpServlet {
 
                     break;
 
+                case "invoice_detailAdmin":
+                    try {
+
+                        int orderid = Integer.parseInt(request.getParameter("id"));
+                        request.setAttribute("orderid", orderid);
+
+                        List<Odetail> allId = lim.getInvoiceDetailByOrderId(orderid);
+                        request.setAttribute("allId", allId);
+
+                        request.getRequestDispatcher("/customer_history_detail_admin.jsp").forward(request, response);
+                    } catch (NumberFormatException | NullPointerException ex) {
+                        ex.getMessage();
+                    }
+
+                    break;
+                
                 case "invoice_detailUser":
                     try {
 
-                        String userName = request.getParameter("username");
-                        request.setAttribute("userName", userName);
-                        User u = um.getUserData(userName);
+                        String customerName = request.getParameter("customerName");
+                        request.setAttribute("customerName", customerName);
+                        User u = um.getUserData(customerName);
                         int userId = u.getUser_id();
                         request.setAttribute("userId", userId);
+                        String cName = u.getUserName();
+                        request.setAttribute("cName", cName);
                         List<Order> allId = itam.getOrdersByUserId(userId);
                         request.setAttribute("allId", allId);
 
-                        request.getRequestDispatcher("/customer_history.jsp").forward(request, response);
+                        request.getRequestDispatcher("/customer_history_admin.jsp").forward(request, response);
 
                     } catch (NumberFormatException | NullPointerException ex) {
                         ex.getMessage();

@@ -1,23 +1,21 @@
 <%-- 
-    Document   : admin_page
-    Created on : 26-09-2017, 12:52:08
-    Author     : Bo Henriksen 
+    Document   : customer_history_admin
+    Created on : 05-11-2017, 21:49:49
+    Author     : Bo
 --%>
 
-<%@page import="Utilities.UserRendUtil"%>
 <%@page import="data.UserMapper"%>
-<%@page import="Utilities.RendUtilAllId"%>
-<%@page import="domain.LineItem"%>
+<%@page import="Utilities.RendUtilAllIdForCustomer"%>
 <%@page import="domain.Order"%>
-<%@page import="data.InfoToAdminMapper"%>
 <%@page import="java.util.List"%>
-<%@page import="data.LineItemsMapper"%>
 <%@page import="domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -29,7 +27,7 @@
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
 
-        <title>Administration</title>
+        <title>Customer History</title>
     </head>
     <body>
 
@@ -50,12 +48,13 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
+                       
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="customer_history_admin.jsp">Customers Order</a>
+                            <a class="nav-link text-uppercase text-expanded"  href="admin_page.jsp">Customer History</a>
                         </li>
-                        <!--<li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
-                        </li> -->
+                        <li class="nav-item px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded"  href="#">Shopping Cart</a>
+                        </li>
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="index.jsp">Logout</a>
                         </li>
@@ -71,10 +70,10 @@
                 <!-- Welcome Message -->
                 <div class="text-center mt-4">
                     <div class="text-heading text-muted text-lg">Welcome To</div>
-                    <h1 class="my-2">The Administration Page</h1>
-                    <div class="text-heading text-muted text-lg">By
-                        <strong>The Data Builders</strong>
-                    </div>
+                    <h1 class="my-2">Your Order History</h1>
+                     <!-- <div class="text-heading text-muted text-lg">By
+                      <strong>The Data Builders</strong>
+                    </div>-->
                 </div>
             </div>
 
@@ -85,35 +84,28 @@
                 </h2>
                 <hr class="divider">
 
-                <% 
+                <% User user = (User) session.getAttribute("user");
 
-                    out.println("Hello " + (String)session.getAttribute("userAdminName")+ ". What are your plans for today?");
-
-                 //   InfoToAdminMapper infoToAdmin = new InfoToAdminMapper(); 
-                  //  List<Order> allId = infoToAdmin.getOrders();
-                    UserMapper um = new UserMapper();
-                   
-                    List<User> allUsers = um.getUsers();
-
+                    if (user != null) {
+                        out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                    }
+                    else{
+                          out.println("Hello  You have to log in again to see history. Which order do you want to see?");
+                    }
+                  UserMapper um = new UserMapper();
+                  String cName = (String) request.getAttribute("cName");
+                  
+                  
+                  
+                List<Order>  allId = RendUtilAllIdForCustomer.setAllId(cName);
+                    
                 %>
-               
-                
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllId.allInvoiceIdSearch()%>
-
+                        <%= RendUtilAllIdForCustomer.allInvoiceIdTabelCustomerToAdmin((allId))%>
                     </div>
 
-                    <div id="box">
-                        <%= UserRendUtil.userList(allUsers)%>
-
-                    </div>
-                        
-                         <div id="box">
-                        <%= UserRendUtil.allUserNameSearch()%>
-
-                    </div>
-
+                  
                 </div>
 
 
@@ -148,17 +140,8 @@
         </div>
     </footer>
 
-
-
-
-
-
-
-
-
-
     <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="script/popper/popper.min.js" type="text/javascript"></script>
     <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-</body>
+    </body>
 </html>

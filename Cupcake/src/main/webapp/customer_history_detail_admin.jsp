@@ -1,24 +1,18 @@
 <%-- 
-    Document   : admin_page
-    Created on : 26-09-2017, 12:52:08
-    Author     : Bo Henriksen 
+    Document   : customer_history_detail_admin
+    Created on : 05-11-2017, 22:24:32
+    Author     : Bo
 --%>
 
-<%@page import="Utilities.UserRendUtil"%>
-<%@page import="data.UserMapper"%>
-<%@page import="Utilities.RendUtilAllId"%>
-<%@page import="domain.LineItem"%>
-<%@page import="domain.Order"%>
-<%@page import="data.InfoToAdminMapper"%>
-<%@page import="java.util.List"%>
-<%@page import="data.LineItemsMapper"%>
 <%@page import="domain.User"%>
+<%@page import="java.util.List"%>
+<%@page import="Utilities.RendUtilInvoiceDetailsCustomer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+        
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
@@ -28,12 +22,12 @@
 
         <!-- Custom styles for this template -->
         <link href="css/business-casual.css" rel="stylesheet" type="text/css"/>
-
-        <title>Administration</title>
+        
+        <title>Invoice Detail</title>
     </head>
     <body>
-
-        <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
+        
+     <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Marys Cupcakes</div>
         <div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">3481 Melrose Place | Beverly Hills, CA 90210 | 123.456.7890</div>
 
         <!-- Navigation -->
@@ -51,11 +45,14 @@
                             </a>
                         </li>
                         <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="customer_history_admin.jsp">Customers Order</a>
+                            <a class="nav-link text-uppercase text-expanded" href="admin_page.jsp">Order History</a>
                         </li>
-                        <!--<li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
-                        </li> -->
+                        
+                         
+                        <li class="nav-item px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded"  href="#">Products</a>
+                        </li>
+                     
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="index.jsp">Logout</a>
                         </li>
@@ -63,7 +60,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <div class="container">
 
             <div class="bg-faded p-4 my-4">
@@ -85,32 +82,27 @@
                 </h2>
                 <hr class="divider">
 
-                <% 
+                <% User user = (User) session.getAttribute("user");
 
-                    out.println("Hello " + (String)session.getAttribute("userAdminName")+ ". What are your plans for today?");
+                    if (user != null) {
+                        out.println("Hello " + user.getUserName() + ". Which order do you want to see?");
+                        
 
-                 //   InfoToAdminMapper infoToAdmin = new InfoToAdminMapper(); 
-                  //  List<Order> allId = infoToAdmin.getOrders();
-                    UserMapper um = new UserMapper();
-                   
-                    List<User> allUsers = um.getUsers();
+                    }
+
+                    List allId = (List) request.getAttribute("allId");
 
                 %>
-               
-                
                 <div class="flex-container">
                     <div id="box">
-                        <%= RendUtilAllId.allInvoiceIdSearch()%>
+                        <%= RendUtilInvoiceDetailsCustomer.invoiceTabelCustomer(allId)%>
+                        
+                       <!-- <button type="button" onclick="location.href = 'customer_history.jsp';">Back</button>-->
 
                     </div>
 
                     <div id="box">
-                        <%= UserRendUtil.userList(allUsers)%>
-
-                    </div>
                         
-                         <div id="box">
-                        <%= UserRendUtil.allUserNameSearch()%>
 
                     </div>
 
@@ -148,17 +140,8 @@
         </div>
     </footer>
 
-
-
-
-
-
-
-
-
-
     <script src="script/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="script/popper/popper.min.js" type="text/javascript"></script>
     <script src="css/js/bootstrap.min.js" type="text/javascript"></script>
-</body>
+    </body>
 </html>
