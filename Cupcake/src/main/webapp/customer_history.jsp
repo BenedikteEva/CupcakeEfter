@@ -91,7 +91,6 @@
                     else{
                           out.println("Hello  You have to log in again to see history. Which order do you want to see?");
                     }
-
                     InfoToAdminMapper infoToAdmin = new InfoToAdminMapper();
                     String userName = user.getUserName();
                     int user_id = infoToAdmin.getUserIdByUserName(userName);                  

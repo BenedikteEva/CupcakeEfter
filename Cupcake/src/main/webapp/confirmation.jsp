@@ -58,7 +58,6 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                      
                         <li class="nav-item px-lg-4">
                             <a class="nav-link text-uppercase text-expanded" href="#">Shopping Cart</a>
                         </li>
